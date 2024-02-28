@@ -1,2 +1,94 @@
-/*Test*/
+/*ORHAN*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: grid;
+  grid-template-areas:
+    "header header header header"
+    "main main main aside"
+    "footer footer footer footer";
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  grid-area: header;
+  padding: 1px 10%;
+  background-color: #fe9a10;
+}
+
+.nav_links li a {
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+}
+.logo {
+  cursor: pointer;
+}
+
+.nav_links {
+  list-style: none;
+}
+.nav_links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav_links li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav_links li a:hover {
+  color: black;
+  font-size: 20px;
+}
+
+.nav_links li a img:hover {
+  opacity: 0.7;
+  transform: scale(0.975);
+}
+
+/*YOUNES MAIN BEGIN*/
+
+#projecten {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.projecten-item {
+  width: 26rem;
+  padding: 0 0.5rem 2rem 0;
+}
+
+.projecten-item img {
+  width: 100%;
+  height: auto;
+  transition: 0.3s opacity, transform 0.3s;
+}
+.projecten-item img:hover {
+  opacity: 0.7;
+  transform: scale(0.975);
+}
+
+
+
+/*YOUNES MAIN EINDE*/
+
+footer {
+  grid-area: footer;
+  background-color: #fe9a10;
+  padding: 10px;
+}
