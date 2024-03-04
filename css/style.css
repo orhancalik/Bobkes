@@ -23,8 +23,8 @@ header {
   align-items: center;
   grid-area: header;
   padding: 1px 10%;
-
   background-image: url(../assets/images/sky-background.jpg);
+  
 }
 
 .nav_links li a {
