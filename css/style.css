@@ -115,13 +115,13 @@ footer li {
   flex-direction: row;
 }
 
-#pokemon-naam {
+.pokemon-naam {
   color: black;
   text-align: center;
   text-transform: uppercase;
   font-size: 20px;
   margin-top: 10px;
-  margin-bottom: -10px;
+ 
 }
 #hp {
   color: rgb(140, 228, 10);
@@ -216,4 +216,43 @@ footer {
 /*Pagina vergelijken Rayan*/
 #compare-page {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px; 
+}
+
+.compare-pokemon {
+  width: 40%; 
+  margin: 0 10px; 
+   
+}
+
+.pok {
+  max-width: 100%; 
+  height: auto; 
+}
+
+.statsmenu {
+  background-color: #f2f2f2; 
+  padding: 10px;
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#compare-versus {
+  width: 100px;
+  margin: 0 10px; 
+}
+
+
+label {
+  padding-right: 10px;
+  font-size: 1rem;
+}
+.progress{
+  margin: 20px;
+
+}
+.progress-bar{
+  
 }
