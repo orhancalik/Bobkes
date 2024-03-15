@@ -84,6 +84,15 @@ footer li {
 
 /*YOUNES MAIN BEGIN*/
 
+.pokemonNumber {
+font-size: 1rem;
+font-weight: 999;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+color: red;
+}
+
+
+
 #projecten {
   display: flex;
   flex-wrap: wrap;
@@ -285,3 +294,47 @@ label {
   margin: 20px;
 
 }
+
+#pokedexList {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+#pokedexList li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#pokedexList li img {
+  width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+
+
+.custom-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #45a049;
+}
+
+
