@@ -96,14 +96,17 @@ footer li {
 }
 /* pokemon battle tiles */
 .pokemon-item {
-  width: 216px;
-  padding: 0 20px 20px 0;
+  width: 416px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .pokemon-item img:hover {
   transform: scale(0.975);
 }
 #battlepage {
   display: flex;
+  margin-left: 220px;
+  align-items: center;
 }
 #pokemon1 {
   display: flex;
@@ -118,26 +121,16 @@ footer li {
 .pokemon-naam {
   color: black;
   text-align: center;
-  text-transform: uppercase;
   font-size: 20px;
   margin-top: 10px;
  
 }
-#hp {
-  color: rgb(140, 228, 10);
+.battle-stats{
+  margin: 20px;
+  font-weight: bold;
   text-align: center;
-  font-size: 20px;
 }
-.stats {
-  color: black;
-  font-size: 18px;
-  padding: 15px;
-  border: solid 2px black;
-}
-.stats img {
-  width: 25px;
-  height: 25px;
-}
+
 /* pokemon battle tiles */
 .projecten-item img {
   width: 100%;
@@ -150,6 +143,7 @@ footer li {
 }
 #pokemon-versus {
   width: 100px;
+  margin: 40px;
 }
 .image-container {
   position: relative;
