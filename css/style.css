@@ -96,9 +96,15 @@ footer li {
 }
 /* pokemon battle tiles */
 .pokemon-item {
+<<<<<<< HEAD
   width: 416px;
   padding-top: 20px;
   padding-bottom: 20px;
+=======
+  width: 216px;
+  padding: 0 20px 20px 0;
+  margin-left: 250px;
+>>>>>>> e4b9f6f6e4e3951486c329a99311274cb86c92cc
 }
 .pokemon-item img:hover {
   transform: scale(0.975);
@@ -112,7 +118,6 @@ footer li {
   display: flex;
   flex-direction: row-reverse;
 }
-
 #pokemon2 {
   display: flex;
   flex-direction: row;
@@ -129,8 +134,19 @@ footer li {
   margin: 20px;
   font-weight: bold;
   text-align: center;
+<<<<<<< HEAD
 }
 
+=======
+  font-size: 20px;
+}
+.stats {
+  color: black;
+  font-size: 18px;
+  padding: 15px;
+  border: solid 2px black;
+}
+>>>>>>> e4b9f6f6e4e3951486c329a99311274cb86c92cc
 /* pokemon battle tiles */
 .projecten-item img {
   width: 100%;
@@ -141,10 +157,14 @@ footer li {
   opacity: 0.7;
   transform: scale(0.975);
 }
+<<<<<<< HEAD
 #pokemon-versus {
   width: 100px;
   margin: 40px;
 }
+=======
+
+>>>>>>> e4b9f6f6e4e3951486c329a99311274cb86c92cc
 .image-container {
   position: relative;
 }
@@ -231,12 +251,38 @@ footer {
   max-width: 100%; 
   height: auto; 
 }
+/* Button random pokemon*/
+#random-pokemon{
+  border: 2px solid #4CAF50;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #4CAF50;
+  cursor: pointer;
+  display: inline-block;
+
+}
+#random-pokemon:hover {
+  background-color: blue;
+  border-color: #45a049;
+}
+
+#random-pokemon:focus {
+  outline: none;
+}
+
+#random-pokemon:active {
+  background-color: #3e8e41;
+  border-color: #3e8e41;
+}
+
 
 .statsmenu {
   background-color: #f2f2f2; 
   padding: 10px;
   border-radius: 5px; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
+ 
 }
 
 #compare-versus {
@@ -253,47 +299,3 @@ label {
   margin: 20px;
 
 }
-
-#pokedexList {
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-#pokedexList li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-#pokedexList li img {
-  width: 200px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-
-
-.custom-button {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-}
-
-.custom-button:hover {
-  background-color: #45a049;
-}
-
-
