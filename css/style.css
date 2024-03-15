@@ -96,15 +96,9 @@ footer li {
 }
 /* pokemon battle tiles */
 .pokemon-item {
-<<<<<<< HEAD
   width: 416px;
   padding-top: 20px;
   padding-bottom: 20px;
-=======
-  width: 216px;
-  padding: 0 20px 20px 0;
-  margin-left: 250px;
->>>>>>> e4b9f6f6e4e3951486c329a99311274cb86c92cc
 }
 .pokemon-item img:hover {
   transform: scale(0.975);
@@ -134,19 +128,15 @@ footer li {
   margin: 20px;
   font-weight: bold;
   text-align: center;
-<<<<<<< HEAD
 }
 
-=======
-  font-size: 20px;
-}
+  
 .stats {
   color: black;
   font-size: 18px;
   padding: 15px;
   border: solid 2px black;
 }
->>>>>>> e4b9f6f6e4e3951486c329a99311274cb86c92cc
 /* pokemon battle tiles */
 .projecten-item img {
   width: 100%;
@@ -157,14 +147,10 @@ footer li {
   opacity: 0.7;
   transform: scale(0.975);
 }
-<<<<<<< HEAD
 #pokemon-versus {
   width: 100px;
   margin: 40px;
 }
-=======
-
->>>>>>> e4b9f6f6e4e3951486c329a99311274cb86c92cc
 .image-container {
   position: relative;
 }
