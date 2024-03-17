@@ -226,7 +226,7 @@ footer {
 }
 
 /*Pagina vergelijken Rayan*/
-.Layout-section {
+#compare-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -325,4 +325,20 @@ label {
   margin-bottom: 10px;
   box-sizing: border-box;
   border: solid 2px #3e8e41;
+}
+
+#who-page {
+  display: flex;
+  justify-content: center; /* Horizontaal centreren */
+  align-items: flex-start; /* Verticaal centreren */
+}
+
+#who-page article {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 50%;
+  max-width: 600px;
+  margin-bottom: 20px; /* Voeg een margin-bottom toe */
 }
