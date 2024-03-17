@@ -326,10 +326,10 @@ label {
   padding-right: 10px;
   font-size: 1rem;
 }
+
 .progress {
   margin: 20px;
 }
-
 #pokedexList {
   list-style-type: none;
   display: flex;
@@ -378,10 +378,22 @@ label {
 }
 
 #who-page article {
+  display: flex;
+  justify-content: center;
+
   text-align: center;
   padding: 20px;
   border-radius: 5px;
   width: 50%;
-  max-width: 600px;
-  margin-left: 150px; /* Voeg een margin-bottom toe */
+  max-width: 450px;
+  flex-direction: column;
+  margin-left: 250px;
+}
+
+#who-page article h1 {
+  margin-bottom: 25px;
+}
+
+#blurry {
+  filter: blur(10px);
 }
