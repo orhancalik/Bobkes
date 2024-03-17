@@ -113,11 +113,10 @@ select {
   font-weight: bold;
   color: black;
   background-color: rgb(241, 176, 34);
-  border: 2px solid  black;
-  border-radius: 5px; 
+  border: 2px solid black;
+  border-radius: 5px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
 }
-
 
 select option {
   padding: 10px;
@@ -126,14 +125,18 @@ select option {
 /* Stijl voor de focus (wanneer de dropdown is geselecteerd) */
 select:focus {
   outline: none; /* Verwijder de standaard focusstijl */
-  border-color: rgb(241, 176, 34); /* Verander de randkleur wanneer de dropdown is geselecteerd */
+  border-color: rgb(
+    241,
+    176,
+    34
+  ); /* Verander de randkleur wanneer de dropdown is geselecteerd */
 }
 .pokemon-item {
   width: 416px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.pokemon-item img{
+.pokemon-item img {
   margin-top: 15px;
 }
 .pokemon-item img:hover {
@@ -196,7 +199,7 @@ select:focus {
   padding-left: 25px;
   padding-right: 25px;
   padding-bottom: 10px;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .attack-button:hover {
@@ -222,7 +225,7 @@ select:focus {
 .battle-button:hover {
   background-color: red;
 }
-.fight-text{
+.fight-text {
   text-align: center;
   font-size: 22px;
   font-weight: bold;
@@ -315,18 +318,20 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+  margin: 20px;
 }
 
 .compare-pokemon {
-  width: 30%;
-  margin: 0 10px;
-}
-
-.compare-pokemon img{
   width: 50%;
   margin: 0 10px;
-  margin-left: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.compare-pokemon img {
+  width: 50%;
+  margin: 0 10px;
   padding: 10px;
 }
 
@@ -363,6 +368,7 @@ footer {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 #compare-versus {
