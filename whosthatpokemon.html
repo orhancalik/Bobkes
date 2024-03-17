@@ -42,7 +42,11 @@
       <section id="who-page">
         <article class="projecten-item">
           <h1>Who's that Pokémon?</h1>
-          <img src="assets/images/charizard.jpeg" alt="Who's that Pokémon" />
+          <img
+            id="blurry"
+            src="assets/images/charizard.jpeg"
+            alt="Who's that Pokémon"
+          />
           <form id="guessForm">
             <label for="pokemonName">Raad de naam van de Pokémon:</label>
             <input type="text" id="pokemonName" name="pokemonName" required />
@@ -56,11 +60,11 @@
             alt="Current Pokémon"
             width="350px"
           />
-          <div class="progress">
+          <div class="progress" style="height: 30px">
             <div
               class="progress-bar bg-warning"
               role="progressbar"
-              style="width: 39%"
+              style="width: 39%; height: 100%"
               aria-valuenow="39"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -68,16 +72,16 @@
               Aanval: 39
             </div>
           </div>
-          <div class="progress">
+          <div class="progress" style="height: 30px">
             <div
               class="progress-bar bg-danger"
               role="progressbar"
-              style="width: 21%"
-              aria-valuenow="21"
+              style="width: 28%; height: 100%"
+              aria-valuenow="28"
               aria-valuemin="0"
               aria-valuemax="100"
             >
-              Verdediging: 21
+              Verdediging: 28
             </div>
           </div>
         </article>
