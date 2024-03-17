@@ -218,6 +218,12 @@ select:focus {
 .battle-button:hover {
   background-color: red;
 }
+.fight-text{
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: orangered;
+}
 /* pokemon battle tiles */
 .projecten-item img {
   width: 100%;
