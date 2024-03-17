@@ -315,12 +315,19 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 10px;
 }
 
 .compare-pokemon {
-  width: 40%;
+  width: 30%;
   margin: 0 10px;
+}
+
+.compare-pokemon img{
+  width: 50%;
+  margin: 0 10px;
+  margin-left: 6rem;
+  padding: 10px;
 }
 
 .pok {
