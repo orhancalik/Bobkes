@@ -293,7 +293,7 @@ footer {
   color: #fff;
   background-color: #4caf50;
   cursor: pointer;
-
+  margin: 2rem;
   padding: 5px;
 }
 .myBttn:hover {
@@ -335,7 +335,7 @@ label {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  padding: 2rem;
 }
 
 #pokedexList li {
