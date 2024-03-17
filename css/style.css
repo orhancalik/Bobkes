@@ -33,6 +33,10 @@ header {
   font-size: 18px;
   text-decoration: none;
 }
+aside {
+  border-left: solid 1px black;
+}
+
 footer {
   display: flex;
   justify-content: space-around;
@@ -373,6 +377,7 @@ label {
   flex-wrap: wrap;
   justify-content: center;
   padding: 2rem;
+  gap: 20px;
 }
 
 #pokedexList li {
@@ -410,8 +415,8 @@ label {
 
 #who-page {
   display: flex;
-  justify-content: center; /* Horizontaal centreren */
-  align-items: flex-start; /* Verticaal centreren */
+  justify-content: center;
+  align-items: flex-start;
 }
 
 #who-page article {
