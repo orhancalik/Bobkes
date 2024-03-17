@@ -85,13 +85,12 @@ footer li {
 /*YOUNES MAIN BEGIN*/
 
 .pokemonNumber {
-font-size: 1rem;
-font-weight: 999;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-color: red;
+  font-size: 1rem;
+  font-weight: 999;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: red;
 }
-
-
 
 #projecten {
   display: flex;
@@ -131,15 +130,13 @@ color: red;
   text-align: center;
   font-size: 20px;
   margin-top: 10px;
- 
 }
-.battle-stats{
+.battle-stats {
   margin: 20px;
   font-weight: bold;
   text-align: center;
 }
 
-  
 .stats {
   color: black;
   font-size: 18px;
@@ -229,72 +226,64 @@ footer {
 }
 
 /*Pagina vergelijken Rayan*/
-#compare-page {
+.Layout-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px; 
- 
+  margin: 20px;
 }
 
 .compare-pokemon {
-  width: 40%; 
-  margin: 0 10px; 
-   
+  width: 40%;
+  margin: 0 10px;
 }
 
 .pok {
-  max-width: 100%; 
-  height: auto; 
+  max-width: 100%;
+  height: auto;
 }
 /* Button random pokemon*/
-#random-pokemon{
-  border: 2px solid #4CAF50;
+.myBttn {
+  border: 2px solid #4caf50;
   border-radius: 5px;
   color: #fff;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   cursor: pointer;
 
   padding: 5px;
-
 }
-#random-pokemon:hover {
+.myBttn:hover {
   background-color: blue;
   border-color: #45a049;
 }
 
-#random-pokemon:focus {
+.myBttn:focus {
   outline: none;
 }
 
-#random-pokemon:active {
+.myBttn:active {
   background-color: #3e8e41;
   border-color: #3e8e41;
 }
 
-
 .statsmenu {
-  background-color: #f2f2f2; 
+  background-color: #f2f2f2;
   padding: 10px;
-  border-radius: 5px; 
+  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
- 
- 
 }
 
 #compare-versus {
   width: 100px;
-  margin: 0 10px; 
+  margin: 0 10px;
 }
-
 
 label {
   padding-right: 10px;
   font-size: 1rem;
 }
-.progress{
+.progress {
   margin: 20px;
-
 }
 
 #pokedexList {
@@ -318,25 +307,22 @@ label {
   margin-bottom: 10px;
 }
 
+/* Whos that pokemon Rayan*/
 
-
-.custom-button {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
+#guessForm {
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-.custom-button:hover {
-  background-color: #45a049;
+#guessForm label {
+  display: block;
+  margin-bottom: 10px;
 }
 
-
+#guessForm input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: solid 2px #3e8e41;
+}
