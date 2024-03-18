@@ -84,9 +84,16 @@ footer li {
   font-weight: 999;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  color: red;
+  color: blue;
 
 }
+
+#Titel-evo {
+  font-weight: 999;
+}
+
+
+
 
 #projecten {
   display: flex;
@@ -148,6 +155,10 @@ select:focus {
   flex-direction: row;
 }
 
+#naampokemonstats
+{
+  font-weight: 999;
+}
 .pokemon-naam {
   color: black;
   text-align: center;
