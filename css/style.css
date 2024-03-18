@@ -226,13 +226,7 @@ select:focus {
 .battle-button:hover {
   background-color: red;
 }
-.fight-text {
-  margin-top: -40px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  color: orangered;
-}
+
 /* pokemon battle tiles */
 .projecten-item img {
   width: 100%;
@@ -453,4 +447,16 @@ label {
 
 #blurry {
   filter: blur(10px);
+}
+
+/* login page */
+.background-wrapper {
+  background-image: url("../assets/images/login-pikachu.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh; /* Full height of viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

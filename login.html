@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl-BE">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,9 +12,8 @@
       crossorigin="anonymous"
     />
     <script src="scripts/script.js" defer></script>
-    <title>Mijn Pokemon</title>
+    <title>Log-in</title>
   </head>
-
   <body>
     <header>
       <nav>
@@ -40,21 +39,50 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <section>
-        <article class="projecten-item">
-          <h1>Bulbasaur</h1>
-          <img src="assets/images/bulbasaur.jpg" alt="" />
-        </article>
-        <article>
-          <h1>Stats</h1>
-        </article>
-      </section>
-      <section>
-        <h1>Evolution Path</h1>
-      </section>
-    </main>
-    <footer>
+    <div class="background-wrapper">
+      <main>
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+            <div id="emailHelp" class="form-text">
+              We'll never share your email with anyone else.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="mb-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >Check me out</label
+            >
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </main>
+    </div>
+    <aside></aside>
+
+    <footer class="login-footer">
       <ul>
         <li><a href="mijnpokemon.html">Mijn Pokemon</a></li>
         <li><a href="pokemonvergelijken.html">Vergelijken</a></li>
