@@ -24,8 +24,9 @@ header {
   grid-area: header;
   padding: 1px 10;
   background-image: url(../assets/images/navbar.jpg);
-  background-position: 50% 40%;
+  background-position: top;
 }
+
 .nav_links li a {
   text-transform: uppercase;
   color: white;
@@ -37,19 +38,9 @@ aside {
   border-left: solid 1px black;
 }
 
-footer {
-  display: flex;
-  justify-content: space-around;
-  grid-area: footer;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-content: space-around;
-  align-items: center;
-}
 footer li a {
   text-transform: uppercase;
   color: white;
-
   font-size: 12px;
   text-decoration: none;
 }
@@ -304,6 +295,9 @@ select:focus {
 
 footer {
   grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px;
   background-image: url(../assets/images/navbar.jpg);
   background-position: top;
@@ -448,20 +442,24 @@ label {
 #blurry {
   filter: blur(10px);
 }
-<<<<<<< HEAD
 
 /* login page */
 .background-wrapper {
-  background-image: url("../assets/images/login-pikachu.jpg");
+  background-image: url("../assets/images/navbar.jpg");
   background-size: cover;
   background-position: center;
-  width: 100vw;
+  width: 98.9vw;
   height: 100vh; /* Full height of viewport */
   display: flex;
   justify-content: center;
   align-items: center;
 }
-=======
+.mb-3 {
+  color: white;
+}
+#emailHelp {
+  color: white;
+}
 /* Pokemon detail Rayan*/
 #pokemonDetail {
   display: flex;
@@ -496,4 +494,3 @@ label {
   width: 200px;
   margin: 20px;
 }
->>>>>>> 38d557c2d770058ebab4db7d5ea58858965050ab
