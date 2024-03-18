@@ -448,7 +448,6 @@ label {
 #blurry {
   filter: blur(10px);
 }
-<<<<<<< HEAD
 
 /* login page */
 .background-wrapper {
@@ -461,39 +460,3 @@ label {
   justify-content: center;
   align-items: center;
 }
-=======
-/* Pokemon detail Rayan*/
-#pokemonDetail {
-  display: flex;
-  gap: 50px;
-  justify-content: flex-start;
-  margin: 20px;
-}
-#pokemonDetail h1 {
-  margin-bottom: 20px;
-}
-
-#pokemonDetail ul {
-  list-style-type: none;
-  padding: 0;
-}
-#pokemonDetail li {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-#evolution {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-}
-#Titel-evo {
-  text-align: left;
-  padding-left: 20px;
-}
-
-.evo-path {
-  width: 200px;
-  margin: 20px;
-}
->>>>>>> 38d557c2d770058ebab4db7d5ea58858965050ab
