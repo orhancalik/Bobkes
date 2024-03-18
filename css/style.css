@@ -454,12 +454,16 @@ label {
   justify-content: center;
   align-items: center;
 }
+<<<<<<< HEAD
 .mb-3 {
   color: white;
 }
 #emailHelp {
   color: white;
 }
+=======
+
+>>>>>>> 880f2501f1067026352864519efdc35b7ce88af9
 /* Pokemon detail Rayan*/
 #pokemonDetail {
   display: flex;
