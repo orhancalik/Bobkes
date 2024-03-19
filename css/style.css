@@ -76,17 +76,13 @@ footer li {
 
 /*YOUNES MAIN BEGIN*/
 
-
 .pokebalicon {
   color: black;
   font-family: cursive;
   display: flex;
   justify-content: center;
   align-items: center;
- 
 }
-
-
 
 .pokemonNumber {
   font-size: 1rem;
@@ -518,7 +514,7 @@ label {
   background-image: url("../assets/images/navbar.jpg");
   background-size: cover;
   background-position: center;
-  width: 98.9vw;
+  width: 98.5vw;
   height: 100vh; /* Full height of viewport */
   display: flex;
   justify-content: center;
@@ -675,5 +671,8 @@ label {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  #pokemonDetail {
+    flex-direction: column;
   }
 }
