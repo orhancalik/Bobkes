@@ -35,6 +35,9 @@ header {
   text-decoration: none;
 }
 
+#backgroundforest {
+  width: 100vw;
+}
 
 footer li a {
   text-transform: uppercase;
