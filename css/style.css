@@ -13,7 +13,7 @@ body {
   display: grid;
   grid-template-areas:
     "header header header header"
-    "main main main aside"
+    "main main main main"
     "footer footer footer footer";
 }
 
@@ -34,14 +34,6 @@ header {
   font-size: 18px;
   text-decoration: none;
 }
-
-aside {
-  display: none;
-  border-left: black 0.1rem solid;
-  padding: 5px;
-}
-
-
 
 footer li a {
   text-transform: uppercase;
@@ -89,7 +81,7 @@ footer li {
   font-weight: 999;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  color:black;
+  color: black;
 }
 
 .Grass {
@@ -98,8 +90,7 @@ footer li {
   font-size: 1rem;
 }
 
-.Poison
-{
+.Poison {
   color: purple;
   font-weight: 999;
   font-size: 1rem;
@@ -142,7 +133,14 @@ footer li {
 }
 
 #backgroundforest {
-  width: 98.9vw;
+  background-image: url("../assets/images/forrest.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh; /* Full height of viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #Titel-evo {
@@ -458,7 +456,6 @@ label {
   text-align: center;
 }
 
-
 /* Whos that pokemon Rayan*/
 
 #guessForm {
@@ -517,14 +514,14 @@ label {
   justify-content: center;
   align-items: center;
 }
-.login-title{
+.login-title {
   color: white;
   text-transform: uppercase;
   font-size: 30px;
   font-weight: bold;
   text-align: center;
 }
-.login-text{
+.login-text {
   color: white;
   text-align: center;
 }
@@ -534,21 +531,22 @@ label {
   border-radius: 20px;
 }
 /* register page */
-.register-section{
+.register-section {
   display: flex;
   justify-content: space-between;
 }
-.register-title{
+.register-title {
   color: white;
   font-size: 25px;
   text-transform: uppercase;
   font-weight: bold;
 }
-.register-text{
+.register-text {
   width: 500px;
   color: white;
 }
-.register-form{
+
+.register-form {
   background-color: white;
   padding: 30px;
   border-radius: 15px;
