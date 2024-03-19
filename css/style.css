@@ -151,8 +151,8 @@ select {
   padding: 6px;
   font-size: 16px;
   font-weight: bold;
-  color: black;
-  background-color: rgb(241, 176, 34);
+  color: white;
+  background-color: rgb(252, 134, 0);
   border: 2px solid black;
   border-radius: 5px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
@@ -256,14 +256,14 @@ select:focus {
 
 .battle-button {
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 23px;
   font-weight: bold;
-  color: black;
+  color: white;
   margin-left: 50px;
   margin-right: 50px;
-  background-color: orange;
+  background-color: red;
   padding: 20px;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 100px;
 }
 .battle-button:hover {
@@ -534,8 +534,7 @@ label {
   width: 500px;
   color: white;
 }
-.register-squad {
-}
+
 .register-form {
   background-color: white;
   padding: 30px;
