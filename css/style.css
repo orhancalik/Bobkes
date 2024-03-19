@@ -74,6 +74,15 @@ footer li {
   transform: scale(0.975);
 }
 
+.pokeball{
+  color: white;
+  font-weight: bold;
+  line-height: 15px;
+}
+.pokemon-info {
+  display: inline-block;
+}
+
 /*YOUNES MAIN BEGIN*/
 
 
