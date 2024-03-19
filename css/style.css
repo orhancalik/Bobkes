@@ -373,6 +373,13 @@ select:focus {
 .MijnPokemonLijst {
   width: 300px;
 }
+
+#pokemoncatchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
 /*YOUNES MAIN EINDE*/
 
 footer {
