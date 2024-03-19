@@ -517,7 +517,17 @@ label {
   justify-content: center;
   align-items: center;
 }
-
+.login-title{
+  color: white;
+  text-transform: uppercase;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+.login-text{
+  color: white;
+  text-align: center;
+}
 .login-form {
   background-color: white;
   padding: 40px;
@@ -526,7 +536,7 @@ label {
 /* register page */
 .register-section{
   display: flex;
-
+  justify-content: space-between;
 }
 .register-title{
   color: white;
@@ -538,14 +548,13 @@ label {
   width: 500px;
   color: white;
 }
-.register-squad{
-  
-}
 .register-form{
   background-color: white;
   padding: 30px;
   border-radius: 15px;
+  width: 1000px;
 }
+
 /* Pokemon detail Rayan*/
 #pokemonDetail {
   display: flex;
