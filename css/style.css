@@ -681,4 +681,7 @@ label {
   .statsmenu {
     padding: 0px;
   }
+  #evolution {
+    flex-direction: column;
+  }
 }
