@@ -137,7 +137,7 @@ footer li {
   background-size: cover;
   background-position: center;
   width: 98.9vw;
-  height: 100vh; /
+  height: 100vh; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -545,8 +545,7 @@ label {
   width: 500px;
   color: white;
 }
-.register-squad {
-}
+
 .register-form {
   background-color: white;
   padding: 30px;
