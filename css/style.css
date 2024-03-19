@@ -27,12 +27,14 @@ header {
   background-position: top;
 }
 
+
 .nav_links li a {
   text-transform: uppercase;
   color: white;
   font-weight: bold;
   font-size: 18px;
   text-decoration: none;
+
 }
 
 footer li a {
@@ -54,6 +56,8 @@ footer li {
 
 .nav_links {
   list-style: none;
+  display: flex;
+  align-items: center;
 }
 .nav_links li {
   display: inline-block;
@@ -602,5 +606,34 @@ label {
   }
   #who-page article {
     margin-left: 100px;
+  }
+  .nav_links{
+    flex-direction: column;
+  }
+  #battlepage{
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 1780px) {
+  #battlepage {
+    padding: 10px; /* Extra padding toevoegen om ruimte te maken */
+  }
+
+  .pokemon-item {
+    max-width: 300px; /* Verklein de maximale breedte van de pokemon-item */
+  }
+
+  .battle-stats {
+    margin: 5px; /* Verklein de marge rond de battle-stats */
+  }
+
+  .stats {
+    font-size: 14px; /* Verklein de lettergrootte van de statistieken */
+  }
+
+  .attack-button,
+  .defend-button {
+    font-size: 12px; /* Verklein de lettergrootte van de knoppen */
   }
 }
