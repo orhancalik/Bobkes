@@ -80,6 +80,18 @@ footer li {
 
 /*YOUNES MAIN BEGIN*/
 
+
+.pokebalicon {
+  color: black;
+  font-family: cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+
+
 .pokemonNumber {
   font-size: 1rem;
   font-weight: 999;
@@ -136,6 +148,17 @@ footer li {
   font-size: 1rem;
 }
 
+#backgroundforest {
+  background-image: url("../assets/images/forrest.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh; /* Full height of viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #Titel-evo {
   font-weight: 999;
 }
@@ -176,7 +199,6 @@ select:focus {
   ); /* Verander de randkleur wanneer de dropdown is geselecteerd */
 }
 .pokemon-item {
-  width: 416px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -210,7 +232,6 @@ select:focus {
   margin-top: 10px;
 }
 .battle-stats {
-  margin: 20px;
   font-weight: bold;
   text-align: center;
 }
@@ -501,7 +522,7 @@ label {
   background-image: url("../assets/images/navbar.jpg");
   background-size: cover;
   background-position: center;
-  width: 99.1vw;
+  width: 98.9vw;
   height: 100vh; /* Full height of viewport */
   display: flex;
   justify-content: center;
@@ -630,7 +651,7 @@ label {
 #squirtle {
   position: relative;
   bottom: 80px;
-  left: 100px;
+  left: 10px;
 }
 #squirtle:hover {
   transform: scale(5.9);
@@ -649,34 +670,5 @@ label {
   }
   #who-page article {
     margin-left: 100px;
-  }
-  .nav_links{
-    flex-direction: column;
-  }
-  #battlepage{
-    flex-direction: column;
-  }
-}
-
-@media only screen and (max-width: 1780px) {
-  #battlepage {
-    padding: 10px; /* Extra padding toevoegen om ruimte te maken fdssfdfsd */
-  }
-
-  .pokemon-item {
-    max-width: 300px; /* Verklein de maximale breedte van de pokemon-item */
-  }
-
-  .battle-stats {
-    margin: 5px; /* Verklein de marge rond de battle-stats */
-  }
-
-  .stats {
-    font-size: 14px; /* Verklein de lettergrootte van de statistieken */
-  }
-
-  .attack-button,
-  .defend-button {
-    font-size: 12px; /* Verklein de lettergrootte van de knoppen */
   }
 }
