@@ -76,6 +76,18 @@ footer li {
 
 /*YOUNES MAIN BEGIN*/
 
+
+.pokebalicon {
+  color: black;
+  font-family: cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+
+
 .pokemonNumber {
   font-size: 1rem;
   font-weight: 999;
@@ -130,6 +142,10 @@ footer li {
   color: palevioletred;
   font-weight: 999;
   font-size: 1rem;
+}
+
+#currentPokemonName {
+  font-weight: 999;
 }
 
 #backgroundforest {
