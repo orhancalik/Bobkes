@@ -34,9 +34,7 @@ header {
   font-size: 18px;
   text-decoration: none;
 }
-aside {
-  border-left: solid 1px black;
-}
+
 
 footer li a {
   text-transform: uppercase;
