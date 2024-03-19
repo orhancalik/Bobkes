@@ -674,5 +674,11 @@ label {
   }
   #pokemonDetail {
     flex-direction: column;
+    margin: 0px;
+    margin-top: 10px;
+    align-items: center;
+  }
+  .statsmenu {
+    padding: 0px;
   }
 }
