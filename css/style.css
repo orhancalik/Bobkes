@@ -88,6 +88,10 @@ footer li {
   color: blue;
 }
 
+#backgroundforest {
+  width: 100vw;
+}
+
 #Titel-evo {
   font-weight: 999;
 }
