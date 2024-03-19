@@ -16,6 +16,9 @@ body {
     "main main main main"
     "footer footer footer footer";
 }
+main {
+  grid-area: main;
+}
 
 header {
   display: flex;
@@ -74,7 +77,7 @@ footer li {
   transform: scale(0.975);
 }
 
-.pokeball{
+.pokeball {
   color: white;
   font-weight: bold;
   line-height: 15px;
@@ -663,6 +666,38 @@ label {
 }
 #squirtle:hover {
   transform: scale(5.9);
+}
+
+#catch-pokemon {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#catch-pokemon h1 {
+  margin-bottom: 10px;
+}
+
+#catch-pokemon .statsmenu {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#catch-stats {
+  width: 50%;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#pokeball {
+  width: 50px;
+  margin: 10px;
+}
+#catch-stats img {
+  width: 50%;
+  margin: 0 10px;
+  padding: 10px;
 }
 
 /* Mediaqueries*/
