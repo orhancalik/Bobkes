@@ -13,7 +13,7 @@ body {
   display: grid;
   grid-template-areas:
     "header header header header"
-    "main main main aside"
+    "main main main main"
     "footer footer footer footer";
 }
 
@@ -24,8 +24,9 @@ header {
   grid-area: header;
   padding: 1px 10;
   background-image: url(../assets/images/navbar.jpg);
-  background-position: 50% 40%;
+  background-position: top;
 }
+
 .nav_links li a {
   text-transform: uppercase;
   color: white;
@@ -33,23 +34,10 @@ header {
   font-size: 18px;
   text-decoration: none;
 }
-aside {
-  border-left: solid 1px black;
-}
 
-footer {
-  display: flex;
-  justify-content: space-around;
-  grid-area: footer;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-content: space-around;
-  align-items: center;
-}
 footer li a {
   text-transform: uppercase;
   color: white;
-
   font-size: 12px;
   text-decoration: none;
 }
@@ -93,7 +81,70 @@ footer li {
   font-weight: 999;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  color: red;
+  color: black;
+}
+
+.Grass {
+  color: green;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Poison {
+  color: purple;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Fire {
+  color: orangered;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Flying {
+  color: lightblue;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Water {
+  color: blue;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Electric {
+  color: yellow;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Steel {
+  color: gray;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Psychic {
+  color: palevioletred;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+#backgroundforest {
+  background-image: url("../assets/images/forrest.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh; /* Full height of viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#Titel-evo {
+  font-weight: 999;
 }
 
 #projecten {
@@ -156,6 +207,9 @@ select:focus {
   flex-direction: row;
 }
 
+#naampokemonstats {
+  font-weight: 999;
+}
 .pokemon-naam {
   color: black;
   text-align: center;
@@ -300,10 +354,17 @@ select:focus {
   text-align: center;
   margin-left: 500px;
 }
+
+.MijnPokemonLijst {
+  width: 300px;
+}
 /*YOUNES MAIN EINDE*/
 
 footer {
   grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px;
   background-image: url(../assets/images/navbar.jpg);
   background-position: top;
@@ -346,7 +407,6 @@ footer {
   padding: 5px;
 }
 .myBttn:hover {
-  background-color: blue;
   border-color: #45a049;
 }
 
@@ -368,8 +428,8 @@ footer {
 }
 
 #compare-versus {
-  width: 100px;
-  margin: 0 10px;
+  width: 200px;
+  margin-bottom: 22rem;
 }
 
 label {
@@ -394,12 +454,6 @@ label {
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-
-#pokedexList li img {
-  width: 200px;
-  height: auto;
-  margin-bottom: 10px;
 }
 
 /* Whos that pokemon Rayan*/
@@ -451,14 +505,53 @@ label {
 
 /* login page */
 .background-wrapper {
-  background-image: url("../assets/images/login-pikachu.jpg");
+  background-image: url("../assets/images/navbar.jpg");
   background-size: cover;
   background-position: center;
-  width: 100vw;
+  width: 99.1vw;
   height: 100vh; /* Full height of viewport */
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.login-title {
+  color: white;
+  text-transform: uppercase;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+.login-text {
+  color: white;
+  text-align: center;
+}
+.login-form {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+}
+/* register page */
+.register-section {
+  display: flex;
+  justify-content: space-between;
+}
+.register-title {
+  color: white;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.register-text {
+  width: 500px;
+  color: white;
+}
+.register-squad {
+}
+.register-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 1000px;
 }
 
 /* Pokemon detail Rayan*/
@@ -494,4 +587,21 @@ label {
 .evo-path {
   width: 200px;
   margin: 20px;
+}
+/* Pokemon catcher Rayan*/
+
+/* Mediaqueries*/
+@media only screen and (max-width: 992px) {
+  #compare-page {
+    flex-direction: column;
+  }
+  .compare-pokemon img {
+    width: 100%;
+  }
+  #who-page {
+    flex-direction: column;
+  }
+  #who-page article {
+    margin-left: 100px;
+  }
 }
