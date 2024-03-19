@@ -35,6 +35,12 @@ header {
   text-decoration: none;
 }
 
+aside {
+  display: none;
+  border-left: black 0.1rem solid;
+  padding: 5px;
+}
+
 
 
 footer li a {
@@ -136,7 +142,7 @@ footer li {
 }
 
 #backgroundforest {
-  width: 100vw;
+  width: 98.9vw;
 }
 
 #Titel-evo {
@@ -424,8 +430,8 @@ footer {
 }
 
 #compare-versus {
-  width: 100px;
-  margin: 0 10px;
+  width: 200px;
+  margin-bottom: 22rem;
 }
 
 label {
