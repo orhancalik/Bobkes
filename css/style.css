@@ -132,17 +132,6 @@ footer li {
   font-size: 1rem;
 }
 
-#backgroundforest {
-  background-image: url("../assets/images/forrest.jpg");
-  background-size: cover;
-  background-position: center;
-  width: 100vw;
-  height: 100vh; /* Full height of viewport */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #Titel-evo {
   font-weight: 999;
 }
@@ -589,6 +578,60 @@ label {
   margin: 20px;
 }
 /* Pokemon catcher Rayan*/
+#backgroundforest {
+  background-image: url("../assets/images/forrest.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 98.9vw;
+  height: 100vh; /* Full height of viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#pokemon-catcher {
+  display: flex;
+  gap: 120px;
+}
+
+#pokemon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#pokemon img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#charizard {
+  position: relative;
+  top: 110px;
+  left: 210px;
+}
+#charizard:hover {
+  transform: scale(5.9);
+}
+#bulbasaur {
+  position: relative;
+  top: 120px;
+  right: 110px;
+}
+#bulbasaur:hover {
+  transform: scale(5.9);
+}
+#squirtle {
+  position: relative;
+  bottom: 80px;
+  left: 100px;
+}
+#squirtle:hover {
+  transform: scale(5.9);
+}
 
 /* Mediaqueries*/
 @media only screen and (max-width: 992px) {
