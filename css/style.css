@@ -35,6 +35,12 @@ header {
   text-decoration: none;
 }
 
+aside {
+  display: none;
+  border-left: black 0.1rem solid;
+  padding: 5px;
+}
+
 
 
 footer li a {
