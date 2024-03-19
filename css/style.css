@@ -136,8 +136,8 @@ footer li {
   background-image: url("../assets/images/forrest.jpg");
   background-size: cover;
   background-position: center;
-  width: 100vw;
-  height: 100vh; /* Full height of viewport */
+  width: 98.9vw;
+  height: 100vh; /
   display: flex;
   justify-content: center;
   align-items: center;
