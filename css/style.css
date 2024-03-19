@@ -505,7 +505,7 @@ label {
   background-image: url("../assets/images/navbar.jpg");
   background-size: cover;
   background-position: center;
-  width: 98.9vw;
+  width: 99.1vw;
   height: 100vh; /* Full height of viewport */
   display: flex;
   justify-content: center;
@@ -517,7 +517,29 @@ label {
   padding: 40px;
   border-radius: 20px;
 }
+/* register page */
+.register-section{
+  display: flex;
 
+}
+.register-title{
+  color: white;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.register-text{
+  width: 500px;
+  color: white;
+}
+.register-squad{
+  
+}
+.register-form{
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+}
 /* Pokemon detail Rayan*/
 #pokemonDetail {
   display: flex;
