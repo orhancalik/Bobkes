@@ -35,9 +35,6 @@ header {
   text-decoration: none;
 }
 
-#backgroundforest {
-  width: 100vw;
-}
 
 footer li a {
   text-transform: uppercase;
@@ -86,6 +83,10 @@ footer li {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: blue;
+}
+
+#backgroundforest {
+  width: 100vw;
 }
 
 #Titel-evo {
@@ -502,4 +503,21 @@ label {
 .evo-path {
   width: 200px;
   margin: 20px;
+}
+/* Pokemon catcher Rayan*/
+
+/* Mediaqueries*/
+@media only screen and (max-width: 992px) {
+  #compare-page {
+    flex-direction: column;
+  }
+  .compare-pokemon img {
+    width: 100%;
+  }
+  #who-page {
+    flex-direction: column;
+  }
+  #who-page article {
+    margin-left: 100px;
+  }
 }
