@@ -34,7 +34,10 @@ header {
   font-size: 18px;
   text-decoration: none;
 }
-
+aside {
+  display: flex;
+  border-left: solid 1px black;
+}
 
 footer li a {
   text-transform: uppercase;
@@ -501,20 +504,19 @@ label {
   margin: 20px;
 }
 /* Pokemon catcher Rayan*/
-.forest-background {
-  background-image: url("https://example.com/forest.jpg"); /* Vervang 'https://example.com/forest.jpg' door de URL van je bosachtergrondafbeelding */
-  background-size: cover;
-  background-position: center;
-}
-.pokemon-hidden {
-  width: 200px;
-  height: 200px;
-  background-image: url("https://example.com/forest.jpg"); /* Vervang 'https://example.com/forest.jpg' door dezelfde URL als hierboven */
-  background-size: cover;
-  background-position: center;
-  margin: 10px;
-}
 
-.pokemon-image {
-  visibility: hidden;
+/* Mediaqueries*/
+@media only screen and (max-width: 992px) {
+  #compare-page {
+    flex-direction: column;
+  }
+  .compare-pokemon img {
+    width: 100%;
+  }
+  #who-page {
+    flex-direction: column;
+  }
+  #who-page article {
+    margin-left: 100px;
+  }
 }
