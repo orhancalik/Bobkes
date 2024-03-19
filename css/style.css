@@ -85,7 +85,56 @@ footer li {
   font-weight: 999;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color:black;
+}
+
+.Grass {
+  color: green;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Poison
+{
+  color: purple;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Fire {
+  color: orangered;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Flying {
+  color: lightblue;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Water {
   color: blue;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Electric {
+  color: yellow;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Steel {
+  color: gray;
+  font-weight: 999;
+  font-size: 1rem;
+}
+
+.Psychic {
+  color: palevioletred;
+  font-weight: 999;
+  font-size: 1rem;
 }
 
 #backgroundforest {
@@ -303,6 +352,10 @@ select:focus {
   text-align: center;
   margin-left: 500px;
 }
+
+.MijnPokemonLijst {
+  width: 300px;
+}
 /*YOUNES MAIN EINDE*/
 
 footer {
@@ -402,11 +455,6 @@ label {
   text-align: center;
 }
 
-#pokedexList li img {
-  width: 200px;
-  height: auto;
-  margin-bottom: 10px;
-}
 
 /* Whos that pokemon Rayan*/
 
