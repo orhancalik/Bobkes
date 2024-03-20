@@ -157,7 +157,7 @@ footer li {
   background-size: cover;
   background-position: center;
   width: 100vw;
-  height: 100vh; /* Full height of viewport */
+  height: 100vh; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,14 +193,14 @@ select option {
   padding: 10px;
 }
 
-/* Stijl voor de focus (wanneer de dropdown is geselecteerd) */
+
 select:focus {
-  outline: none; /* Verwijder de standaard focusstijl */
+  outline: none; 
   border-color: rgb(
     241,
     176,
     34
-  ); /* Verander de randkleur wanneer de dropdown is geselecteerd */
+  ); 
 }
 .pokemon-item {
   padding-top: 20px;
@@ -534,7 +534,7 @@ label {
   background-size: cover;
   background-position: center;
   width: 98.5vw;
-  height: 100vh; /* Full height of viewport */
+  height: 100vh; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -734,5 +734,12 @@ label {
   }
   #evolution {
     flex-direction: column;
+  }
+
+  .pokeball {
+    margin-top: 1rem;
+  }
+  .pokeball img {
+  width: 40px;
   }
 }
