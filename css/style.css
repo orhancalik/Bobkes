@@ -177,6 +177,7 @@ footer li {
   width: 416px;
   padding: 0 20px 20px 0;
 }
+
 /* pokemon battle tiles */
 select {
   padding: 6px;
@@ -228,6 +229,11 @@ select:focus {
 
 #naampokemonstats {
   font-weight: 999;
+}
+
+#Pokemonstatspicture
+{
+  width: 400px;
 }
 .pokemon-naam {
   color: black;
