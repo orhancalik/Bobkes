@@ -30,11 +30,13 @@ app.post("/register", async (req, res) => {
   // Code voor registratie...
 });
 
-app.post("/login", async (req, res) => {
-  // Code voor inloggen...
+app.post("/login", async (req, res) => {});
+
+// Route om de pokemonvergelijken.ejs pagina te renderen
+app.get("/pokemonvergelijken", (req, res) => {
+  res.render("pokemonvergelijken");
 });
 
-// Luister naar de server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
