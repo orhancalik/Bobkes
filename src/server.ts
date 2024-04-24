@@ -2,10 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
-import User from "../models/User"; // Definieer het User-model
-import dotenv from "dotenv";
-
-dotenv.config();
+import User, { UserModel } from "../models/User";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,12 +23,47 @@ mongoose
   .catch((err) => console.error(err));
 
 // Routes
+
 app.post("/register", async (req, res) => {
-  // Code voor registratie...
+  const { email, password } = req.body;
+
+  // Controleer of gebruiker al bestaat
+  const existingUser: UserModel | null = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({ message: "Gebruiker bestaat al" });
+  }
+
+  // Hash het wachtwoord
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Maak nieuwe gebruiker
+  const newUser = new User({ email, password: hashedPassword });
+
+  // Opslaan in database
+  try {
+    await newUser.save();
+    res.status(201).json({ message: "Gebruiker aangemaakt" });
+  } catch (error) {
+    res.status(500).json({ message: "Er is iets misgegaan" });
+  }
 });
 
 app.post("/login", async (req, res) => {
-  // Code voor inloggen...
+  const { email, password } = req.body;
+
+  // Zoek gebruiker in database
+  const user: UserModel | null = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).json({ message: "Gebruiker niet gevonden" });
+  }
+
+  // Controleer wachtwoord
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    return res.status(400).json({ message: "Ongeldig wachtwoord" });
+  }
+
+  res.status(200).json({ message: "Inloggen gelukt" });
 });
 
 // Luister naar de server
