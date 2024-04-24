@@ -2,10 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
-import User from "../models/User"; // Definieer het User-model
-import dotenv from "dotenv";
-
-dotenv.config();
+import User, { UserModel } from "../models/User";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,7 +34,7 @@ app.post("/register", async (req, res) => {
   if (existingUser) {
     return res.status(400).json({ message: "Gebruiker bestaat al" });
   }
-
+  ///ddsdfssdf
   // Hash het wachtwoord
   const hashedPassword = await bcrypt.hash(password, 10);
 
