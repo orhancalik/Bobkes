@@ -2,7 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
-import User, { UserModel } from "../models/User";
+import User from "../models/User"; // Definieer het User-model
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
