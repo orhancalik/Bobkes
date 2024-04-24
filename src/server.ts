@@ -7,6 +7,8 @@ import User, { UserModel } from "../models/User";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 // Middleware
 app.use(bodyParser.json());
 
@@ -49,7 +51,21 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  // Code voor inloggen...
+  const { email, password } = req.body;
+
+  // Zoek gebruiker in database
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).json({ message: "Gebruiker niet gevonden" });
+  }
+
+  // Controleer wachtwoord
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    return res.status(400).json({ message: "Ongeldig wachtwoord" });
+  }
+
+  res.status(200).json({ message: "Inloggen gelukt" });
 });
 
 // Route om de pokemonvergelijken.ejs pagina te renderen
