@@ -49,24 +49,14 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  // Zoek gebruiker in database
-  const user: UserModel | null = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ message: "Gebruiker niet gevonden" });
-  }
-
-  // Controleer wachtwoord
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) {
-    return res.status(400).json({ message: "Ongeldig wachtwoord" });
-  }
-
-  res.status(200).json({ message: "Inloggen gelukt" });
+  // Code voor inloggen...
 });
 
-// Luister naar de server
+// Route om de pokemonvergelijken.ejs pagina te renderen
+app.get("/pokemonvergelijken", (req, res) => {
+  res.render("pokemonvergelijken");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
