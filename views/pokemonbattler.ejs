@@ -1,0 +1,257 @@
+<%- include("header") %
+<header>
+    <nav>
+      <ul class="nav_links">
+        <li>
+          <a href="index.html">
+            <img
+              src="assets/images/Logo.png"
+              alt="logo"
+              width="175px"
+              height="175px"
+            />
+          </a>
+        </li>
+        <li><a href="mijnpokemon.html">Mijn Pokemon</a></li>
+        <li><a href="pokemonvergelijken.html">Vergelijken</a></li>
+        <li><a href="pokemonbattler.html">Battler</a></li>
+    
+
+        <li><a href="pokemoncatcher.html">Catcher</a></li>
+        <li><a href="whosthatpokemon.html">Who's that pokemon</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li class="pokeball">
+          <img src="/assets/images/pokeball.png" alt="" width="50px" />
+          <div class="pokemon-info">
+            <span id="currentPokemonName"> Charmander </span>
+            <span class="Fire">(Fire)</span>
+            <br />
+            <p class="current-pokemon-level">LVL2</p>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="battlepage">
+      <section id="pokemon1">
+        <article class="pokemon-item">
+          <strong>Verander uw Pokémon:</strong>
+          <select id="pokemon1-select">
+            <option value="Gyarados">Mijn Pokemon</option>
+            <option value="Piplup">Piplup</option>
+            <option value="Pikachu">Pikachu</option>
+            <option value="Bulbasaur">Bulbasaur</option>
+            <option value="Charmander">Charmander</option>
+            <option value="Squirtle">Squirtle</option>
+            <option value="Jigglypuff">Jigglypuff</option>
+            <option value="Eevee">Eevee</option>
+            <option value="Snorlax">Snorlax</option>
+            <option value="Mewtwo">Mewtwo</option>
+            <option value="Psyduck">Psyduck</option>
+            <option value="Gengar">Gengar</option>
+          </select>
+          <img
+            class="pok1"
+            src="assets/images/pokemonfighter.jpg"
+            alt="pokemonfighter1"
+          />
+        </article>
+
+        <article class="battle-stats">
+          <p class="pokemon-naam">Gyarados</p>
+          <div class="progress" style="height: 30px">
+            <div
+              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style="width: 89%"
+              aria-valuenow="89"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              HP
+            </div>
+          </div>
+          <article class="stats">
+            <p>Totale basisstatistieken: 318</p>
+
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: 89%"
+                aria-valuenow="89"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Aanval
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                style="width: 49%"
+                aria-valuenow="49"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Verdediging
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-info"
+                role="progressbar"
+                style="width: 69%"
+                aria-valuenow="69"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Speciale aanval
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-info"
+                role="progressbar"
+                style="width: 65%"
+                aria-valuenow="65"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Speciale verdediging
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: 72%"
+                aria-valuenow="72"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Snelheid
+              </div>
+            </div>
+          </article>
+          <button class="attack-button">Attack</button>
+          <button class="defend-button">Defend</button>
+        </article>
+      </section>
+
+      <article><button class="battle-button">Battle!</button></article>
+
+      <section id="pokemon2">
+        <article class="pokemon-item">
+          <strong>Verander uw Pokémon:</strong>
+          <select id="pokemon1-select">
+            <option value="Gyarados">Gyarados</option>
+            <option value="Piplup">Piplup</option>
+            <option value="Pikachu">Pikachu</option>
+            <option value="Bulbasaur">Bulbasaur</option>
+            <option value="Charmander">Charmander</option>
+            <option value="Squirtle">Squirtle</option>
+            <option value="Jigglypuff">Jigglypuff</option>
+            <option value="Eevee">Eevee</option>
+            <option value="Snorlax">Snorlax</option>
+            <option value="Mewtwo">Mewtwo</option>
+            <option value="Psyduck">Psyduck</option>
+            <option value="Gengar">Gengar</option>
+          </select>
+          <img
+            class="pok2"
+            src="assets/images/pokemonfighter2.jpg"
+            alt="pokemonfighter2"
+          />
+        </article>
+
+        <article class="battle-stats">
+          <p class="pokemon-naam">Piplup</p>
+          <div class="progress" style="height: 30px">
+            <div
+              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style="width: 89%; height: 100%"
+              aria-valuenow="89"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              HP
+            </div>
+          </div>
+          <article class="stats">
+            <p>Totale basisstatistieken: 318</p>
+
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: 69%"
+                aria-valuenow="69"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Aanval
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                style="width: 39%"
+                aria-valuenow="39"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Verdediging
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-info"
+                role="progressbar"
+                style="width: 79%"
+                aria-valuenow="79"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Speciale aanval
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-info"
+                role="progressbar"
+                style="width: 55%"
+                aria-valuenow="65"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Speciale verdediging
+              </div>
+            </div>
+            <div class="progress" style="height: 20px">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: 62%"
+                aria-valuenow="62"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                Snelheid
+              </div>
+            </div>
+          </article>
+          <button class="attack-button">Attack</button>
+          <button class="defend-button">Defend</button>
+        </article>
+      </section>
+    </section>
+  </main>
+
+
+
+<%- include("footer") %>

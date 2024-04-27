@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // MongoDB-verbinding
 mongoose
   .connect(
-    `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER_URL}/${process.env.DB_NAME}`,
+    `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -50,6 +50,41 @@ app.post("/register", async (req, res) => {
   }
 });
 
+
+
+// Route om de pokemonvergelijken.ejs pagina te renderen
+app.get("/pokemonvergelijken", (req, res) => {
+  res.render("pokemonvergelijken");
+});
+
+
+//MijnPokemon YNS
+app.get("/mijnpokemon", (req, res) => {
+  res.render("mijnpokemon");
+});
+
+
+//Pokemon catcher Rayan
+app.get("/catch", (req, res) => {
+  res.render("catch");
+});
+
+//Index
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
+
+//LandingPage
+app.get("/landingPage", (req, res) => {
+  res.render("landingPage");
+}); 
+
+//Login
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -68,10 +103,7 @@ app.post("/login", async (req, res) => {
   res.status(200).json({ message: "Inloggen gelukt" });
 });
 
-// Route om de pokemonvergelijken.ejs pagina te renderen
-app.get("/pokemonvergelijken", (req, res) => {
-  res.render("pokemonvergelijken");
-});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

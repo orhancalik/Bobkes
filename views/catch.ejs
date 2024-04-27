@@ -1,0 +1,57 @@
+<%- include("header") %>
+<header>
+    <nav>
+      <ul class="nav_links">
+        <li>
+          <a href="index.html">
+            <img
+              src="assets/images/Logo.png"
+              alt="logo"
+              width="175px"
+              height="175px"
+            />
+          </a>
+        </li>
+        <li><a href="mijnpokemon.html">Mijn Pokemon</a></li>
+        <li><a href="pokemonvergelijken.html">Vergelijken</a></li>
+        <li><a href="pokemonbattler.html">Battler</a></li>
+     
+
+        <!-- YNS  -->
+        <li><a href="pokemoncatcher.html">Catcher</a></li>
+        <li><a href="whosthatpokemon.html">Who's that pokemon</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li class="pokeball">
+          <img src="/assets/images/pokeball.png" alt="" width="50px" />
+          <div class="pokemon-info">
+            <span id="currentPokemonName"> Charmander </span>
+            <span class="Fire"> (Fire)</span>
+            <br />
+            <p class="current-pokemon-level">LVL2</p>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="catch-pokemon">
+      <h1>Gotta Catch 'Em All !</h1>
+      <article id="catch-stats">
+        <img
+          class="pok"
+          src="assets/images/bulbasaur.jpg"
+          alt="pokemonfighter1"
+        />
+        <article class="statsmenu">
+          <p class="pokemon-naam">Bulbasaur</p>
+          <span class="Grass">Grass </span>
+          <span class="Poison">Poison</span>
+        </article>
+      </article>
+      <a href="#"
+        ><img id="pokeball" src="/assets/images/groenepokeball.png" alt=""
+      /></a>
+    </section>
+  </main>
+  <%- include("footer") %>
