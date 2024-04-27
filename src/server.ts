@@ -26,6 +26,12 @@ mongoose
 
 // Routes
 
+
+//Index
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
 app.post("/register", async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,6 +58,8 @@ app.post("/register", async (req, res) => {
 
 
 
+
+//Ik heb hier routes gegeven. -YNS
 // Route om de pokemonvergelijken.ejs pagina te renderen
 app.get("/pokemonvergelijken", (req, res) => {
   res.render("pokemonvergelijken");
@@ -65,14 +73,22 @@ app.get("/mijnpokemon", (req, res) => {
 
 
 //Pokemon catcher Rayan
-app.get("/catch", (req, res) => {
-  res.render("catch");
+app.get("/pokemoncatcher", (req, res) => {
+  res.render("pokemoncatcher");
 });
 
-//Index
-app.get("/", (req, res) => {
-  res.render("index");
+//pokemonbattler
+app.get("/pokemonbattler", (req, res) => {
+  res.render("pokemonbattler");
 });
+
+//Who's That Pokemon? 
+app.get("/whosthatpokemon", (req, res) => {
+  res.render("whosthatpokemon");
+});
+
+
+
 
 
 //LandingPage
