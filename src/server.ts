@@ -105,7 +105,7 @@ app.get("/whosthatpokemon", (req, res) => {
 //LandingPage
 app.get("/landingPage", (req, res) => {
   res.render("landingPage");
-}); 
+});
 
 //Login
 app.get("/login", (req, res) => {
