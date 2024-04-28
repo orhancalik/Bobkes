@@ -1,5 +1,5 @@
 import express from "express";
-/*import mongoose from "mongoose";*/
+import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import User, { UserModel } from "../models/User";
@@ -13,20 +13,18 @@ app.use(express.static("public"));
 // Middleware
 app.use(bodyParser.json());
 
-// MongoDB-verbinding
-/*
+
 mongoose
   .connect(
     `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`,
     {
-      
-    } 
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as mongoose.ConnectOptions
   )
+  .then(() => console.log("MongoDB connected"))
   .then(() => console.log("MongoDB con  nected"))
   .catch((err) => console.error(err));
-*/
-// Routes
-
 
 //Index
 app.get("/", (req, res) => {
