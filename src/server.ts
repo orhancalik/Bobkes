@@ -17,11 +17,10 @@ mongoose
   .connect(
     `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`,
     {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions
+      
+    } 
   )
-  .then(() => console.log("MongoDB connected"))
+  .then(() => console.log("MongoDB con  nected"))
   .catch((err) => console.error(err));
 
 // Routes
@@ -32,7 +31,32 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+<<<<<<< HEAD
 app.post('/register', async (req, res) => {
+=======
+
+//Register
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", async (req, res) => {
+  const { email, password } = req.body;
+
+  // Controleer of gebruiker al bestaat
+  const existingUser: UserModel | null = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({ message: "Gebruiker bestaat al" });
+  }
+  ///ddsdfssdf
+  // Hash het wachtwoord
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Maak nieuwe gebruiker
+  const newUser = new User({ email, password: hashedPassword });
+
+  // Opslaan in database
+>>>>>>> origin
   try {
     // Ontvang gegevens van het registratieformulier
     const { email, password, address, city, province, zip } = req.body;
@@ -72,6 +96,12 @@ app.get("/pokemonvergelijken", (req, res) => {
 //MijnPokemon YNS
 app.get("/mijnpokemon", (req, res) => {
   res.render("mijnpokemon");
+});
+
+
+//pokemonStats YNS
+app.get("/pokemonStats", (req, res) => {
+  res.render("pokemonStats");
 });
 
 
