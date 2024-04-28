@@ -144,3 +144,11 @@ document.getElementById('random-pokemon2-btn').addEventListener('click', async (
 });
 
 
+//test
+
+
+document.getElementById('random-pokemon3-btn').addEventListener('click', async () => {
+  const randomPokemonData = await fetchRandomPokemon();
+  updatePokemonInfo(randomPokemonData, 'pokemon2');
+
+});
