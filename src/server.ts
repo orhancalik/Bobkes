@@ -1,8 +1,9 @@
 import express from "express";
-import mongoose from "mongoose";
+/*import mongoose from "mongoose";*/
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import User, { UserModel } from "../models/User";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 
 // MongoDB-verbinding
+/*
 mongoose
   .connect(
     `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`,
@@ -22,7 +24,7 @@ mongoose
   )
   .then(() => console.log("MongoDB con  nected"))
   .catch((err) => console.error(err));
-
+*/
 // Routes
 
 
@@ -132,6 +134,8 @@ app.post("/login", async (req, res) => {
 
   res.status(200).json({ message: "Inloggen gelukt" });
 });
+
+
 
 
 
