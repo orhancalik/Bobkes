@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 document.addEventListener("DOMContentLoaded", function () {
   const registerForm = document.querySelector(".row g-3");
 
@@ -69,9 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-=======
-=======
->>>>>>> main
+
 // Functie om de gegevens van een specifieke Pokémon op te halen
 async function fetchPokemonData(pokemonName) {
   try {
@@ -143,9 +140,7 @@ document.getElementById('choose-pokemon2-btn').addEventListener('click', async (
 document.getElementById('random-pokemon2-btn').addEventListener('click', async () => {
   const randomPokemonData = await fetchRandomPokemon();
   updatePokemonInfo(randomPokemonData, 'pokemon2');
-<<<<<<< HEAD
+
 });
->>>>>>> origin/main
-=======
-});
->>>>>>> main
+
+
