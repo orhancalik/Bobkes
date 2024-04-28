@@ -19,11 +19,10 @@ mongoose
   .connect(
     `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`,
     {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions
+      
+    } 
   )
-  .then(() => console.log("MongoDB connected"))
+  .then(() => console.log("MongoDB con  nected"))
   .catch((err) => console.error(err));
 */
 // Routes
@@ -32,6 +31,12 @@ mongoose
 //Index
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+
+//Register
+app.get("/register", (req, res) => {
+  res.render("register");
 });
 
 app.post("/register", async (req, res) => {
@@ -71,6 +76,12 @@ app.get("/pokemonvergelijken", (req, res) => {
 //MijnPokemon YNS
 app.get("/mijnpokemon", (req, res) => {
   res.render("mijnpokemon");
+});
+
+
+//pokemonStats YNS
+app.get("/pokemonStats", (req, res) => {
+  res.render("pokemonStats");
 });
 
 
