@@ -13,6 +13,7 @@ app.use(express.static("public"));
 // Middleware
 app.use(bodyParser.json());
 
+// MongoDB-verbinding
 
 mongoose
   .connect(
@@ -23,8 +24,9 @@ mongoose
     } as mongoose.ConnectOptions
   )
   .then(() => console.log("MongoDB connected"))
-  .then(() => console.log("MongoDB con  nected"))
   .catch((err) => console.error(err));
+// Routes
+
 
 //Index
 app.get("/", (req, res) => {
@@ -37,29 +39,32 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.post("/register", async (req, res) => {
-  const { email, password } = req.body;
-
-  // Controleer of gebruiker al bestaat
-  const existingUser: UserModel | null = await User.findOne({ email });
-  if (existingUser) {
-    return res.status(400).json({ message: "Gebruiker bestaat al" });
-  }
-  ///ddsdfssdf
-  // Hash het wachtwoord
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Maak nieuwe gebruiker
-  const newUser = new User({ email, password: hashedPassword });
-
-  // Opslaan in database
+app.post('/register', async (req, res) => {
   try {
+    // Ontvang gegevens van het registratieformulier
+    const { email, password, address, city, province, zip } = req.body;
+
+    // Maak een nieuwe gebruiker aan met Mongoose
+    const newUser = new User({
+      email,
+      password, // Je moet het wachtwoord beveiligen voordat je het opslaat in de database
+      address,
+      city,
+      province,
+      zip
+    });
+
+    // Sla de nieuwe gebruiker op in de database
     await newUser.save();
-    res.status(201).json({ message: "Gebruiker aangemaakt" });
+
+    // Stuur een bevestiging dat de registratie is geslaagd
+    res.status(200).send('Registratie succesvol!');
   } catch (error) {
-    res.status(500).json({ message: "Er is iets misgegaan" });
+    // Stuur een foutmelding als er iets misgaat tijdens het verwerken van het registratieverzoek
+    res.status(500).send('Er is een fout opgetreden bij het verwerken van het registratieverzoek.');
   }
 });
+
 
 
 
