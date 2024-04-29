@@ -83,8 +83,14 @@ app.post("/register", async (req, res) => {
     if (!collection || !collection.UserModel) {
       throw new Error("UserModel is not defined");
     }
+
+    // Voeg extra logboekregistratie toe om het proces te volgen
+    console.log("Creating user:", userData);
+
     const result = await collection.UserModel.create(userData);
-    console.log(result);
+
+    console.log("User created successfully:", result);
+
     res.send("User registered successfully");
   } catch (error) {
     console.error("Error registering user:", error);
