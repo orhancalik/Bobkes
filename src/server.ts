@@ -18,10 +18,13 @@ app.use(bodyParser.json());
 mongoose
   .connect(
     `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`
-   
   )
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error(err));
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 // Routes
 
 
@@ -32,10 +35,6 @@ app.get("/", (req, res) => {
 
 
 //Register
-app.get("/register", (req, res) => {
-  res.render("register");
-});
-
 app.post('/register', async (req, res) => {
   try {
     // Ontvang gegevens van het registratieformulier
@@ -53,11 +52,13 @@ app.post('/register', async (req, res) => {
 
     // Sla de nieuwe gebruiker op in de database
     await newUser.save();
+    console.log("Nieuwe gebruiker opgeslagen in de database:", newUser);
 
     // Stuur een bevestiging dat de registratie is geslaagd
     res.status(200).send('Registratie succesvol!');
   } catch (error) {
     // Stuur een foutmelding als er iets misgaat tijdens het verwerken van het registratieverzoek
+    console.error("Er is een fout opgetreden bij het verwerken van het registratieverzoek:", error);
     res.status(500).send('Er is een fout opgetreden bij het verwerken van het registratieverzoek.');
   }
 });
