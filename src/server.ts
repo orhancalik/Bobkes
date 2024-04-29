@@ -17,11 +17,8 @@ app.use(bodyParser.json());
 
 mongoose
   .connect(
-    `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions
+    `mongodb+srv://Younes:APHogeschool@clusterofyounes.4temuqa.mongodb.net/ClusterOfYounes`
+   
   )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
