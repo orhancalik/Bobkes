@@ -460,6 +460,30 @@ footer {
 .statsmenu .higher-stat {
   color: green;
 }
+.stat {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.stat-name {
+  width: 100px;
+}
+
+.stat-bar {
+  height: 20px;
+  background-color: grey;
+  transition: width 0.5s ease-in-out;
+}
+
+.stat-bar.higher {
+  background-color: green;
+}
+
+.stat-bar.lower {
+  background-color: red;
+}
+
 #compare-versus {
   width: 200px;
   margin-bottom: 22rem;
