@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 
 const collection = require("./config");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 app.set("view engine", "ejs");
 
@@ -84,13 +84,13 @@ app.post("/register", async (req, res) => {
       throw new Error("UserModel is not defined");
     }
 
-    // Voeg extra logboekregistratie toe om het proces te volgen
-    console.log("Creating user:", userData);
+    // Maak een nieuw gebruikersinstantie met de ontvangen gegevens
+    const newUser = new collection.UserModel(userData);
 
-    const result = await collection.UserModel.create(userData);
+    // Sla de gebruiker op in de database
+    const result = await newUser.save();
 
-    console.log("User created successfully:", result);
-
+    console.log(result);
     res.send("User registered successfully");
   } catch (error) {
     console.error("Error registering user:", error);
