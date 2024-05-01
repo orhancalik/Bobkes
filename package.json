@@ -16,7 +16,7 @@
     "hbs": "^4.2.0",
     "mariadb": "^3.3.0",
     "mongodb": "^6.5.0",
-    "mongoose": "^8.3.2",
+    "mongoose": "^8.3.3",
     "moongoose": "^0.0.5",
     "tsc-init": "^2.1.0"
   },
