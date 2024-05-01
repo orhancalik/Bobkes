@@ -30,7 +30,7 @@ const LoginSchema = new mongoose.Schema({
 });
 
 // Maak een model aan op basis van het schema
-const UserModel = mongoose.model("User", LoginSchema);
+const UserModel = mongoose.model("User", LoginSchema, "users");
 
 // Exporteer het model voor gebruik in andere modules
 module.exports = {

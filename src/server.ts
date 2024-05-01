@@ -1,21 +1,22 @@
 import express from "express";
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
-const collection = require("./config");
+
+dotenv.config();
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 app.set("view engine", "ejs");
-
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
-// Middleware
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
+const uri = process.env.MONGO_URI as string;
+const client = new MongoClient(uri, {});
 
 //Index
 app.get("/", (req, res) => {
@@ -57,48 +58,66 @@ app.get("/whosthatpokemon", (req, res) => {
 });
 
 
-
-
-
 //LandingPage
 app.get("/landingPage", (req, res) => {
   res.render("landingPage");
 });
 
-//Login
-app.get("/login", (req, res) => {
-  res.render("login");
-});
 
+//Register
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
 app.post("/register", async (req, res) => {
   try {
-    const userData = req.body;
-    if (!userData.email || !userData.password) {
-      throw new Error("Email and password are required");
-    }
-    if (!collection || !collection.UserModel) {
-      throw new Error("UserModel is not defined");
-    }
+    const { email, password } = req.body;
 
-    // Voeg extra logboekregistratie toe om het proces te volgen
-    console.log("Creating user:", userData);
+    // Hash het wachtwoord
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const result = await collection.UserModel.create(userData);
+    // Voeg de gebruiker toe aan de database
+    const db = client.db();
+    const collection = db.collection("users");
+    await collection.insertOne({ email, password: hashedPassword });
 
-    console.log("User created successfully:", result);
-
-    res.send("User registered successfully");
+    res.send("Registratie succesvol!");
   } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).send("Internal server error");
+    console.error("Error during registration:", error);
+    res.status(500).send("Er is een fout opgetreden bij de registratie.");
   }
 });
 
 
+//Login
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Zoek de gebruiker in de database
+    const db = client.db();
+    const collection = db.collection("users");
+    const user = await collection.findOne({ email });
+    if (!user) {
+      return res.status(401).send("Ongeldige inloggegevens");
+    }
+
+    // Controleer het wachtwoord
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).send("Ongeldige inloggegevens");
+    }
+
+    res.send("Inloggen succesvol!");
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).send("Er is een fout opgetreden bij het inloggen.");
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
