@@ -22,10 +22,19 @@
         <li class="pokeball">
           <img src="/assets/images/pokeball.png" alt="" width="50px" />
           <div class="pokemon-info">
-            <span id="currentPokemonName"> Charmander </span>
-            <span class="Fire">(Fire)</span>
+            <span id="currentPokemonName">
+              <% if (username) { %>
+                <%= username %>
+              <% } else { %>
+                Vang pokemon
+              <% } %>
+            </span>
             <br />
-            <p class="current-pokemon-level">LVL2</p>
+            <% if (username) { %>
+              <span class="<%= currentPokemonType %>">( <%= currentPokemonType %> )</span>
+              <br />
+              <p class="current-pokemon-level">LVL<%= currentPokemonLevel %></p>
+            <% } %>
           </div>
         </li>
       </ul>

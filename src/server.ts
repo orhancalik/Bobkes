@@ -1,20 +1,42 @@
-import express from "express";
+import express, { Request, Response } from 'express';
+import session from 'express-session';
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import { url } from "inspector";
-
+import './types';
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
+app.use(session({
+  secret: 'geheim', // Geheime sleutel voor het ondertekenen van de sessie-ID-cookie
+  resave: false, // Niet de sessie opnieuw opslaan als er geen wijzigingen zijn
+  saveUninitialized: false, // Sla geen nieuwe sessies op als er geen gegevens zijn
+}));
+
+interface UserSession {
+  username: string;
+}
+
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req: Request, res: Response, next) => {
+  // Controleer of de gebruiker is ingelogd en stel de 'user'-eigenschap in de sessie in
+  if (req.session && req.session.user) {
+    // Doe iets met de ingelogde gebruiker
+    console.log('Gebruiker ingelogd:', req.session.user);
+  } else {
+    // Gebruiker is niet ingelogd, doe iets anders
+    console.log('Gebruiker niet ingelogd');
+  }
+  next();
+});
 
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
@@ -91,45 +113,50 @@ app.post("/register", async (req, res) => {
 
 
 //Login
-app.get("/login", (req, res) => {
+app.get("/login", (req: Request, res: Response) => {
   res.render("login");
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    console.log("Received login request with email:", email);
-
-    // Check if user exists in the database
+    // Zoek de gebruiker in de database en haal de gebruikersnaam op
     const db = client.db();
     const collection = db.collection("users");
     const user = await collection.findOne({ email });
 
-    console.log("User found in the database:", user);
-
     if (!user) {
-      console.log("User not found with email:", email);
       return res.status(401).send("Ongeldige inloggegevens");
     }
 
-    // Compare the provided password with the stored hash
+    // Controleer het wachtwoord
     const passwordMatch = await bcrypt.compare(password, user.password);
-
-    console.log("Password comparison result:", passwordMatch);
-
     if (!passwordMatch) {
-      console.log("Passwords do not match");
       return res.status(401).send("Ongeldige inloggegevens");
     }
 
-    // If everything is successful, send a success message
+    // Sla de gebruikersnaam op in de sessie
+    req.session.user = { username: user.username };
+
     res.send("Inloggen succesvol!");
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).send("Er is een fout opgetreden bij het inloggen.");
   }
 });
+
+
+app.get("/profile", (req, res) => {
+  // Controleren of de gebruiker is ingelogd
+  if (!req.session.user) {
+    return res.redirect("/login"); // Als de gebruiker niet is ingelogd, stuur hem naar de loginpagina
+  }
+
+  // Render de profielpagina met de gebruikersnaam
+  res.render("profile", { username: req.session.user });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
