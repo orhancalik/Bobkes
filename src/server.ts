@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import express, { Request, Response } from 'express';
-=======
-import express, { Request, Response } from "express";
->>>>>>> refs/remotes/origin/main
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
