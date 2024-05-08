@@ -1,8 +1,13 @@
+<<<<<<< HEAD
+import express, { Request, Response } from 'express';
+=======
 import express, { Request, Response } from "express";
+>>>>>>> refs/remotes/origin/main
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import session from './session';
 import { url } from "inspector";
 
 dotenv.config();
@@ -10,10 +15,18 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
+
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session);
+
+app.use((req: Request, res: Response, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
 
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
@@ -89,36 +102,31 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    console.log("Received login request with email:", email);
-
-    // Check if user exists in the database
+    // Zoek de gebruiker in de database en haal de gebruikersnaam op
     const db = client.db();
     const collection = db.collection("users");
     const user = await collection.findOne({ email });
 
-    console.log("User found in the database:", user);
-
     if (!user) {
-      console.log("User not found with email:", email);
       return res.status(401).send("Ongeldige inloggegevens");
     }
 
-    // Compare the provided password with the stored hash
+    // Controleer het wachtwoord
     const passwordMatch = await bcrypt.compare(password, user.password);
-
-    console.log("Password comparison result:", passwordMatch);
-
     if (!passwordMatch) {
-      console.log("Passwords do not match");
       return res.status(401).send("Ongeldige inloggegevens");
     }
 
-    // If everything is successful, send a success message
-    res.send("Inloggen succesvol!");
+    // Sla de gebruikersnaam op in de sessie
+    req.session.user = { username: user.username };
+
+    // Stuur de gebruiker door naar de indexpagina
+    res.redirect("/");
+
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).send("Er is een fout opgetreden bij het inloggen.");
