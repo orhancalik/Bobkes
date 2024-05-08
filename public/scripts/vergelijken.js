@@ -1,3 +1,19 @@
+// pokemon-api.js
+async function fetchPokemonData(pokemonName) {
+  try {
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
+    );
+    if (!response.ok) {
+      throw new Error(`Pokémon not found: ${pokemonName}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    alert(`Error fetching Pokémon data: ${error.message}`);
+  }
+}
+
 async function fetchRandomPokemon() {
   try {
     const randomId = Math.floor(Math.random() * 898) + 1;
@@ -54,13 +70,42 @@ function updatePokemonInfo(
   }
 }
 
-function getStatColor(percentage) {
-  if (percentage >= 75) {
-    return "success";
-  } else if (percentage >= 50) {
-    return "warning";
+function updatePokemon(
+  container,
+  name,
+  imageUrl,
+  pokemonStats,
+  otherPokemonStats
+) {
+  const pokemonImage = container.querySelector(".pok");
+  pokemonImage.src = imageUrl;
+  const pokemonNameElement = container.querySelector(".pokemon-naam");
+  pokemonNameElement.textContent = name;
+  const statsMenu = container.querySelector(".statsmenu");
+  statsMenu.innerHTML = ""; // Clear existing stats
+
+  pokemonStats.forEach((stat, index) => {
+    const statElement = document.createElement("div");
+    statElement.classList.add("progress");
+    const percentage = (stat.baseStat / 255) * 100;
+    const otherPercentage = (otherPokemonStats[index].base_stat / 255) * 100;
+    const color = getStatColor(percentage, otherPercentage);
+    statElement.innerHTML = `
+      <div class="progress-bar bg-${color}" role="progressbar" style="width: ${percentage}%; aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100">
+        ${stat.name}: ${stat.baseStat}
+      </div>
+    `;
+    statsMenu.appendChild(statElement);
+  });
+}
+
+function getStatColor(percentage, otherPercentage) {
+  if (percentage > otherPercentage) {
+    return "success"; // Green for higher stat
+  } else if (percentage === otherPercentage) {
+    return "warning"; // Yellow for equal stats
   } else {
-    return "danger";
+    return "danger"; // Red for lower stat
   }
 }
 
@@ -71,11 +116,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize Pokémon 1 with Bulbasaur data
   const bulbasaurData = await fetchPokemonData("bulbasaur");
-  updatePokemonInfo(processPokemonData(bulbasaurData), "pokemon1");
-
-  // Initialize Pokémon 2 with random data
-  const randomPokemonData = await fetchRandomPokemon();
-  updatePokemonInfo(processPokemonData(randomPokemonData), "pokemon2");
+  let randomPokemonData = await fetchRandomPokemon();
+  updatePokemonInfo(
+    processPokemonData(bulbasaurData),
+    processPokemonData(randomPokemonData),
+    "pokemon1",
+    "pokemon2"
+  );
 
   // Event listeners for choosing and randomizing Pokémon
   document
@@ -83,16 +130,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("click", async () => {
       const pokemonName = prompt("Enter a Pokémon name:");
       if (pokemonName) {
-        const pokemonData = await fetchPokemonData(pokemonName);
-        updatePokemonInfo(processPokemonData(pokemonData), "pokemon1");
+        const pokemonData1 = await fetchPokemonData(pokemonName);
+        randomPokemonData = await fetchRandomPokemon();
+        updatePokemonInfo(
+          processPokemonData(pokemonData1),
+          processPokemonData(randomPokemonData),
+          "pokemon1",
+          "pokemon2"
+        );
       }
     });
 
   document
     .getElementById("random-pokemon1-btn")
     .addEventListener("click", async () => {
-      const randomPokemonData = await fetchRandomPokemon();
-      updatePokemonInfo(processPokemonData(randomPokemonData), "pokemon1");
+      const randomPokemonData1 = await fetchRandomPokemon();
+      randomPokemonData = await fetchRandomPokemon();
+      updatePokemonInfo(
+        processPokemonData(randomPokemonData1),
+        processPokemonData(randomPokemonData),
+        "pokemon1",
+        "pokemon2"
+      );
     });
 
   document
@@ -100,15 +159,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("click", async () => {
       const pokemonName = prompt("Enter a Pokémon name:");
       if (pokemonName) {
-        const pokemonData = await fetchPokemonData(pokemonName);
-        updatePokemonInfo(processPokemonData(pokemonData), "pokemon2");
+        const pokemonData2 = await fetchPokemonData(pokemonName);
+        updatePokemonInfo(
+          processPokemonData(bulbasaurData),
+          processPokemonData(pokemonData2),
+          "pokemon1",
+          "pokemon2"
+        );
       }
     });
 
   document
     .getElementById("random-pokemon2-btn")
     .addEventListener("click", async () => {
-      const randomPokemonData = await fetchRandomPokemon();
-      updatePokemonInfo(processPokemonData(randomPokemonData), "pokemon2");
+      const randomPokemonData2 = await fetchRandomPokemon();
+      updatePokemonInfo(
+        processPokemonData(bulbasaurData),
+        processPokemonData(randomPokemonData2),
+        "pokemon1",
+        "pokemon2"
+      );
     });
 });
