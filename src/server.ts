@@ -1,9 +1,8 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-
 
 dotenv.config();
 
@@ -25,22 +24,20 @@ app.get("/", (req, res) => {
 
 //Ik heb hier routes gegeven. -YNS
 // Route om de pokemonvergelijken.ejs pagina te renderen
-app.get("/pokemonvergelijken", (req, res) => {
+
+app.get("/pokemonvergelijken", async (req: Request, res: Response) => {
   res.render("pokemonvergelijken");
 });
-
 
 //MijnPokemon YNS
 app.get("/mijnpokemon", (req, res) => {
   res.render("mijnpokemon");
 });
 
-
 //pokemonStats YNS
 app.get("/pokemonStats", (req, res) => {
   res.render("pokemonStats");
 });
-
 
 //Pokemon catcher Rayan
 app.get("/pokemoncatcher", (req, res) => {
@@ -52,17 +49,15 @@ app.get("/pokemonbattler", (req, res) => {
   res.render("pokemonbattler");
 });
 
-//Who's That Pokemon? 
+//Who's That Pokemon?
 app.get("/whosthatpokemon", (req, res) => {
   res.render("whosthatpokemon");
 });
-
 
 //LandingPage
 app.get("/landingPage", (req, res) => {
   res.render("landingPage");
 });
-
 
 //Register
 app.get("/register", (req, res) => {
@@ -87,7 +82,6 @@ app.post("/register", async (req, res) => {
     res.status(500).send("Er is een fout opgetreden bij de registratie.");
   }
 });
-
 
 //Login
 app.get("/login", (req, res) => {
