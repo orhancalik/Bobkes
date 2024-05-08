@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import { url } from "inspector";
 
 dotenv.config();
 
@@ -76,7 +77,7 @@ app.post("/register", async (req, res) => {
     const collection = db.collection("users");
     await collection.insertOne({ email, password: hashedPassword });
 
-    res.send("Registratie succesvol!");
+    res.redirect("/login");
   } catch (error) {
     console.error("Error during registration:", error);
     res.status(500).send("Er is een fout opgetreden bij de registratie.");
@@ -92,20 +93,31 @@ app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Zoek de gebruiker in de database
+    console.log("Received login request with email:", email);
+
+    // Check if user exists in the database
     const db = client.db();
     const collection = db.collection("users");
     const user = await collection.findOne({ email });
+
+    console.log("User found in the database:", user);
+
     if (!user) {
+      console.log("User not found with email:", email);
       return res.status(401).send("Ongeldige inloggegevens");
     }
 
-    // Controleer het wachtwoord
+    // Compare the provided password with the stored hash
     const passwordMatch = await bcrypt.compare(password, user.password);
+
+    console.log("Password comparison result:", passwordMatch);
+
     if (!passwordMatch) {
+      console.log("Passwords do not match");
       return res.status(401).send("Ongeldige inloggegevens");
     }
 
+    // If everything is successful, send a success message
     res.send("Inloggen succesvol!");
   } catch (error) {
     console.error("Error during login:", error);
