@@ -14,40 +14,33 @@ async function fetchPokemonData(pokemonName) {
     }
   }
 
-
   document.addEventListener("DOMContentLoaded", async function () {
-    const allPokemonBtn = document.getElementById("allPokemonBtn");
     const pokedexList = document.getElementById("pokedexList");
+    const morePokemonBtn = document.getElementById("morePokemonBtn");
+    const allPokemonBtn = document.getElementById("allPokemonBtn");
   
-    
-    allPokemonBtn.addEventListener("click", async function () {
+    async function fetchAndDisplayPokemons(offset) {
       try {
-        let pokemons = [];
-        for (let offset = 0; offset < 100; offset += 100) {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=100&offset=${offset}`);
-          const data = await response.json();
-          pokemons = pokemons.concat(data.results);
-        }
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=50&offset=${offset}`);
+        const data = await response.json();
+        const pokemons = data.results;
   
+        const pokemonDataPromises = pokemons.map(async function (pokemon) {
+          const pokemonResponse = await fetch(pokemon.url);
+          return await pokemonResponse.json();
+        });
+ 
+        const pokemonDataArray = await Promise.all(pokemonDataPromises);
 
-      const pokemonDataPromises = pokemons.map(async function (pokemon) {
-        const pokemonResponse = await fetch(pokemon.url);
-        return await pokemonResponse.json();
-      });
-
-      const pokemonDataArray = await Promise.all(pokemonDataPromises);
-      pokemonDataArray.sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
+        pokemonDataArray.sort((a, b) => {
+          return a.id - b.id;
+        });
   
       
         pokedexList.innerHTML = "";
   
-       
-        pokemons.forEach(async function (pokemon) {
-          const pokemonResponse = await fetch(pokemon.url);
-          const pokemonData = await pokemonResponse.json();
-  
+
+        pokemonDataArray.forEach(function (pokemonData) {
           const article = document.createElement("article");
           article.classList.add("MijnPokemonLijst");
   
@@ -64,11 +57,29 @@ async function fetchPokemonData(pokemonName) {
   
           pokedexList.appendChild(article);
         });
+  
+   
+        if (pokemonDataArray.length >= 50) {
+          morePokemonBtn.style.display = "block";
+        } else {
+          morePokemonBtn.style.display = "none";
+        }
 
-        morePokemonBtn.style.display = "block";
+        allPokemonBtn.style.display = "none";
       } catch (error) {
         console.error("Er is een fout opgetreden bij het ophalen van de Pokémon:", error);
       }
+    }
+  
+
+    morePokemonBtn.addEventListener("click", async function () {
+      const currentPokemonCount = pokedexList.querySelectorAll(".MijnPokemonLijst").length;
+      await fetchAndDisplayPokemons(currentPokemonCount);
+    });
+  
+  
+    allPokemonBtn.addEventListener("click", async function () {
+      await fetchAndDisplayPokemons(0);
     });
   });
   
