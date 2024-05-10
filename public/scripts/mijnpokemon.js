@@ -23,7 +23,7 @@ async function fetchPokemonData(pokemonName) {
     allPokemonBtn.addEventListener("click", async function () {
       try {
         let pokemons = [];
-        for (let offset = 0; offset < 10000; offset += 100) {
+        for (let offset = 0; offset < 100; offset += 100) {
           const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=100&offset=${offset}`);
           const data = await response.json();
           pokemons = pokemons.concat(data.results);
