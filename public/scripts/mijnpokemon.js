@@ -18,11 +18,10 @@ async function fetchPokemonData(pokemonName) {
     const pokedexList = document.getElementById("pokedexList");
     const morePokemonBtn = document.getElementById("morePokemonBtn");
     const allPokemonBtn = document.getElementById("allPokemonBtn");
-    let limit = 50; // Beginlimiet
   
     async function fetchAndDisplayPokemons(offset) {
       try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=50&offset=${offset}`);
         const data = await response.json();
         const pokemons = data.results;
   
@@ -30,15 +29,17 @@ async function fetchPokemonData(pokemonName) {
           const pokemonResponse = await fetch(pokemon.url);
           return await pokemonResponse.json();
         });
-  
+ 
         const pokemonDataArray = await Promise.all(pokemonDataPromises);
-  
+
         pokemonDataArray.sort((a, b) => {
           return a.id - b.id;
         });
   
+      
         pokedexList.innerHTML = "";
   
+
         pokemonDataArray.forEach(function (pokemonData) {
           const article = document.createElement("article");
           article.classList.add("MijnPokemonLijst");
@@ -57,23 +58,25 @@ async function fetchPokemonData(pokemonName) {
           pokedexList.appendChild(article);
         });
   
-        if (pokemonDataArray.length >= limit && limit < 10000) {
+   
+        if (pokemonDataArray.length >= 50) {
           morePokemonBtn.style.display = "block";
         } else {
           morePokemonBtn.style.display = "none";
         }
-  
+
         allPokemonBtn.style.display = "none";
       } catch (error) {
         console.error("Er is een fout opgetreden bij het ophalen van de Pokémon:", error);
       }
     }
   
+
     morePokemonBtn.addEventListener("click", async function () {
       const currentPokemonCount = pokedexList.querySelectorAll(".MijnPokemonLijst").length;
       await fetchAndDisplayPokemons(currentPokemonCount);
-      limit += 50; // Verhoog de limiet met 50
     });
+  
   
     allPokemonBtn.addEventListener("click", async function () {
       await fetchAndDisplayPokemons(0);
