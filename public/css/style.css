@@ -381,6 +381,7 @@ select:focus {
 
 .MijnPokemonLijst {
   width: 300px;
+  cursor: pointer;
 }
 
 #pokemoncatchbar {
@@ -389,6 +390,8 @@ select:focus {
   align-items: center;
   margin: 20px;
 }
+
+
 /*YOUNES MAIN EINDE*/
 
 footer {
