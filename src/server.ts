@@ -1,15 +1,16 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response } from 'express';
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-import session from "./session";
+import session from './session';
 import { url } from "inspector";
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
+
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -22,13 +23,17 @@ app.use((req: Request, res: Response, next) => {
   next();
 });
 
+
+
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
 //Index
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
+
+
 
 //Ik heb hier routes gegeven. -YNS
 // Route om de pokemonvergelijken.ejs pagina te renderen
@@ -120,6 +125,7 @@ app.post("/login", async (req: Request, res: Response) => {
 
     // Stuur de gebruiker door naar de indexpagina
     res.redirect("/");
+
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).send("Er is een fout opgetreden bij het inloggen.");
