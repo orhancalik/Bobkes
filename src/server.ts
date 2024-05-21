@@ -11,11 +11,6 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-const mime = require('mime');
-
-// Override the mime type for .ts files
-mime.define({'application/typescript': ['ts']});
-
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static("public"));
@@ -33,7 +28,7 @@ const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
 //Index
-app.get("/", (req, res) => {
+app.get("/index", (req, res) => {
   res.render("index");
 });
 
