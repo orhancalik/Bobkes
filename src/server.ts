@@ -28,6 +28,7 @@ app.use((req: Request, res: Response, next) => {
 });
 
 
+
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
@@ -35,6 +36,8 @@ const client = new MongoClient(uri, {});
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+
 
 //Ik heb hier routes gegeven. -YNS
 // Route om de pokemonvergelijken.ejs pagina te renderen
