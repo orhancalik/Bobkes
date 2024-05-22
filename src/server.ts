@@ -28,7 +28,7 @@ const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
 //Index
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
 
