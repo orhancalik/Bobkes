@@ -157,7 +157,7 @@ footer li {
   background-size: cover;
   background-position: center;
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,22 +194,21 @@ select option {
   padding: 10px;
 }
 
-
 select:focus {
-  outline: none; 
-  border-color: rgb(
-    241,
-    176,
-    34
-  ); 
+  outline: none;
+  border-color: rgb(241, 176, 34);
 }
 .pokemon-item {
   padding-top: 20px;
   padding-bottom: 20px;
 }
 .pokemon-item img {
+  width: auto; /* Zorg ervoor dat de breedte automatisch wordt aangepast */
+  max-height: 200px; /* Stel de maximale hoogte in */
   margin-top: 15px;
+  margin-bottom: 15px; /* Voeg indien nodig marge toe aan de boven- en onderkant */
 }
+
 .pokemon-item img:hover {
   transform: scale(0.975);
 }
@@ -231,8 +230,7 @@ select:focus {
   font-weight: 999;
 }
 
-#Pokemonstatspicture
-{
+#Pokemonstatspicture {
   width: 400px;
 }
 .pokemon-naam {
@@ -390,7 +388,6 @@ select:focus {
   align-items: center;
   margin: 20px;
 }
-
 
 /*YOUNES MAIN EINDE*/
 
@@ -560,7 +557,8 @@ label {
 }
 
 #blurry {
-  filter: blur(10px);
+  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%)
+    hue-rotate(9deg) brightness(0%) contrast(100%);
 }
 
 /* login page */
@@ -569,7 +567,7 @@ label {
   background-size: cover;
   background-position: center;
   width: 98.5vw;
-  height: 100vh; 
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -775,6 +773,6 @@ label {
     margin-top: 1rem;
   }
   .pokeball img {
-  width: 40px;
+    width: 40px;
   }
 }
