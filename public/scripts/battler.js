@@ -42,3 +42,32 @@ async function updatePokemonStats(pokemonSection, pokemonName) {
   );
   totalStatsElem.textContent = `Totale basisstatistieken: ${totalStats}`;
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const attackButtons = document.querySelectorAll(".attack-button");
+
+  attackButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const pokemon1 = document.getElementById("pokemon1-select").value;
+      const pokemon2 = document.getElementById("pokemon2-select").value;
+
+      try {
+        const response = await fetch("/pokemonbattle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ pokemon1, pokemon2 }),
+        });
+
+        if (response.ok) {
+          alert("Pokémon battle successful!");
+        } else {
+          alert("Er is een fout opgetreden bij de Pokémon battle.");
+        }
+      } catch (error) {
+        console.error("Error during Pokémon battle:", error);
+        alert("Er is een fout opgetreden bij de Pokémon battle.");
+      }
+    });
+  });
+});

@@ -67,7 +67,20 @@ app.get("/pokemonbattler", async (req: Request, res: Response) => {
   const pokemonList = await getPokemonList();
   res.render("pokemonbattler", { pokemonList });
 });
+app.post("/pokemonbattle", async (req, res) => {
+  try {
+    const { pokemon1, pokemon2 } = req.body;
 
+    // Hier moet de logica komen om de Pokémon te laten vechten
+    // Bijvoorbeeld: Bereken de aanvalsschade en pas de HP aan
+
+    // Voorlopig sturen we gewoon een succesmelding terug
+    res.status(200).send("Pokémon battle successful!");
+  } catch (error) {
+    console.error("Error during Pokémon battle:", error);
+    res.status(500).send("Er is een fout opgetreden bij de Pokémon battle.");
+  }
+});
 // Who's That Pokemon?
 app.get("/whosthatpokemon", async (req, res) => {
   try {
