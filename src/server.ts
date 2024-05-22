@@ -63,7 +63,7 @@ app.get("/pokemoncatcher", (req, res) => {
 });
 
 // pokemonbattler
-app.get("/pokemonbattler", async (req, res) => {
+app.get("/pokemonbattler", async (req: Request, res: Response) => {
   const pokemonList = await getPokemonList();
   res.render("pokemonbattler", { pokemonList });
 });
