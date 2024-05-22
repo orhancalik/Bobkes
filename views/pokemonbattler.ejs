@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/style.css" />
-    <script src="/scripts/script.js"> defer</script>
+    <script src="/scripts/battler.js">
+      defer
+    </script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    
+
     <title>Pokemon Battler</title>
   </head>
   <body>
@@ -39,240 +41,227 @@
             <img src="/assets/images/pokeball.png" alt="" width="50px" />
             <div class="pokemon-info">
               <% if (user && user.username) { %>
-                <span id="currentPokemonName"><%= user.username %></span>
+              <span id="currentPokemonName"><%= user.username %></span>
               <% } else { %>
-                <span id="currentPokemonName">Vang pokemon</span>
+              <span id="currentPokemonName">Vang pokemon</span>
+              <% } %> <% if (user && user.pokemon) { %>
+              <span class="<%= user.pokemon.type %>"
+                ><%= user.pokemon.name %></span
+              >
+              <% } else { %>
+              <span class="no-pokemon">Geen pokemon</span>
               <% } %>
-              <% if (user && user.pokemon) { %> 
-                <span class="<%= user.pokemon.type %>"><%= user.pokemon.name %></span> 
-              <% } else { %> 
-                <span class="no-pokemon">Geen pokemon</span> 
-              <% } %> 
             </div>
           </li>
         </ul>
       </nav>
     </header>
-  <main>
-    <section id="battlepage">
-      <section id="pokemon1">
-        <article class="pokemon-item">
-          <strong>Verander uw Pokémon:</strong>
-          <select id="pokemon1-select">
-            <option value="Gyarados">Mijn Pokemon</option>
-            <option value="Piplup">Piplup</option>
-            <option value="Pikachu">Pikachu</option>
-            <option value="Bulbasaur">Bulbasaur</option>
-            <option value="Charmander">Charmander</option>
-            <option value="Squirtle">Squirtle</option>
-            <option value="Jigglypuff">Jigglypuff</option>
-            <option value="Eevee">Eevee</option>
-            <option value="Snorlax">Snorlax</option>
-            <option value="Mewtwo">Mewtwo</option>
-            <option value="Psyduck">Psyduck</option>
-            <option value="Gengar">Gengar</option>
-          </select>
-          <img
-            class="pok1"
-            src="assets/images/pokemonfighter.jpg"
-            alt="pokemonfighter1"
-          />
-        </article>
-
-        <article class="battle-stats">
-          <p class="pokemon-naam">Gyarados</p>
-          <div class="progress" style="height: 30px">
-            <div
-              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-              role="progressbar"
-              style="width: 89%"
-              aria-valuenow="89"
-              aria-valuemin="0"
-              aria-valuemax="100"
+    <main>
+      <section id="battlepage">
+        <section id="pokemon1">
+          <article class="pokemon-item">
+            <strong>Select Your Pokémon:</strong>
+            <select
+              id="pokemon1-select"
+              onchange="updatePokemonStats('pokemon1', this.value)"
             >
-              HP
-            </div>
-          </div>
-          <article class="stats">
-            <p>Totale basisstatistieken: 318</p>
-
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                style="width: 89%"
-                aria-valuenow="89"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Aanval
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-warning"
-                role="progressbar"
-                style="width: 49%"
-                aria-valuenow="49"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Verdediging
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-info"
-                role="progressbar"
-                style="width: 69%"
-                aria-valuenow="69"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Speciale aanval
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-info"
-                role="progressbar"
-                style="width: 65%"
-                aria-valuenow="65"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Speciale verdediging
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                style="width: 72%"
-                aria-valuenow="72"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Snelheid
-              </div>
-            </div>
+              <% pokemonList.forEach(pokemon => { %>
+              <option value="<%= pokemon.name %>"><%= pokemon.name %></option>
+              <% }); %>
+            </select>
+            <img id="pokemon1-img" class="pok1" src="" alt="pokemonfighter1" />
           </article>
-          <button class="attack-button">Attack</button>
-          <button class="defend-button">Defend</button>
-        </article>
-      </section>
-
-      <article><button class="battle-button">Battle!</button></article>
-
-      <section id="pokemon2">
-        <article class="pokemon-item">
-          <strong>Verander uw Pokémon:</strong>
-          <select id="pokemon1-select">
-            <option value="Gyarados">Gyarados</option>
-            <option value="Piplup">Piplup</option>
-            <option value="Pikachu">Pikachu</option>
-            <option value="Bulbasaur">Bulbasaur</option>
-            <option value="Charmander">Charmander</option>
-            <option value="Squirtle">Squirtle</option>
-            <option value="Jigglypuff">Jigglypuff</option>
-            <option value="Eevee">Eevee</option>
-            <option value="Snorlax">Snorlax</option>
-            <option value="Mewtwo">Mewtwo</option>
-            <option value="Psyduck">Psyduck</option>
-            <option value="Gengar">Gengar</option>
-          </select>
-          <img
-            class="pok2"
-            src="assets/images/pokemonfighter2.jpg"
-            alt="pokemonfighter2"
-          />
-        </article>
-
-        <article class="battle-stats">
-          <p class="pokemon-naam">Piplup</p>
-          <div class="progress" style="height: 30px">
-            <div
-              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-              role="progressbar"
-              style="width: 89%; height: 100%"
-              aria-valuenow="89"
-              aria-valuemin="0"
-              aria-valuemax="100"
+          <article id="pokemon1-stats" class="battle-stats">
+            <p id="pokemon1-name" class="pokemon-naam">Select a Pokémon</p>
+            <div class="progress" style="height: 30px">
+              <div
+                id="pokemon1-hp"
+                class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                style="width: 0%"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                HP
+              </div>
+            </div>
+            <article class="stats">
+              <p id="pokemon1-total-stats">Totale basisstatistieken: 0</p>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon1-attack"
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Aanval
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon1-defense"
+                  class="progress-bar bg-warning"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Verdediging
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon1-special-attack"
+                  class="progress-bar bg-info"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Speciale aanval
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon1-special-defense"
+                  class="progress-bar bg-info"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Speciale verdediging
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon1-speed"
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Snelheid
+                </div>
+              </div>
+            </article>
+            <button class="attack-button">Attack</button>
+            <button class="defend-button">Defend</button>
+          </article>
+        </section>
+        <article><button class="battle-button">Battle!</button></article>
+        <section id="pokemon2">
+          <article class="pokemon-item">
+            <strong>Select Opponent Pokémon:</strong>
+            <select
+              id="pokemon2-select"
+              onchange="updatePokemonStats('pokemon2', this.value)"
             >
-              HP
-            </div>
-          </div>
-          <article class="stats">
-            <p>Totale basisstatistieken: 318</p>
-
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                style="width: 69%"
-                aria-valuenow="69"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Aanval
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-warning"
-                role="progressbar"
-                style="width: 39%"
-                aria-valuenow="39"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Verdediging
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-info"
-                role="progressbar"
-                style="width: 79%"
-                aria-valuenow="79"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Speciale aanval
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-info"
-                role="progressbar"
-                style="width: 55%"
-                aria-valuenow="65"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Speciale verdediging
-              </div>
-            </div>
-            <div class="progress" style="height: 20px">
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                style="width: 62%"
-                aria-valuenow="62"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Snelheid
-              </div>
-            </div>
+              <% pokemonList.forEach(pokemon => { %>
+              <option value="<%= pokemon.name %>"><%= pokemon.name %></option>
+              <% }); %>
+            </select>
+            <img id="pokemon2-img" class="pok2" src="" alt="pokemonfighter2" />
           </article>
-          <button class="attack-button">Attack</button>
-          <button class="defend-button">Defend</button>
-        </article>
+          <article id="pokemon2-stats" class="battle-stats">
+            <p id="pokemon2-name" class="pokemon-naam">Select a Pokémon</p>
+            <div class="progress" style="height: 30px">
+              <div
+                id="pokemon2-hp"
+                class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                style="width: 0%"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                HP
+              </div>
+            </div>
+            <article class="stats">
+              <p id="pokemon2-total-stats">Totale basisstatistieken: 0</p>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon2-attack"
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Aanval
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon2-defense"
+                  class="progress-bar bg-warning"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Verdediging
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon2-special-attack"
+                  class="progress-bar bg-info"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Speciale aanval
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon2-special-defense"
+                  class="progress-bar bg-info"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Speciale verdediging
+                </div>
+              </div>
+              <div class="progress" style="height: 20px">
+                <div
+                  id="pokemon2-speed"
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  Snelheid
+                </div>
+              </div>
+            </article>
+            <button class="attack-button">Attack</button>
+            <button class="defend-button">Defend</button>
+          </article>
+        </section>
       </section>
-    </section>
-  </main>
+    </main>
 
-
-
-<%- include("./partials/footer") %>
+    <%- include("./partials/footer") %>
+  </body>
+</html>
