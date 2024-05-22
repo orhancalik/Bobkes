@@ -35,20 +35,26 @@
           <li><a href="pokemonbattler">Battler</a></li>
           <li><a href="pokemoncatcher">Catcher</a></li>
           <li><a href="whosthatpokemon">Who's that pokemon</a></li>
-          <li><a href="login">Login</a></li>
+          <% if (user) { %>
+            <li><form id="logoutForm" action="/logout" method="POST"><button type="submit">Logout</button></form></li>
+          <% } else { %>
+            <li><a href="login">Login</a></li>
+          <% } %>
           <li class="pokeball">
             <img src="/assets/images/pokeball.png" alt="" width="50px" />
             <div class="pokemon-info">
               <% if (user && user.username) { %>
-                <span id="currentPokemonName"><%= user.username %></span>
+              <span id="currentPokemonName"><%= user.username %></span>
               <% } else { %>
-                <span id="currentPokemonName">Vang pokemon</span>
+              <span id="currentPokemonName">Vang pokemon</span>
               <% } %>
-              <% if (user && user.pokemon) { %> 
-                <span class="<%= user.pokemon.type %>"><%= user.pokemon.name %></span> 
-              <% } else { %> 
-                <span class="no-pokemon">Geen pokemon</span> 
-              <% } %> 
+              <% if (user && user.pokemon) { %>
+              <span class="<%= user.pokemon.type %>"
+                ><%= user.pokemon.name %></span
+              >
+              <% } else { %>
+              <span class="no-pokemon">Geen pokemon</span>
+              <% } %>
             </div>
           </li>
         </ul>

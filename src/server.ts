@@ -24,16 +24,13 @@ app.use((req: Request, res: Response, next) => {
 });
 
 
-
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
 //Index
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
-
-
 
 //Ik heb hier routes gegeven. -YNS
 // Route om de pokemonvergelijken.ejs pagina te renderen
@@ -79,7 +76,7 @@ app.get("/register", (req, res) => {
 
 app.post("/register", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
     // Hash het wachtwoord
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -87,51 +84,69 @@ app.post("/register", async (req, res) => {
     // Voeg de gebruiker toe aan de database
     const db = client.db();
     const collection = db.collection("users");
-    await collection.insertOne({ email, password: hashedPassword });
+    await collection.insertOne({ username, email, password: hashedPassword });
 
     res.redirect("/login");
   } catch (error) {
     console.error("Error during registration:", error);
     res.status(500).send("Er is een fout opgetreden bij de registratie.");
+    res.redirect("/register")
   }
 });
 
 //Login
 app.get("/login", (req, res) => {
-  res.render("login");
+  const error = req.query.error;
+  res.render("login", { error });
 });
 
 app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    // Zoek de gebruiker in de database en haal de gebruikersnaam op
     const db = client.db();
     const collection = db.collection("users");
     const user = await collection.findOne({ email });
 
     if (!user) {
-      return res.status(401).send("Ongeldige inloggegevens");
+      return res.status(401).render("login", { error: "Ongeldige inloggegevens" });
     }
 
-    // Controleer het wachtwoord
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).send("Ongeldige inloggegevens");
+      return res.status(401).render("login", { error: "Ongeldige inloggegevens" });
     }
 
-    // Sla de gebruikersnaam op in de sessie
     req.session.user = { username: user.username };
 
-    // Stuur de gebruiker door naar de indexpagina
     res.redirect("/");
-
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).send("Er is een fout opgetreden bij het inloggen.");
+    res.status(500).render("login", { error: "Er is een fout opgetreden bij het inloggen." });
   }
+});
+
+
+
+const checkAuth = (req: Request, res: Response, next: () => void) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.status(500).send("Er is een fout opgetreden bij het uitloggen.");
+    }
+    res.redirect("/login");
+  });
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
