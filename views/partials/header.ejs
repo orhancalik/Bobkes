@@ -32,11 +32,11 @@
               />
             </a>
           </li>
-          <li><a href="mijnpokemon"><img src="/assets/images/Compare.png" alt="" width="100px"></a></li>
-          <li><a href="pokemonvergelijken"><img src="/assets/images/Compare.png" alt="" width="100px"></a></li>
-          <li><a href="pokemonbattler"><img src="/assets/images/Compare.png" alt="" width="100px"></a></li>
-          <li><a href="pokemoncatcher"><img src="/assets/images/Compare.png" alt="" width="100px"></a></li>
-          <li><a href="whosthatpokemon"><img src="/assets/images/Compare.png" alt="" width="100px"></a></li>
+          <li><a href="mijnpokemon">Mijn Pokemon</a></li>
+          <li><a href="pokemonvergelijken">Vergelijken</a></li>
+          <li><a href="pokemonbattler">Battler</a></li>
+          <li><a href="pokemoncatcher">Catcher</a></li>
+          <li><a href="whosthatpokemon">Who's that pokemon</a></li>
           <li><a href="login">Login</a></li>
           <li class="pokeball">
             <img src="/assets/images/pokeball.png" alt="" width="50px" />
@@ -45,7 +45,8 @@
               <span id="currentPokemonName"><%= user.username %></span>
               <% } else { %>
               <span id="currentPokemonName">Vang pokemon</span>
-              <% } %> <% if (user && user.pokemon) { %>
+              <% } %>
+              <% if (user && user.pokemon) { %>
               <span class="<%= user.pokemon.type %>"
                 ><%= user.pokemon.name %></span
               >
@@ -57,5 +58,4 @@
         </ul>
       </nav>
     </header>
-  </body>
-</html>
+  
