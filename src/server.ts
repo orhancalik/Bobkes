@@ -176,6 +176,8 @@ app.post("/register", async (req, res) => {
 // Login
 app.get("/login", (req, res) => {
   res.render("login");
+  const error = req.query.error;
+  res.render("login", { error });
 });
 
 app.post("/login", async (req: Request, res: Response) => {
@@ -189,25 +191,47 @@ app.post("/login", async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(401).send("Ongeldige inloggegevens");
+      return res.status(401).render("login", { error: "Ongeldige inloggegevens" });
     }
 
     // Controleer het wachtwoord
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).send("Ongeldige inloggegevens");
+      return res.status(401).render("login", { error: "Ongeldige inloggegevens" });
     }
 
     // Sla de gebruikersnaam op in de sessie
     req.session.user = { username: user.username };
 
     // Stuur de gebruiker door naar de indexpagina
-    res.redirect("/index");
+    res.redirect("/");
+
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).send("Er is een fout opgetreden bij het inloggen.");
+    res.status(500).render("login", { error: "Er is een fout opgetreden bij het inloggen." });
   }
 });
 
+
+
+const checkAuth = (req: Request, res: Response, next: () => void) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.status(500).send("Er is een fout opgetreden bij het uitloggen.");
+    }
+    res.redirect("/login");
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
