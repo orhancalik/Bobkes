@@ -62,10 +62,46 @@ app.get("/pokemoncatcher", (req, res) => {
   res.render("pokemoncatcher");
 });
 
+let currentPokemon1 = {
+  name: "",
+  hp: 100, // Stel de HP in op 100 of een ander passend startwaarde
+  // Andere statistieken van de Pokémon...
+};
+
+let currentPokemon2 = {
+  name: "",
+  hp: 100, // Stel de HP in op 100 of een ander passend startwaarde
+  // Andere statistieken van de Pokémon...
+};
+
 // pokemonbattler
 app.get("/pokemonbattler", async (req: Request, res: Response) => {
   const pokemonList = await getPokemonList();
   res.render("pokemonbattler", { pokemonList });
+});
+// Handle Pokémon battle
+app.post("/pokemonbattle", (req, res) => {
+  const { pokemon1, pokemon2 } = req.body;
+
+  // Simulated logic: decrease HP of both Pokémon by a fixed amount
+  const damage = 10;
+
+  currentPokemon1.hp -= damage;
+  currentPokemon2.hp -= damage;
+
+  // Check if any Pokémon's HP drops to or below 0
+  if (currentPokemon1.hp <= 0 || currentPokemon2.hp <= 0) {
+    // One of the Pokémon fainted
+    res.status(200).json({ message: "Pokémon battle successful!" });
+  } else {
+    res
+      .status(200)
+      .json({
+        message: "Pokémon battle successful!",
+        currentPokemon1,
+        currentPokemon2,
+      });
+  }
 });
 
 // Who's That Pokemon?

@@ -199,8 +199,10 @@ select:focus {
   border-color: rgb(241, 176, 34);
 }
 .pokemon-item {
+  display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
+  flex-direction: column;
 }
 .pokemon-item img {
   width: auto; /* Zorg ervoor dat de breedte automatisch wordt aangepast */
