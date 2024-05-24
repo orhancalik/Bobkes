@@ -13,8 +13,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    
-    <title>Catcher</title>
+    <title>Home</title>
   </head>
   <body>
     <header>
@@ -60,31 +59,26 @@
         </ul>
       </nav>
     </header>
-<main>
-  <h1>Pokémon Catcher</h1>
-  <div class="pokemon-list" id="pokemonList"></div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="pokemonModal" tabindex="-1" aria-labelledby="pokemonModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="pokemonModalLabel">Pokémon</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <img id="pokemonImage" src="" alt="Pokémon" />
-          <div>
-            <img id="pokeball" class="pokeball red" src="/assets/images/pokeball.png" alt="Pokéball" />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="catchButton">Catch</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+  <main>
+    <section id="catch-pokemon">
+      <h1>Gotta Catch 'Em All !</h1>
+      <article id="catch-stats">
+        <img
+          class="pok"
+          src="assets/images/bulbasaur.jpg"
+          alt="pokemonfighter1"
+        />
+        <article class="statsmenu">
+          <p class="pokemon-naam">Bulbasaur</p>
+          <span class="Grass">Grass </span>
+          <span class="Poison">Poison</span>
+        </article>
+      </article>
+      <a href="#"
+        ><img id="pokeball" src="/assets/images/groenepokeball.png" alt=""
+      /></a>
+    </section>
+  </main>
 
 <%- include("./partials/footer") %>
