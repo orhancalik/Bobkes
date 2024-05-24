@@ -735,6 +735,8 @@ label {
   padding: 10px;
 }
 
+
+
 /* Mediaqueries*/
 @media only screen and (max-width: 992px) {
   #compare-page {
@@ -778,3 +780,5 @@ label {
     width: 40px;
   }
 }
+
+
