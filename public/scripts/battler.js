@@ -71,3 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function updateHPBar(id, newHP) {
+  const hpBar = document.getElementById(id);
+  hpBar.style.width = `${newHP}%`;
+}

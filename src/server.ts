@@ -22,8 +22,6 @@ app.use((req: Request, res: Response, next) => {
   next();
 });
 
-
-
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
@@ -40,7 +38,7 @@ let currentPokemon = {
 };
 
 // Index
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
 
@@ -60,7 +58,6 @@ app.get("/pokemonStats", (req, res) => {
 });
 
 // Pokemon catcher Rayan
-
 
 let currentPokemon1 = {
   name: "",
@@ -94,13 +91,11 @@ app.post("/pokemonbattle", (req, res) => {
     // One of the Pokémon fainted
     res.status(200).json({ message: "Pokémon battle successful!" });
   } else {
-    res
-      .status(200)
-      .json({
-        message: "Pokémon battle successful!",
-        currentPokemon1,
-        currentPokemon2,
-      });
+    res.status(200).json({
+      message: "Pokémon battle successful!",
+      currentPokemon1,
+      currentPokemon2,
+    });
   }
 });
 
@@ -189,14 +184,17 @@ app.post("/login", async (req: Request, res: Response) => {
     const user = await collection.findOne({ email });
 
     if (!user) {
-      return res.status(401).render("login", { error: "Ongeldige inloggegevens" });
+      return res
+        .status(401)
+        .render("login", { error: "Ongeldige inloggegevens" });
     }
 
     // Controleer het wachtwoord
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-
-      return res.status(401).render("login", { error: "Ongeldige inloggegevens" });
+      return res
+        .status(401)
+        .render("login", { error: "Ongeldige inloggegevens" });
     }
 
     // Sla de gebruikersnaam op in de sessie
@@ -204,19 +202,19 @@ app.post("/login", async (req: Request, res: Response) => {
 
     // Stuur de gebruiker door naar de indexpagina
     res.redirect("/");
-
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).render("login", { error: "Er is een fout opgetreden bij het inloggen." });
+    res
+      .status(500)
+      .render("login", {
+        error: "Er is een fout opgetreden bij het inloggen.",
+      });
   }
 });
 
-
-
-
 const checkAuth = (req: Request, res: Response, next: () => void) => {
   if (!req.session.user) {
-    return res.redirect('/login');
+    return res.redirect("/login");
   }
   next();
 };
@@ -225,12 +223,13 @@ app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error("Error during logout:", err);
-      return res.status(500).send("Er is een fout opgetreden bij het uitloggen.");
+      return res
+        .status(500)
+        .send("Er is een fout opgetreden bij het uitloggen.");
     }
     res.redirect("/login");
   });
 });
-
 
 app.get("/pokemoncatcher", (req, res) => {
   res.render("pokemoncatcher");
@@ -239,17 +238,24 @@ app.get("/pokemoncatcher", (req, res) => {
 app.post("/pokemoncatcher/catch", (req, res) => {
   const { targetPokemon, currentPokemon } = req.body;
 
-  const chanceToCatch = 100 - (targetPokemon.defence - currentPokemon.attack) % 100;
+  const chanceToCatch =
+    100 - ((targetPokemon.defence - currentPokemon.attack) % 100);
 
   if (Math.random() * 100 < chanceToCatch) {
     // Pokémon gevangen
-    res.status(200).json({ success: true, message: "Je hebt de Pokémon gevangen!" });
+    res
+      .status(200)
+      .json({ success: true, message: "Je hebt de Pokémon gevangen!" });
   } else {
     // Pokémon niet gevangen
-    res.status(200).json({ success: false, message: "Je hebt de Pokémon niet kunnen vangen." });
+    res
+      .status(200)
+      .json({
+        success: false,
+        message: "Je hebt de Pokémon niet kunnen vangen.",
+      });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
