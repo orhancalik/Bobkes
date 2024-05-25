@@ -28,8 +28,8 @@ const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
 const getPokemonList = async () => {
-  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
-  const data = await response.json();
+  const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=151");
+  const data = response.data;
   return data.results;
 };
 
@@ -40,7 +40,7 @@ let currentPokemon = {
 };
 
 // Index
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
 
@@ -60,7 +60,9 @@ app.get("/pokemonStats", (req, res) => {
 });
 
 // Pokemon catcher Rayan
-
+app.get("/pokemoncatcher", (req, res) => {
+  res.render("pokemoncatcher");
+});
 
 let currentPokemon1 = {
   name: "",
@@ -79,29 +81,50 @@ app.get("/pokemonbattler", async (req: Request, res: Response) => {
   const pokemonList = await getPokemonList();
   res.render("pokemonbattler", { pokemonList });
 });
+
 // Handle Pokémon battle
-app.post("/pokemonbattle", (req, res) => {
+app.post("/pokemonbattle", async (req: Request, res: Response) => {
   const { pokemon1, pokemon2 } = req.body;
 
-  // Simulated logic: decrease HP of both Pokémon by a fixed amount
-  const damage = 10;
+  // Fetch stats and sprites for both Pokémon
+  const fetchPokemonStats = async (pokemonName: string) => {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+    return {
+      name: pokemonName,
+      attack: response.data.stats[1].base_stat,
+      defense: response.data.stats[2].base_stat,
+      hp: response.data.stats[0].base_stat,
+      sprite: response.data.sprites.front_default,
+    };
+  };
 
-  currentPokemon1.hp -= damage;
-  currentPokemon2.hp -= damage;
+  const pokemon1Stats = await fetchPokemonStats(pokemon1);
+  const pokemon2Stats = await fetchPokemonStats(pokemon2);
 
-  // Check if any Pokémon's HP drops to or below 0
-  if (currentPokemon1.hp <= 0 || currentPokemon2.hp <= 0) {
-    // One of the Pokémon fainted
-    res.status(200).json({ message: "Pokémon battle successful!" });
-  } else {
-    res
-      .status(200)
-      .json({
-        message: "Pokémon battle successful!",
-        currentPokemon1,
-        currentPokemon2,
-      });
+  // Simulated battle logic
+  while (pokemon1Stats.hp > 0 && pokemon2Stats.hp > 0) {
+    // Pokémon 1 attacks Pokémon 2
+    const damageTo2 = Math.max(0, pokemon1Stats.attack - pokemon2Stats.defense);
+    pokemon2Stats.hp -= damageTo2;
+
+    // Check if Pokémon 2 has fainted
+    if (pokemon2Stats.hp <= 0) {
+      res.json({ message: `${pokemon1Stats.name} wins!`, currentPokemon1: pokemon1Stats, currentPokemon2: pokemon2Stats });
+      return;
+    }
+
+    // Pokémon 2 attacks Pokémon 1
+    const damageTo1 = Math.max(0, pokemon2Stats.attack - pokemon1Stats.defense);
+    pokemon1Stats.hp -= damageTo1;
+
+    // Check if Pokémon 1 has fainted
+    if (pokemon1Stats.hp <= 0) {
+      res.json({ message: `${pokemon2Stats.name} wins!`, currentPokemon1: pokemon1Stats, currentPokemon2: pokemon2Stats });
+      return;
+    }
   }
+
+  res.json({ message: "It's a draw!", currentPokemon1: pokemon1Stats, currentPokemon2: pokemon2Stats });
 });
 
 // Who's That Pokemon?
