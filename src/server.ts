@@ -38,7 +38,7 @@ let currentPokemon = {
 };
 
 // Index
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
 
@@ -61,6 +61,8 @@ app.get("/pokemonStats", (req, res) => {
 app.get("/pokemoncatcher", (req, res) => {
   res.render("pokemoncatcher");
 });
+
+
 
 let currentPokemon1 = {
   name: "",
