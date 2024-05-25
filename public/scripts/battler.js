@@ -1,78 +1,87 @@
-async function updatePokemonStats(pokemonSection, pokemonName) {
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
-  );
-  const pokemon = await response.json();
-
-  const pokemonImg = document.getElementById(`${pokemonSection}-img`);
-  const pokemonNameElem = document.getElementById(`${pokemonSection}-name`);
-  const hpElem = document.getElementById(`${pokemonSection}-hp`);
-  const attackElem = document.getElementById(`${pokemonSection}-attack`);
-  const defenseElem = document.getElementById(`${pokemonSection}-defense`);
-  const specialAttackElem = document.getElementById(
-    `${pokemonSection}-special-attack`
-  );
-  const specialDefenseElem = document.getElementById(
-    `${pokemonSection}-special-defense`
-  );
-  const speedElem = document.getElementById(`${pokemonSection}-speed`);
-  const totalStatsElem = document.getElementById(
-    `${pokemonSection}-total-stats`
-  );
-
-  pokemonImg.src = pokemon.sprites.front_default;
-  pokemonNameElem.textContent =
-    pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-
-  const stats = pokemon.stats.reduce((acc, stat) => {
-    acc[stat.stat.name] = stat.base_stat;
-    return acc;
-  }, {});
-
-  hpElem.style.width = `${stats.hp}%`;
-  attackElem.style.width = `${stats.attack}%`;
-  defenseElem.style.width = `${stats.defense}%`;
-  specialAttackElem.style.width = `${stats["special-attack"]}%`;
-  specialDefenseElem.style.width = `${stats["special-defense"]}%`;
-  speedElem.style.width = `${stats.speed}%`;
-
-  const totalStats = Object.values(stats).reduce(
-    (acc, value) => acc + value,
-    0
-  );
-  totalStatsElem.textContent = `Totale basisstatistieken: ${totalStats}`;
-}
 document.addEventListener("DOMContentLoaded", () => {
-  const attackButtons = document.querySelectorAll(".attack-button");
+  const battleForm = document.getElementById("battleForm");
+  const startBattleButton = document.getElementById("startBattle");
+  const battleResultDiv = document.getElementById("battleResult");
+  const pokemon1Select = document.getElementById("pokemon1");
+  const pokemon2Select = document.getElementById("pokemon2");
+  const pokemon1MoveSelect = document.getElementById("pokemon1Move");
+  const pokemon2MoveSelect = document.getElementById("pokemon2Move");
 
-  attackButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
-      const pokemon1 = document.getElementById("pokemon1-select").value;
-      const pokemon2 = document.getElementById("pokemon2-select").value;
+  const fetchPokemonMoves = async (pokemonName, moveSelect) => {
+    try {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+      );
+      const pokemonData = await response.json();
+      const moves = pokemonData.moves.map((move) => move.move.name);
 
-      try {
-        const response = await fetch("/pokemonbattle", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ pokemon1, pokemon2 }),
-        });
+      moveSelect.innerHTML = "";
+      moves.slice(0, 4).forEach((move) => {
+        const option = document.createElement("option");
+        option.value = move;
+        option.text = move;
+        moveSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error fetching moves:", error);
+    }
+  };
 
-        if (response.ok) {
-          alert("Pokémon battle successful!");
-        } else {
-          alert("Er is een fout opgetreden bij de Pokémon battle.");
-        }
-      } catch (error) {
-        console.error("Error during Pokémon battle:", error);
-        alert("Er is een fout opgetreden bij de Pokémon battle.");
-      }
-    });
+  pokemon1Select.addEventListener("change", (event) => {
+    fetchPokemonMoves(event.target.value, pokemon1MoveSelect);
   });
-});
 
-function updateHPBar(id, newHP) {
-  const hpBar = document.getElementById(id);
-  hpBar.style.width = `${newHP}%`;
-}
+  pokemon2Select.addEventListener("change", (event) => {
+    fetchPokemonMoves(event.target.value, pokemon2MoveSelect);
+  });
+
+  startBattleButton.addEventListener("click", async () => {
+    const pokemon1 = pokemon1Select.value;
+    const pokemon1Move = pokemon1MoveSelect.value;
+    const pokemon2 = pokemon2Select.value;
+    const pokemon2Move = pokemon2MoveSelect.value;
+
+    try {
+      const response = await fetch("/pokemonbattle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pokemon1,
+          pokemon1Move,
+          pokemon2,
+          pokemon2Move,
+        }),
+      });
+
+      const result = await response.json();
+      battleResultDiv.innerHTML = `
+        <h2>Battle Result</h2>
+        <p>${result.message}</p>
+        <div>
+          <h3>${result.currentPokemon1.name}</h3>
+          <img src="${result.currentPokemon1.sprite}" alt="${
+        result.currentPokemon1.name
+      }" />
+          <p>Moves: ${result.currentPokemon1.moves.join(", ")}</p>
+          <p>HP: ${result.currentPokemon1.hp}</p>
+        </div>
+        <div>
+          <h3>${result.currentPokemon2.name}</h3>
+          <img src="${result.currentPokemon2.sprite}" alt="${
+        result.currentPokemon2.name
+      }" />
+          <p>Moves: ${result.currentPokemon2.moves.join(", ")}</p>
+          <p>HP: ${result.currentPokemon2.hp}</p>
+        </div>
+      `;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+
+  // Initialize moves for default selections
+  fetchPokemonMoves(pokemon1Select.value, pokemon1MoveSelect);
+  fetchPokemonMoves(pokemon2Select.value, pokemon2MoveSelect);
+});

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "axios": "^1.7.2",
     "bcrpyt": "^2.0.0",
     "bcrypt": "^5.1.1",
@@ -21,7 +22,8 @@
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.3",
     "moongoose": "^0.0.5",
-    "tsc-init": "^2.1.0"
+    "tsc-init": "^2.1.0",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
