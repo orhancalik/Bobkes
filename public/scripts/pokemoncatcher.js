@@ -2,8 +2,14 @@
 window.onload = function () {
     const pokemonContainer = document.getElementById("pokemonContainer");
 
+    // Functie om een willekeurig getal te genereren binnen een bereik
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
     // Haal 20 willekeurige Pokémon op van de PokeAPI
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=5")
+    const offset = getRandomInt(1000); // Haal een willekeurige offset binnen een bereik (bijvoorbeeld tot 1000)
+    fetch(`https://pokeapi.co/api/v2/pokemon?limit=8&offset=${offset}`)
         .then(response => response.json())
         .then(data => {
             const availablePokemon = data.results;
@@ -14,7 +20,8 @@ window.onload = function () {
                     .then(response => response.json())
                     .then(data => {
                         const pokemonInfo = {
-                            name: data.name,
+                            name: data.name, // Gebruik de naam zoals deze uit de API komt
+                            level: Math.floor(Math.random() * 50) + 1, // Random level tussen 1 en 50
                             defence: data.stats[3].base_stat, // Veronderstel dat de 4e statistiek de verdediging is
                             captured: false,
                             image: data.sprites.front_default,
@@ -34,6 +41,11 @@ window.onload = function () {
                             // Open een venster met de afbeelding van de Pokémon
                             window.open(pokemonInfo.image, "_blank");
                         });
+
+                        // Voeg een div toe voor de naam en level van de Pokémon
+                        const pokemonDetails = document.createElement("div");
+                        pokemonDetails.classList.add("pokemon-details");
+                        pokemonDetails.innerText = `${pokemonInfo.name} | Level: ${pokemonInfo.level}`;
 
                         // Voeg een pokebal-afbeelding toe
                         const pokeballImage = document.createElement("img");
@@ -59,19 +71,19 @@ window.onload = function () {
                                 // Doe een poging om de Pokémon te vangen
                                 if (Math.random() * 100 < chanceToCatch) {
                                     const nickname = prompt(`Gefeliciteerd! Je hebt ${pokemonInfo.name} gevangen! Geef deze Pokémon een bijnaam:`);
-                                    pokemonInfo.name = nickname || pokemonInfo.name; // Gebruik de ingevoerde bijnaam, anders behoud de originele naam
+                                    pokemonInfo.name = nickname ? nickname : pokemonInfo.name; // Gebruik de ingevoerde bijnaam, anders behoud de originele naam
                                     pokemonInfo.captured = true;
                                     pokeballImage.src = "./assets/images/green_pokeball.png";
+                                    alert(`Je hebt ${pokemonInfo.name} gevangen!`);
                                 } else {
                                     alert(`Je hebt ${pokemonInfo.name} niet kunnen vangen.`);
-                                }
-
-                                // Verminder het aantal resterende pogingen en toon het aan de gebruiker
-                                pokemonInfo.remainingAttempts--;
-                                if (pokemonInfo.remainingAttempts === 0 && !pokemonInfo.captured) {
-                                    alert("Je hebt geen pogingen meer over.");
-                                } else if (!pokemonInfo.captured) {
-                                    alert(`Je hebt nog ${pokemonInfo.remainingAttempts} pogingen over.`);
+                                    // Verminder het aantal resterende pogingen en toon het aan de gebruiker
+                                    pokemonInfo.remainingAttempts--;
+                                    if (pokemonInfo.remainingAttempts === 0 && !pokemonInfo.captured) {
+                                        alert("Je hebt geen pogingen meer over.");
+                                    } else if (!pokemonInfo.captured) {
+                                        alert(`Je hebt nog ${pokemonInfo.remainingAttempts} pogingen over.`);
+                                    }
                                 }
                             }
                         });
@@ -84,6 +96,7 @@ window.onload = function () {
 
                         // Voeg de elementen toe aan de container
                         pokemonCard.appendChild(pokemonImage);
+                        pokemonCard.appendChild(pokemonDetails); // Voeg de details toe
                         pokemonCard.appendChild(pokeballImage);
                         pokemonContainer.appendChild(pokemonCard);
                     });
