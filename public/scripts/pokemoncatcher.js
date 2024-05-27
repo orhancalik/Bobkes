@@ -103,3 +103,49 @@ window.onload = function () {
             });
         });
 };
+
+function saveCapturedPokemon(pokemonInfo) {
+    fetch("/pokemoncatcher/catch", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(pokemonInfo)
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Er is een fout opgetreden bij het opslaan van de gevangen Pokémon.");
+        })
+        .then(data => {
+            console.log(data.message); // Log het bericht van de server
+        })
+        .catch(error => {
+            console.error("Fout bij het opslaan van de gevangen Pokémon:", error);
+            alert("Er is een fout opgetreden bij het opslaan van de gevangen Pokémon.");
+        });
+}
+
+function getCaughtPokemon() {
+    fetch("/pokemoncatcher/caught", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Er is een fout opgetreden bij het ophalen van de gevangen Pokémon.");
+        })
+        .then(data => {
+            console.log("Gevangen Pokémon:", data.caughtPokemon); // Log de gevangen Pokémon
+            // Doe iets met de gevangen Pokémon, bijvoorbeeld weergeven op de pagina
+        })
+        .catch(error => {
+            console.error("Fout bij het ophalen van gevangen Pokémon:", error);
+            alert("Er is een fout opgetreden bij het ophalen van de gevangen Pokémon.");
+        });
+}
