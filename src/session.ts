@@ -18,7 +18,7 @@ mongoStore.on('error', (error) => {
 
 declare module 'express-session' {
     export interface SessionData {
-        user?: { username: string };
+        user?: { username: string; email: string };
     }
 }
 
