@@ -380,6 +380,7 @@ app.post("/login", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).render("login", { error: "Er is een fout opgetreden bij het inloggen." });
+<<<<<<< HEAD
   }
 });
 
@@ -430,8 +431,38 @@ app.post("/catchPokemon", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error catching Pokémon:", error);
     res.status(500).send("Er is een fout opgetreden bij het vangen van de Pokémon.");
+=======
+>>>>>>> refs/remotes/origin/Kaptan
   }
 });
+
+
+
+
+const checkAuth = (req: Request, res: Response, next: () => void) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.status(500).send("Er is een fout opgetreden bij het uitloggen.");
+    }
+    res.redirect("/login");
+  });
+});
+
+
+app.get("/pokemoncatcher", (req, res) => {
+  res.render("pokemoncatcher");
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
