@@ -29,7 +29,8 @@ const getPokemonList = async () => {
   const response = await axios.get(
     "https://pokeapi.co/api/v2/pokemon?limit=151"
   );
-  return response.data.results;
+  const data = response.data;
+  return data.results;
 };
 
 let currentPokemon1 = {
@@ -46,8 +47,9 @@ let currentPokemon2 = {
   defense: 28,
 };
 
-app.get("/", (req: Request, res: Response) => {
-  res.render("login");
+// Index
+app.get("/", (req, res) => {
+  res.render("index");
 });
 
 app.get("/pokemonvergelijken", async (req: Request, res: Response) => {
@@ -142,11 +144,9 @@ app.get("/pokemonsearch/:pokemonName", async (req: Request, res: Response) => {
     res.json(pokemonDetails);
   } catch (error) {
     console.error("Error fetching Pokémon details:", error);
-    res
-      .status(500)
-      .json({
-        error: "Er is een fout opgetreden bij het ophalen van Pokémon-details.",
-      });
+    res.status(500).json({
+      error: "Er is een fout opgetreden bij het ophalen van Pokémon-details.",
+    });
   }
 });
 
@@ -208,7 +208,8 @@ app.post("/register", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/login", (req: Request, res: Response) => {
+// Login
+app.get("/login", (req, res) => {
   const error = req.query.error;
   res.render("login", { error });
 });
@@ -234,6 +235,8 @@ app.post("/login", async (req: Request, res: Response) => {
     }
 
     req.session.user = { username: user.username };
+
+    // Stuur de gebruiker door naar de indexpagina
     res.redirect("/");
   } catch (error) {
     console.error("Error during login:", error);
@@ -242,13 +245,6 @@ app.post("/login", async (req: Request, res: Response) => {
     });
   }
 });
-
-const checkAuth = (req: Request, res: Response, next: () => void) => {
-  if (!req.session.user) {
-    return res.redirect("/login");
-  }
-  next();
-};
 
 app.post("/logout", (req: Request, res: Response) => {
   req.session.destroy((err) => {
@@ -280,7 +276,33 @@ app.post("/pokemoncatcher/catch", (req: Request, res: Response) => {
       success: false,
       message: "Je hebt de Pokémon niet kunnen vangen.",
     });
+    res.status(500).render("login", {
+      error: "Er is een fout opgetreden bij het inloggen.",
+    });
   }
+});
+
+const checkAuth = (req: Request, res: Response, next: () => void) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+};
+
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res
+        .status(500)
+        .send("Er is een fout opgetreden bij het uitloggen.");
+    }
+    res.redirect("/login");
+  });
+});
+
+app.get("/pokemoncatcher", (req, res) => {
+  res.render("pokemoncatcher");
 });
 
 app.listen(PORT, () => {

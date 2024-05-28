@@ -715,13 +715,40 @@ label {
   margin: 20px;
 }
 
-/* Pokemon catcher Rayan*/
+/* Pokemon catcher Orhan */
 .catcher-page {
   background-image: url("../assets/images/pokemon_forest_background.png");
   background-size: cover;
   background-position: bottom;
   background-repeat: no-repeat;
   padding-bottom: 20px;
+}
+
+.catcher-page h1 {
+  margin-top: 22px;
+  margin-left: 22px;
+  margin-bottom: 62px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+}
+
+#pokemonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 49px;
+}
+
+.pokemon-details {
+  color: white;
+  font-weight: bold;
 }
 
 .pokeball-image {
