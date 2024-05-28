@@ -1,87 +1,161 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const battleForm = document.getElementById("battleForm");
-  const startBattleButton = document.getElementById("startBattle");
-  const battleResultDiv = document.getElementById("battleResult");
-  const pokemon1Select = document.getElementById("pokemon1");
-  const pokemon2Select = document.getElementById("pokemon2");
-  const pokemon1MoveSelect = document.getElementById("pokemon1Move");
-  const pokemon2MoveSelect = document.getElementById("pokemon2Move");
+  let battleResultDiv = document.getElementById("battleResult");
+  let attacker = "user";
 
-  const fetchPokemonMoves = async (pokemonName, moveSelect) => {
-    try {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
-      );
-      const pokemonData = await response.json();
-      const moves = pokemonData.moves.map((move) => move.move.name);
+  document.querySelectorAll(".move").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const move = button.dataset.move;
+      try {
+        const response = await fetch("/pokemonbattle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            attacker: attacker,
+            move: move,
+          }),
+        });
 
-      moveSelect.innerHTML = "";
-      moves.slice(0, 4).forEach((move) => {
-        const option = document.createElement("option");
-        option.value = move;
-        option.text = move;
-        moveSelect.appendChild(option);
-      });
-    } catch (error) {
-      console.error("Error fetching moves:", error);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
+        currentPokemon1 = data.currentPokemon1;
+        currentPokemon2 = data.currentPokemon2;
+
+        if (battleResultDiv) {
+          battleResultDiv.innerText = data.message;
+        }
+
+        const pokemon1HPBar = document.getElementById("pokemon1HPBar");
+        const pokemon2HPBar = document.getElementById("pokemon2HPBar");
+
+        // Update HP bars
+        pokemon1HPBar.style.width = `${currentPokemon1.hp}%`;
+        pokemon1HPBar.innerText = `HP: ${currentPokemon1.hp}`;
+
+        pokemon2HPBar.style.width = `${currentPokemon2.hp}%`;
+        pokemon2HPBar.innerText = `HP: ${currentPokemon2.hp}`;
+
+        attacker = attacker === "user" ? "opponent" : "user";
+
+        if (currentPokemon1.hp <= 0 || currentPokemon2.hp <= 0) {
+          battleResultDiv.innerText = "Battle Over!";
+          document.querySelectorAll(".move").forEach((btn) => {
+            btn.disabled = true;
+          });
+        }
+      } catch (error) {
+        console.error("Error during move:", error);
+      }
+    });
+  });
+
+  document
+    .getElementById("searchButton")
+    .addEventListener("click", async () => {
+      const pokemonName = document
+        .getElementById("searchInput")
+        .value.toLowerCase();
+      if (pokemonName) {
+        try {
+          const response = await fetch(`/pokemonsearch/${pokemonName}`);
+          if (!response.ok) throw new Error("Pokemon niet gevonden");
+
+          const pokemonDetails = await response.json();
+          displayPokemonDetails(pokemonDetails);
+        } catch (error) {
+          console.error(
+            "Er is een fout opgetreden bij het ophalen van Pokémon-details:",
+            error
+          );
+          // Handle the error, for example, show an error message to the user
+        }
+      } else {
+        console.error("Voer een Pokémon-naam in om te zoeken.");
+        // Display a message to the user to enter a Pokémon name
+      }
+    });
+
+  function displayPokemonDetails(pokemonDetails) {
+    const pokemon2Element = document.getElementById("pokemon2");
+    const pokemon2Image = pokemon2Element.querySelector("img");
+    const pokemon2Name = pokemon2Element.querySelector("h3");
+    const pokemon2Moveset = pokemon2Element.querySelector(".moveset");
+
+    // Update the Pokémon image and name
+    if (pokemon2Image && pokemon2Name) {
+      pokemon2Image.src = pokemonDetails.sprite;
+      pokemon2Name.textContent = pokemonDetails.name;
     }
-  };
 
-  pokemon1Select.addEventListener("change", (event) => {
-    fetchPokemonMoves(event.target.value, pokemon1MoveSelect);
-  });
+    // Update the moveset
+    if (pokemon2Moveset) {
+      pokemon2Moveset.innerHTML = ""; // Clear the current moves
 
-  pokemon2Select.addEventListener("change", (event) => {
-    fetchPokemonMoves(event.target.value, pokemon2MoveSelect);
-  });
+      const moves = pokemonDetails.moves.slice(0, 4); // Get only the first four moves
 
-  startBattleButton.addEventListener("click", async () => {
-    const pokemon1 = pokemon1Select.value;
-    const pokemon1Move = pokemon1MoveSelect.value;
-    const pokemon2 = pokemon2Select.value;
-    const pokemon2Move = pokemon2MoveSelect.value;
+      moves.forEach((move) => {
+        const moveButton = document.createElement("button");
+        moveButton.className = "move";
+        moveButton.dataset.pokemon = "2";
+        moveButton.dataset.move = move;
+        moveButton.textContent = move;
+        moveButton.addEventListener("click", async () => {
+          const move = moveButton.dataset.move;
+          try {
+            const response = await fetch("/pokemonbattle", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                attacker: attacker,
+                move: move,
+              }),
+            });
 
-    try {
-      const response = await fetch("/pokemonbattle", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          pokemon1,
-          pokemon1Move,
-          pokemon2,
-          pokemon2Move,
-        }),
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+
+            const data = await response.json();
+
+            currentPokemon1 = data.currentPokemon1;
+            currentPokemon2 = data.currentPokemon2;
+
+            if (battleResultDiv) {
+              battleResultDiv.innerText = data.message;
+            }
+
+            const pokemon1HPBar = document.getElementById("pokemon1HPBar");
+            const pokemon2HPBar = document.getElementById("pokemon2HPBar");
+
+            // Update HP bars
+            pokemon1HPBar.style.width = `${currentPokemon1.hp}%`;
+            pokemon1HPBar.innerText = `HP: ${currentPokemon1.hp}`;
+
+            pokemon2HPBar.style.width = `${currentPokemon2.hp}%`;
+            pokemon2HPBar.innerText = `HP: ${currentPokemon2.hp}`;
+
+            attacker = attacker === "user" ? "opponent" : "user";
+
+            if (currentPokemon1.hp <= 0 || currentPokemon2.hp <= 0) {
+              battleResultDiv.innerText = "Battle Over!";
+              document.querySelectorAll(".move").forEach((btn) => {
+                btn.disabled = true;
+              });
+            }
+          } catch (error) {
+            console.error("Error during move:", error);
+          }
+        });
+
+        pokemon2Moveset.appendChild(moveButton);
       });
-
-      const result = await response.json();
-      battleResultDiv.innerHTML = `
-        <h2>Battle Result</h2>
-        <p>${result.message}</p>
-        <div>
-          <h3>${result.currentPokemon1.name}</h3>
-          <img src="${result.currentPokemon1.sprite}" alt="${
-        result.currentPokemon1.name
-      }" />
-          <p>Moves: ${result.currentPokemon1.moves.join(", ")}</p>
-          <p>HP: ${result.currentPokemon1.hp}</p>
-        </div>
-        <div>
-          <h3>${result.currentPokemon2.name}</h3>
-          <img src="${result.currentPokemon2.sprite}" alt="${
-        result.currentPokemon2.name
-      }" />
-          <p>Moves: ${result.currentPokemon2.moves.join(", ")}</p>
-          <p>HP: ${result.currentPokemon2.hp}</p>
-        </div>
-      `;
-    } catch (error) {
-      console.error("Error:", error);
     }
-  });
-
-  // Initialize moves for default selections
-  fetchPokemonMoves(pokemon1Select.value, pokemon1MoveSelect);
-  fetchPokemonMoves(pokemon2Select.value, pokemon2MoveSelect);
+  }
 });

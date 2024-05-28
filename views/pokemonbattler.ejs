@@ -63,49 +63,75 @@
     </header>
     <main class="container mt-5">
       <h1>Pokemon Battler</h1>
-      <form id="battleForm" method="POST">
-        <div class="mb-3">
-          <label for="pokemon1" class="form-label">Mijn Pokemons:</label>
-          <select id="pokemon1" name="pokemon1" class="form-select">
-            <% pokemonList.forEach(pokemon => { %>
-            <option value="<%= pokemon.name %>"><%= pokemon.name %></option>
+      <div id="battleContainer">
+        <div class="pokemon" id="pokemon1">
+          <h3>My Pokemon</h3>
+          <img
+            src="<%= pokemonDetails[0].sprite %>"
+            alt="<%= pokemonDetails[0].name %>"
+          />
+          <div class="progress" style="height: 30px">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              style="width: 100%"
+              aria-valuenow="100"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              id="pokemon1HPBar"
+            >
+              <span id="pokemon1HP"><%= pokemonDetails[0].hp %></span>
+            </div>
+          </div>
+
+          <div class="moveset grid">
+            <!-- Moveset div for first Pokémon -->
+            <% pokemonDetails[0].moves.forEach((move, index) => { %>
+            <button class="move" data-pokemon="1" data-move="<%= move %>">
+              <%= move %>
+            </button>
             <% }) %>
-          </select>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="pokemon1Move" class="form-label"
-            >Mijn Pokémon's Aanval:</label
-          >
-          <select
-            id="pokemon1Move"
-            name="pokemon1Move"
-            class="form-select"
-          ></select>
-        </div>
-        <div class="mb-3">
-          <label for="pokemon2" class="form-label">Tegenstander:</label>
-          <select id="pokemon2" name="pokemon2" class="form-select">
-            <% pokemonList.forEach(pokemon => { %>
-            <option value="<%= pokemon.name %>"><%= pokemon.name %></option>
+        <div class="pokemon" id="pokemon2">
+          <h3>Opponent Pokemon</h3>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Zoek een Pokémon..."
+          />
+          <button id="searchButton">Zoeken</button>
+
+          <img
+            src="<%= pokemonDetails[1].sprite %>"
+            alt="<%= pokemonDetails[1].name %>"
+          />
+          <div class="progress" style="height: 30px">
+            <div
+              class="progress-bar bg-success custom-progress-bar"
+              role="progressbar"
+              style="width: 100%"
+              aria-valuenow="100"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              id="pokemon2HPBar"
+            >
+              <span id="pokemon2HP"><%= pokemonDetails[1].hp %></span>
+            </div>
+          </div>
+          <div class="moveset grid">
+            <!-- Moveset div for second Pokémon -->
+            <% pokemonDetails[1].moves.forEach((move, index) => { %>
+            <button class="move" data-pokemon="2" data-move="<%= move %>">
+              <%= move %>
+            </button>
             <% }) %>
-          </select>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="pokemon2Move" class="form-label"
-            >Tegenstander Aanval:</label
-          >
-          <select
-            id="pokemon2Move"
-            name="pokemon2Move"
-            class="form-select"
-          ></select>
-        </div>
-        <button type="button" id="startBattle" class="btn btn-primary">
-          Start Battle
-        </button>
-      </form>
+      </div>
       <div id="battleResult" class="mt-5"></div>
     </main>
+
     <%- include("./partials/footer") %>
   </body>
 </html>

@@ -232,15 +232,44 @@ select:focus {
   justify-content: center;
   align-items: center;
 }
+#battleContainer {
+  gap: 500px;
+  display: flex;
+}
+.moveset.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 kolommen met gelijke breedte */
+  gap: 10px; /* Ruimte tussen de knoppen */
+}
+.pokemon img {
+  width: 250px; /* Pas dit aan aan de gewenste breedte */
+  height: 250px; /* Pas dit aan aan de gewenste hoogte */
+}
 
+.moveset.grid .move {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition-duration: 0.4s;
+}
+
+.moveset.grid .move:hover {
+  background-color: #45a049; /* Darker Green */
+}
 #pokemon1 {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
 }
 
 #pokemon2 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 #naampokemonstats {
@@ -587,7 +616,8 @@ label {
 }
 
 #blurry {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%) hue-rotate(9deg) brightness(0%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%)
+    hue-rotate(9deg) brightness(0%) contrast(100%);
 }
 
 /* login page */
@@ -687,15 +717,12 @@ label {
 
 /* Pokemon catcher Rayan*/
 .catcher-page {
-  background-image: url('../assets/images/pokemon_forest_background.png');
+  background-image: url("../assets/images/pokemon_forest_background.png");
   background-size: cover;
   background-position: bottom;
   background-repeat: no-repeat;
   padding-bottom: 20px;
 }
-
-
-
 
 .pokeball-image {
   width: 50px;
@@ -703,8 +730,6 @@ label {
   height: 50px;
   /* Pas de grootte van de pokeball aan naar wens */
 }
-
-
 
 /* Mediaqueries*/
 @media only screen and (max-width: 992px) {
