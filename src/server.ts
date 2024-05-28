@@ -211,19 +211,6 @@ app.get("/pokemonStats", (req, res) => {
   res.render("pokemonStats");
 });
 
-// Pokemon catcher Rayan
-
-let currentPokemon1 = {
-  name: "",
-  hp: 100, // Stel de HP in op 100 of een ander passend startwaarde
-  // Andere statistieken van de Pokémon...
-};
-
-let currentPokemon2 = {
-  name: "",
-  hp: 100, // Stel de HP in op 100 of een ander passend startwaarde
-  // Andere statistieken van de Pokémon...
-};
 
 // pokemonbattler
 app.get("/pokemonbattler", async (req: Request, res: Response) => {
@@ -380,7 +367,6 @@ app.post("/login", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).render("login", { error: "Er is een fout opgetreden bij het inloggen." });
-<<<<<<< HEAD
   }
 });
 
@@ -431,38 +417,8 @@ app.post("/catchPokemon", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error catching Pokémon:", error);
     res.status(500).send("Er is een fout opgetreden bij het vangen van de Pokémon.");
-=======
->>>>>>> refs/remotes/origin/Kaptan
   }
 });
-
-
-
-
-const checkAuth = (req: Request, res: Response, next: () => void) => {
-  if (!req.session.user) {
-    return res.redirect('/login');
-  }
-  next();
-};
-
-app.post("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Error during logout:", err);
-      return res.status(500).send("Er is een fout opgetreden bij het uitloggen.");
-    }
-    res.redirect("/login");
-  });
-});
-
-
-app.get("/pokemoncatcher", (req, res) => {
-  res.render("pokemoncatcher");
-});
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
