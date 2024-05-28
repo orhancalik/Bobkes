@@ -1,4 +1,5 @@
 import session, { SessionData } from 'express-session';
+import { CapturedPokemon } from './types';
 import mongoDbSession from 'connect-mongodb-session';
 import dotenv from 'dotenv';
 
@@ -16,9 +17,11 @@ mongoStore.on('error', (error) => {
     console.error(error);
 });
 
+
+
 declare module 'express-session' {
     export interface SessionData {
-        user?: { username: string; email: string };
+        user?: { username: string; email: string; pokemon?: CapturedPokemon };
     }
 }
 

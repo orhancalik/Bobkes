@@ -1,28 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('morePokemonBtn').addEventListener('click', loadMorePokemon);
-  document.getElementById('allPokemonBtn').addEventListener('click', loadAllPokemon);
+  const favoriteButtons = document.querySelectorAll('.favorite-btn');
+
+  favoriteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const pokemonName = button.getAttribute('data-name');
+
+      fetch('/setFavoritePokemon', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: pokemonName })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Favoriete Pokémon ingesteld!');
+            location.reload(); // Herlaad de pagina om de wijzigingen weer te geven
+          } else {
+            alert('Er is iets misgegaan bij het instellen van je favoriete Pokémon.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  });
+  const showAllPokemonCheckbox = document.getElementById('showAllPokemon');
+  const allPokemonList = document.getElementById('allPokemonList');
+
+  showAllPokemonCheckbox.addEventListener('change', function () {
+    if (this.checked) {
+      allPokemonList.classList.remove('hidden');
+    } else {
+      allPokemonList.classList.add('hidden');
+    }
+  });
 });
 
-function loadMorePokemon() {
-  // Fetch and append more Pokémon to the list
-  // This is an example of how you might fetch data
-  fetch('/api/morepokemon')
-    .then(response => response.json())
-    .then(pokemonList => {
-      const pokedexList = document.getElementById('pokedexList');
-      pokemonList.forEach(pokemon => {
-        const pokemonItem = document.createElement('div');
-        pokemonItem.classList.add('pokemon-item');
-        pokemonItem.textContent = pokemon.name;
-        pokemonItem.addEventListener('click', () => {
-          window.location.href = `/pokemon/${pokemon.name}`;
-        });
-        pokedexList.appendChild(pokemonItem);
-      });
-    })
-    .catch(error => console.error('Error fetching more Pokémon:', error));
-}
 
-function loadAllPokemon() {
-  // Similar implementation as loadMorePokemon but fetches all Pokémon
-}

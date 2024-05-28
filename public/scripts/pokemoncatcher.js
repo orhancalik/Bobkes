@@ -19,7 +19,9 @@ window.onload = function () {
                         const pokemonInfo = {
                             name: data.name, // Gebruik de naam zoals deze uit de API komt
                             level: Math.floor(Math.random() * 50) + 1, // Random level tussen 1 en 50
+                            attack: data.stats[1].base_stat,
                             defence: data.stats[3].base_stat, // Veronderstel dat de 4e statistiek de verdediging is
+                            speed: data.stats[5].base_stat,
                             captured: false,
                             image: data.sprites.front_default,
                             remainingAttempts: 3 // Voeg het aantal resterende pogingen toe
@@ -63,6 +65,7 @@ window.onload = function () {
                                     const nickname = prompt(`Gefeliciteerd! Je hebt ${pokemonInfo.name} gevangen! Geef deze Pokémon een bijnaam:`);
                                     pokemonInfo.name = nickname ? nickname : pokemonInfo.name; // Gebruik de ingevoerde bijnaam, anders behoud de originele naam
                                     pokemonInfo.captured = true;
+                                    pokemonInfo.capturedDate = new Date().toLocaleDateString(); // Voeg de huidige datum toe
                                     pokeballImage.src = "./assets/images/green_pokeball.png";
                                     alert(`Je hebt ${pokemonInfo.name} gevangen!`);
 

@@ -5,6 +5,7 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import axios from "axios"; // Add axios for API requests
 import session from "./session";
+import { CapturedPokemon } from './types';
 
 dotenv.config();
 
@@ -33,11 +34,8 @@ const getPokemonList = async () => {
   return data.results;
 };
 
-// Simulated current Pokémon stats (to be replaced with actual logic)
-let currentPokemon = {
-  attack: 39,
-  defense: 28,
-};
+
+
 
 // Index
 app.get("/", (req, res) => {
@@ -49,9 +47,163 @@ app.get("/pokemonvergelijken", async (req: Request, res: Response) => {
   res.render("pokemonvergelijken");
 });
 
-// MijnPokemon YNS
-app.get("/mijnpokemon", (req, res) => {
-  res.render("mijnpokemon");
+// MijnPokemon Orhan
+app.get('/mijnpokemon', async (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  try {
+    const db = client.db();
+    const collection = db.collection('users');
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user || !user.capturedPokemon || user.capturedPokemon.length === 0) {
+      return res.render('mijnpokemon', {
+        user: req.session.user,
+        pokemonList: [],
+        message: 'Je hebt nog geen pokemons gevangen! Vang je eerste pokemon bij de catcher'
+      });
+    }
+
+    const sortedPokemonList = user.capturedPokemon.sort((a: CapturedPokemon, b: CapturedPokemon) => {
+      return a.number - b.number; // Zorg ervoor dat 'number' een eigenschap is van CapturedPokemon
+    });
+
+    // Haal alle Pokémon op uit de API
+    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1000');
+    const allPokemon: { name: string; url: string }[] = response.data.results;
+
+    // Filter de niet-gevangen Pokémon
+    const caughtPokemonNames = sortedPokemonList.map((pokemon: CapturedPokemon) => pokemon.name);
+    const uncaughtPokemon = allPokemon.filter((pokemon: { name: string; url: string }) => !caughtPokemonNames.includes(pokemon.name)).slice(0, 20);
+
+    // Voeg extra details toe aan de niet-gevangen Pokémon
+    const uncaughtPokemonDetails = await Promise.all(uncaughtPokemon.map(async (pokemon: { name: string; url: string }) => {
+      const details = await axios.get(pokemon.url);
+      return {
+        name: pokemon.name,
+        number: details.data.id,
+        image: details.data.sprites.front_default,
+        level: 'N/A',
+        defence: 'N/A',
+        caught: false
+      };
+    }));
+
+    res.render('mijnpokemon', {
+      user: req.session.user,
+      pokemonList: sortedPokemonList,
+      allPokemonList: uncaughtPokemonDetails,
+      message: '' // Altijd een message variabele doorgeven
+    });
+  } catch (error) {
+    console.error('Error fetching user Pokémon:', error);
+    res.status(500).send('Er is een fout opgetreden bij het ophalen van je Pokémon.');
+  }
+});
+
+app.post('/setFavoritePokemon', async (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.status(401).send('Je moet ingelogd zijn om een favoriete Pokémon in te stellen.');
+  }
+
+  const { name } = req.body;
+
+  try {
+    const db = client.db();
+    const collection = db.collection('users');
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user) {
+      return res.status(404).send('Gebruiker niet gevonden.');
+    }
+
+    const favoritePokemon = user.capturedPokemon.find((pokemon: CapturedPokemon) => pokemon.name === name);
+
+    if (!favoritePokemon) {
+      return res.status(404).send('Pokémon niet gevonden.');
+    }
+
+    await collection.updateOne(
+      { email: req.session.user.email },
+      { $set: { favoritePokemon } }
+    );
+
+    req.session.user.pokemon = favoritePokemon; // Update de sessie met de favoriete Pokémon
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error setting favorite Pokémon:', error);
+    res.status(500).send('Er is een fout opgetreden bij het instellen van je favoriete Pokémon.');
+  }
+});
+
+
+app.get('/pokemon/:name', async (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  try {
+    const db = client.db();
+    const collection = db.collection('users');
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user || !user.capturedPokemon) {
+      return res.status(404).send('Pokémon niet gevonden.');
+    }
+
+    const pokemon = user.capturedPokemon.find((p: CapturedPokemon) => p.name === req.params.name);
+
+    if (!pokemon) {
+      return res.status(404).send('Pokémon niet gevonden.');
+    }
+
+    res.render('pokemondetails', {
+      user: req.session.user,
+      pokemon,
+    });
+  } catch (error) {
+    console.error('Error fetching Pokémon details:', error);
+    res.status(500).send('Er is een fout opgetreden bij het ophalen van de Pokémon details.');
+  }
+});
+
+app.post('/pokemon/:name/update', async (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.status(401).send('Niet geautoriseerd');
+  }
+
+  try {
+    const { type, action } = req.body;
+    const db = client.db();
+    const collection = db.collection('users');
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user || !user.capturedPokemon) {
+      return res.status(404).send('Pokémon niet gevonden.');
+    }
+
+    const pokemon = user.capturedPokemon.find((p: CapturedPokemon) => p.name === req.params.name);
+
+    if (!pokemon) {
+      return res.status(404).send('Pokémon niet gevonden.');
+    }
+
+    if (type === 'wins') {
+      pokemon.wins = action === 'increment' ? pokemon.wins + 1 : pokemon.wins - 1;
+    } else if (type === 'losses') {
+      pokemon.losses = action === 'increment' ? pokemon.losses + 1 : pokemon.losses - 1;
+    }
+
+    await collection.updateOne({ email: req.session.user.email }, { $set: { capturedPokemon: user.capturedPokemon } });
+
+    res.status(200).send('Pokémon stats bijgewerkt');
+  } catch (error) {
+    console.error('Error updating Pokémon stats:', error);
+    res.status(500).send('Er is een fout opgetreden bij het bijwerken van de Pokémon stats.');
+  }
 });
 
 // pokemonStats YNS
@@ -142,7 +294,7 @@ app.get("/whosthatpokemon", async (req, res) => {
         pokemonDetails.data.sprites.other["official-artwork"].front_default,
     };
 
-    res.render("whosthatpokemon", { pokemon, currentPokemon });
+    res.render("whosthatpokemon", { pokemon });
   } catch (error) {
     console.error("Error fetching Pokémon:", error);
     res
@@ -158,7 +310,7 @@ app.post("/whosthatpokemon", (req: Request, res: Response) => {
   if (pokemonName.toLowerCase() === correctName.toLowerCase()) {
     // Increase attack or defense
     const statToIncrease = Math.random() > 0.5 ? "attack" : "defense";
-    currentPokemon[statToIncrease]++;
+    //currentPokemon[statToIncrease]++;
   }
 
   res.redirect("/whosthatpokemon");

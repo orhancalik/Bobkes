@@ -232,18 +232,25 @@ select:focus {
   justify-content: center;
   align-items: center;
 }
+
 #battleContainer {
   gap: 500px;
   display: flex;
 }
+
 .moveset.grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 kolommen met gelijke breedte */
-  gap: 10px; /* Ruimte tussen de knoppen */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 kolommen met gelijke breedte */
+  gap: 10px;
+  /* Ruimte tussen de knoppen */
 }
+
 .pokemon img {
-  width: 250px; /* Pas dit aan aan de gewenste breedte */
-  height: 250px; /* Pas dit aan aan de gewenste hoogte */
+  width: 250px;
+  /* Pas dit aan aan de gewenste breedte */
+  height: 250px;
+  /* Pas dit aan aan de gewenste hoogte */
 }
 
 .moveset.grid .move {
@@ -260,8 +267,10 @@ select:focus {
 }
 
 .moveset.grid .move:hover {
-  background-color: #45a049; /* Darker Green */
+  background-color: #45a049;
+  /* Darker Green */
 }
+
 #pokemon1 {
   display: flex;
   flex-direction: column;
@@ -427,14 +436,166 @@ select:focus {
   pointer-events: auto;
 }
 
-.mijnpokemon {
-  text-align: center;
-  margin-left: 500px;
+/* mijn pokemon en details */
+
+.pokedex {
+  background-image: url(../assets/images/pokedex.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  /* Zorg ervoor dat de achtergrond niet verspringt */
+  background-position: center;
 }
 
-.MijnPokemonLijst {
-  width: 300px;
+.pokedex h1 {
+  color: white;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.pokemon-details,
+.pokemon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pokemon-card,
+.pokemon-details {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.pokemon-card:hover,
+.pokemon-details:hover {
+  transform: scale(1.05);
+}
+
+.pokemon-card img,
+.pokemon-details img {
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.pokemon-details {
+  padding: 20px;
+  max-width: 400px;
+}
+
+.pokemon-details p {
+  margin: 10px 0;
+}
+
+.pokemon-card {
+  width: 200px;
+  text-align: center;
+}
+
+.pokemon-card h2 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: orange;
+  text-transform: uppercase;
+}
+
+.pokemon-card p {
+  margin: -12px 0;
+  color: black;
+}
+
+.favorite-btn,
+.increment-btn {
+  background-color: #2a75bb;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.favorite-btn:hover,
+.increment-btn:hover {
+  background-color: #1a4a7a;
+}
+
+.hidden {
+  display: none;
+}
+
+
+/* Nieuwe CSS voor de checkbox en het label */
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.form-check-input {
+  margin-right: 10px;
+}
+
+.form-check-label {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+/* pokemondetailspagina */
+.pokemon-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.pokemon-detail-container img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.pokemon-detail-container h1 {
+  color: orange;
+  text-transform: uppercase;
+  margin: 20px 0;
+}
+
+.pokemon-detail-container p {
+  color: #333;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.pokemon-detail-container .btn {
+  background-color: #2a75bb;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.pokemon-detail-container .btn:hover {
+  background-color: #1a4a7a;
 }
 
 #pokemoncatchbar {
@@ -616,8 +777,7 @@ label {
 }
 
 #blurry {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%)
-    hue-rotate(9deg) brightness(0%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%) hue-rotate(9deg) brightness(0%) contrast(100%);
 }
 
 /* login page */
