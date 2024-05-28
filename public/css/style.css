@@ -1,4 +1,12 @@
-/*ORHAN*/
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('../assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,10 +23,12 @@ body {
     "header header header header"
     "main main main main"
     "footer footer footer footer";
+
 }
 
 main {
   grid-area: main;
+  font-family: 'PressStart2P', sans-serif;
 }
 
 header {
@@ -34,9 +44,9 @@ header {
 .nav_links li a {
   text-transform: uppercase;
   color: white;
-  font-weight: bold;
-  font-size: 18px;
+  font-size: 11px;
   text-decoration: none;
+  font-family: 'PressStart2P', sans-serif;
 }
 
 footer li a {
@@ -44,6 +54,7 @@ footer li a {
   color: white;
   font-size: 12px;
   text-decoration: none;
+  font-family: 'PressStart2P', sans-serif;
 }
 
 footer li a:hover {
@@ -68,19 +79,12 @@ footer li {
   padding: 0px 20px;
 }
 
-.nav_links li a {
-  transition: all 0.3s ease 0s;
-}
 
 .nav_links li a:hover {
   color: orange;
-  font-size: 20px;
 }
 
-.nav_links li a img:hover {
-  opacity: 0.7;
-  transform: scale(0.975);
-}
+
 
 .pokeball {
   color: white;
@@ -96,7 +100,7 @@ footer li {
 
 .pokebalicon {
   color: black;
-  font-family: cursive;
+  font-family: 'PressStart2P', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,8 +109,7 @@ footer li {
 .pokemonNumber {
   font-size: 1rem;
   font-weight: 999;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'PressStart2P', sans-serif;
   color: black;
 }
 
@@ -882,6 +885,7 @@ label {
   background-position: bottom;
   background-repeat: no-repeat;
   padding-bottom: 20px;
+
 }
 
 .catcher-page h1 {
@@ -917,6 +921,8 @@ label {
   height: 50px;
   /* Pas de grootte van de pokeball aan naar wens */
 }
+
+
 
 /* Mediaqueries*/
 @media only screen and (max-width: 992px) {
