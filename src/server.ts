@@ -56,12 +56,7 @@ app.get("/mijnpokemon", async (req: Request, res: Response) => {
     const user = await collection.findOne({ email: req.session.user.email });
 
     if (!user || !user.capturedPokemon || user.capturedPokemon.length === 0) {
-      return res.render("mijnpokemon", {
-        user: req.session.user,
-        pokemonList: [],
-        message:
-          "Je hebt nog geen pokemons gevangen! Vang je eerste pokemon bij de catcher",
-      });
+      return res.redirect("/pokemoncatcher");
     }
 
     const sortedPokemonList = user.capturedPokemon.sort(
@@ -493,6 +488,30 @@ const redirectLoggedInUser = (
   }
   next();
 };
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Hash het wachtwoord
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Voeg de gebruiker toe aan de database
+    const db = client.db();
+    const collection = db.collection("users");
+    await collection.insertOne({ email, password: hashedPassword });
+
+    res.redirect("/login");
+  } catch (error) {
+    console.error("Error during registration:", error);
+    res.status(500).send("Er is een fout opgetreden bij de registratie.");
+  }
+});
+
 // Login
 app.get("/login", redirectLoggedInUser, (req, res) => {
   const error = req.query.error;
@@ -589,7 +608,9 @@ app.post("/catchPokemon", async (req: Request, res: Response) => {
     res.status(200).send("Pokémon succesvol gevangen!");
   } catch (error) {
     console.error("Error catching Pokémon:", error);
-    res.status(500).send("Er is een fout opgetreden bij het vangen van de Pokémon.");
+    res
+      .status(500)
+      .send("Er is een fout opgetreden bij het vangen van de Pokémon.");
   }
 });
 
