@@ -4,7 +4,7 @@ window.onload = function () {
   }
 
   const offset = getRandomInt(1000);
-  fetch(`https://pokeapi.co/api/v2/pokemon?limit=8&offset=${offset}`)
+  fetch(`https://pokeapi.co/api/v2/pokemon?limit=5&offset=${offset}`)
     .then((response) => response.json())
     .then((data) => {
       const availablePokemon = data.results;
