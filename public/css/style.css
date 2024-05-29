@@ -85,8 +85,6 @@ footer li {
   color: orange;
 }
 
-
-
 .pokeball {
   color: yellow;  
   font-family: 'PressStart2P', sans-serif;
@@ -654,6 +652,13 @@ footer {
 }
 
 /*Pagina vergelijken Rayan*/
+.compare-background{
+  background-image: url(../assets/images/vergelijken-background.png);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
 #compare-page {
   display: flex;
   justify-content: center;
@@ -682,17 +687,17 @@ footer {
 
 /* Button random pokemon*/
 .myBttn {
-  border: 2px solid #4caf50;
+  border: 2px solid black;
   border-radius: 5px;
-  color: #fff;
-  background-color: #4caf50;
+  color: black;
+  background-color: yellow;
   cursor: pointer;
   margin: 2rem;
   padding: 5px;
 }
 
 .myBttn:hover {
-  border-color: #45a049;
+  border-color: white;
 }
 
 .myBttn:focus {
@@ -771,7 +776,12 @@ label {
 }
 
 /* Whos that pokemon Rayan*/
-
+.who-background{
+  background-image: url(../assets/images/whosthatpokemon-background.jpg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
 #guessForm {
   text-align: center;
   margin-top: 20px;
@@ -787,15 +797,21 @@ label {
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  border: solid 2px #3e8e41;
+  border: solid 2px black;
+  background-color: white;
 }
 
 #who-page {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
+#who-page h1{
+  margin-top: 32px;
+  color: yellow;
+}
 #who-page article {
   display: flex;
   justify-content: center;
@@ -805,7 +821,6 @@ label {
   width: 50%;
   max-width: 450px;
   flex-direction: column;
-  margin-left: 250px;
 }
 
 #who-page article h1 {
@@ -813,7 +828,8 @@ label {
 }
 
 #blurry {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%) hue-rotate(9deg) brightness(0%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7494%)
+    hue-rotate(9deg) brightness(0%) contrast(100%);
 }
 
 /* login page */
