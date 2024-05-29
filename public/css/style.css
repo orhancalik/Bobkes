@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'PressStart2P';
-  src: url('../assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-family: "PressStart2P";
+  src: url("../assets/fonts/PressStart2P-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -21,13 +21,13 @@ body {
     "header header header header"
     "main main main main"
     "footer footer footer footer";
-    font-family: 'PressStart2P', sans-serif;
-
+  font-family: "PressStart2P", sans-serif;
+  cursor: url(../assets/images/red_pokeball.png), auto;
 }
 
 main {
   grid-area: main;
-  font-family: 'PressStart2P', sans-serif;
+  font-family: "PressStart2P", sans-serif;
 }
 
 header {
@@ -45,7 +45,7 @@ header {
   color: white;
   font-size: 11px;
   text-decoration: none;
-  font-family: 'PressStart2P', sans-serif;
+  font-family: "PressStart2P", sans-serif;
 }
 
 footer li a {
@@ -53,7 +53,7 @@ footer li a {
   color: white;
   font-size: 12px;
   text-decoration: none;
-  font-family: 'PressStart2P', sans-serif;
+  font-family: "PressStart2P", sans-serif;
 }
 
 footer li a:hover {
@@ -78,18 +78,17 @@ footer li {
   padding: 0px 20px;
 }
 
-
 .nav_links li a:hover {
   color: orange;
 }
 
 .pokeball {
-  color: yellow;  
-  font-family: 'PressStart2P', sans-serif;
+  color: yellow;
+  font-family: "PressStart2P", sans-serif;
 }
 
-#logoutForm{
-  font-family: 'PressStart2P', sans-serif;
+#logoutForm {
+  font-family: "PressStart2P", sans-serif;
 }
 
 .pokemon-info {
@@ -100,7 +99,7 @@ footer li {
 
 .pokebalicon {
   color: black;
-  font-family: 'PressStart2P', sans-serif;
+  font-family: "PressStart2P", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,7 +108,7 @@ footer li {
 .pokemonNumber {
   font-size: 1rem;
   font-weight: 999;
-  font-family: 'PressStart2P', sans-serif;
+  font-family: "PressStart2P", sans-serif;
   color: black;
 }
 
@@ -240,18 +239,18 @@ select:focus {
   justify-content: center;
 }
 
-.battler-background{
+.battler-background {
   background-image: url(../assets/images/battler-background.png);
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
 }
-.battler-background h1{
+.battler-background h1 {
   color: yellow;
   text-align: center;
   margin-top: 22px;
 }
-#battleResult{
+#battleResult {
   color: white;
 }
 
@@ -295,11 +294,11 @@ select:focus {
   color: red;
 }
 
-#searchInput{
+#searchInput {
   color: white;
 }
 
-#searchButton{
+#searchButton {
   color: white;
 }
 #naampokemonstats {
@@ -548,7 +547,6 @@ select:focus {
 
 /* pokemon details uitlijning */
 
-
 /* Nieuwe CSS voor de checkbox en het label */
 .checkbox-container {
   display: flex;
@@ -615,11 +613,11 @@ select:focus {
   background-color: #1a4a7a;
 }
 
-.evolution-path{
-display: flex;
-gap: 50px;
-flex-direction: row;
-align-items: flex-end;
+.evolution-path {
+  display: flex;
+  gap: 50px;
+  flex-direction: row;
+  align-items: flex-end;
 }
 
 #pokemoncatchbar {
@@ -642,7 +640,7 @@ footer {
 }
 
 /*Pagina vergelijken Rayan*/
-.compare-background{
+.compare-background {
   background-image: url(../assets/images/vergelijken-background.png);
   background-position: center;
   background-size: cover;
@@ -766,7 +764,7 @@ label {
 }
 
 /* Whos that pokemon Rayan*/
-.who-background{
+.who-background {
   background-image: url(../assets/images/whosthatpokemon-background.jpg);
   background-position: center;
   background-size: cover;
@@ -798,7 +796,7 @@ label {
   flex-direction: column;
 }
 
-#who-page h1{
+#who-page h1 {
   margin-top: 32px;
   color: yellow;
 }
@@ -924,7 +922,6 @@ label {
   background-position: bottom;
   background-repeat: no-repeat;
   padding-bottom: 20px;
-
 }
 
 .catcher-page h1 {
@@ -961,12 +958,16 @@ label {
   height: 50px;
 }
 
-
-
-
 /* Mediaqueries*/
 @media only screen and (max-width: 992px) {
   #compare-page {
+    flex-direction: column;
+  }
+  #pokemonContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  #battleContainer {
     flex-direction: column;
   }
 
@@ -981,7 +982,9 @@ label {
   #who-page article {
     margin-left: 100px;
   }
-
+  #who-page h1 {
+    text-align: center;
+  }
   #battlepage {
     flex-direction: column;
   }
