@@ -5,8 +5,6 @@
   font-style: normal;
 }
 
-
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -220,12 +218,9 @@ select:focus {
 
 .pokemon-item img {
   width: auto;
-  /* Zorg ervoor dat de breedte automatisch wordt aangepast */
   max-height: 200px;
-  /* Stel de maximale hoogte in */
   margin-top: 15px;
   margin-bottom: 15px;
-  /* Voeg indien nodig marge toe aan de boven- en onderkant */
 }
 
 .pokemon-item img:hover {
@@ -263,16 +258,12 @@ select:focus {
 .moveset.grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* 2 kolommen met gelijke breedte */
   gap: 10px;
-  /* Ruimte tussen de knoppen */
 }
 
 .pokemon img {
   width: 250px;
-  /* Pas dit aan aan de gewenste breedte */
   height: 250px;
-  /* Pas dit aan aan de gewenste hoogte */
 }
 
 .moveset.grid .move {
@@ -290,7 +281,6 @@ select:focus {
 
 .moveset.grid .move:hover {
   background-color: #45a049;
-  /* Darker Green */
 }
 
 #pokemon1 {
@@ -968,9 +958,7 @@ label {
 
 .pokeball-image {
   width: 50px;
-  /* Pas de grootte van de pokeball aan naar wens */
   height: 50px;
-  /* Pas de grootte van de pokeball aan naar wens */
 }
 
 
