@@ -23,6 +23,7 @@ body {
     "header header header header"
     "main main main main"
     "footer footer footer footer";
+    font-family: 'PressStart2P', sans-serif;
 
 }
 
@@ -87,9 +88,12 @@ footer li {
 
 
 .pokeball {
-  color: white;
-  font-weight: bold;
-  line-height: 15px;
+  color: yellow;  
+  font-family: 'PressStart2P', sans-serif;
+}
+
+#logoutForm{
+  font-family: 'PressStart2P', sans-serif;
 }
 
 .pokemon-info {
@@ -237,8 +241,25 @@ select:focus {
 }
 
 #battleContainer {
-  gap: 500px;
+  gap: 250px;
   display: flex;
+  margin: 50px;
+  justify-content: center;
+}
+
+.battler-background{
+  background-image: url(../assets/images/battler-background.png);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.battler-background h1{
+  color: yellow;
+  text-align: center;
+  margin-top: 22px;
+}
+#battleResult{
+  color: white;
 }
 
 .moveset.grid {
@@ -277,13 +298,22 @@ select:focus {
 #pokemon1 {
   display: flex;
   flex-direction: column;
+  color: yellow;
 }
 
 #pokemon2 {
   display: flex;
   flex-direction: column;
+  color: red;
 }
 
+#searchInput{
+  color: white;
+}
+
+#searchButton{
+  color: white;
+}
 #naampokemonstats {
   font-weight: 999;
 }
@@ -496,13 +526,8 @@ select:focus {
   margin: 10px 0;
 }
 
-.pokemon-card {
-  width: 200px;
-  text-align: center;
-}
-
 .pokemon-card h2 {
-  font-size: 24px;
+  font-size: 17px;
   margin: 10px 0;
   color: orange;
   text-transform: uppercase;
@@ -533,6 +558,8 @@ select:focus {
   display: none;
 }
 
+/* pokemon details uitlijning */
+
 
 /* Nieuwe CSS voor de checkbox en het label */
 .checkbox-container {
@@ -557,7 +584,6 @@ select:focus {
 .pokemon-detail-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
@@ -599,6 +625,13 @@ select:focus {
 
 .pokemon-detail-container .btn:hover {
   background-color: #1a4a7a;
+}
+
+.evolution-path{
+display: flex;
+gap: 50px;
+flex-direction: row;
+align-items: flex-end;
 }
 
 #pokemoncatchbar {
@@ -901,6 +934,7 @@ label {
 #pokemonContainer {
   display: flex;
   justify-content: center;
+  gap: 15px;
 }
 
 .pokemon-card {
@@ -908,11 +942,12 @@ label {
   flex-direction: column;
   align-items: center;
   margin-bottom: 49px;
+  width: 200px;
+  text-align: center;
 }
 
 .pokemon-details {
-  color: white;
-  font-weight: bold;
+  color: black;
 }
 
 .pokeball-image {
@@ -921,6 +956,7 @@ label {
   height: 50px;
   /* Pas de grootte van de pokeball aan naar wens */
 }
+
 
 
 

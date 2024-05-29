@@ -103,6 +103,8 @@ app.get('/mijnpokemon', async (req: Request, res: Response) => {
   }
 });
 
+
+
 app.post('/setFavoritePokemon', async (req: Request, res: Response) => {
   if (!req.session.user) {
     return res.status(401).send('Je moet ingelogd zijn om een favoriete Pokémon in te stellen.');
@@ -213,55 +215,157 @@ app.get("/pokemonStats", (req, res) => {
 
 
 // pokemonbattler
+let pokemonDetails: CapturedPokemon[];
 app.get("/pokemonbattler", async (req: Request, res: Response) => {
-  const pokemonList = await getPokemonList();
-  res.render("pokemonbattler", { pokemonList });
-});
-
-// Handle Pokémon battle
-app.post("/pokemonbattle", async (req: Request, res: Response) => {
-  const { pokemon1, pokemon2 } = req.body;
-
-  // Fetch stats and sprites for both Pokémon
-  const fetchPokemonStats = async (pokemonName: string) => {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-    return {
-      name: pokemonName,
-      attack: response.data.stats[1].base_stat,
-      defense: response.data.stats[2].base_stat,
-      hp: response.data.stats[0].base_stat,
-      sprite: response.data.sprites.front_default,
-    };
-  };
-
-  const pokemon1Stats = await fetchPokemonStats(pokemon1);
-  const pokemon2Stats = await fetchPokemonStats(pokemon2);
-
-  // Simulated battle logic
-  while (pokemon1Stats.hp > 0 && pokemon2Stats.hp > 0) {
-    // Pokémon 1 attacks Pokémon 2
-    const damageTo2 = Math.max(0, pokemon1Stats.attack - pokemon2Stats.defense);
-    pokemon2Stats.hp -= damageTo2;
-
-    // Check if Pokémon 2 has fainted
-    if (pokemon2Stats.hp <= 0) {
-      res.json({ message: `${pokemon1Stats.name} wins!`, currentPokemon1: pokemon1Stats, currentPokemon2: pokemon2Stats });
-      return;
-    }
-
-    // Pokémon 2 attacks Pokémon 1
-    const damageTo1 = Math.max(0, pokemon2Stats.attack - pokemon1Stats.defense);
-    pokemon1Stats.hp -= damageTo1;
-
-    // Check if Pokémon 1 has fainted
-    if (pokemon1Stats.hp <= 0) {
-      res.json({ message: `${pokemon2Stats.name} wins!`, currentPokemon1: pokemon1Stats, currentPokemon2: pokemon2Stats });
-      return;
-    }
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
 
-  res.json({ message: "It's a draw!", currentPokemon1: pokemon1Stats, currentPokemon2: pokemon2Stats });
+  try {
+    const db = client.db();
+    const collection = db.collection("users");
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user || !user.capturedPokemon || user.capturedPokemon.length === 0) {
+      return res.status(400).send("You don't have any captured Pokémon.");
+    }
+
+    const currentPokemon1 = user.capturedPokemon[0]; // For simplicity, choose the first captured Pokémon
+
+    // Fetch an opponent Pokémon from the API
+    const response = await axios.get(
+      "https://pokeapi.co/api/v2/pokemon?limit=151"
+    );
+    const randomIndex = Math.floor(
+      Math.random() * response.data.results.length
+    );
+    const opponentData = await axios.get(
+      response.data.results[randomIndex].url
+    );
+    const currentPokemon2 = {
+      name: opponentData.data.name,
+      moves: opponentData.data.moves
+        .slice(0, 4)
+        .map((move: any) => move.move.name),
+      sprite: opponentData.data.sprites.other["official-artwork"].front_default,
+      hp: 100,
+      defense: 5,
+      attack: Math.floor(Math.random() * 10) + 1,
+    };
+
+    // Create a battle context
+    const pokemonDetails = [
+      {
+        name: currentPokemon1.name,
+        moves: ["Tackle", "Growl", "Quick Attack", "Swift"], // Example moves
+        sprite: currentPokemon1.image,
+        hp: 100,
+        defense: currentPokemon1.defense || 5, // Set default if not present
+        attack: currentPokemon1.attack || Math.floor(Math.random() * 10) + 1, // Set default if not present
+      },
+      currentPokemon2,
+    ];
+
+    res.render("pokemonbattler", { pokemonDetails });
+  } catch (error) {
+    console.error("Error fetching Pokémon list:", error);
+    res.status(500).send("Error fetching Pokémon list.");
+  }
 });
+
+app.post("/pokemonbattle", async (req: Request, res: Response) => {
+  const { attacker, move } = req.body;
+  const moveDamage = Math.floor(Math.random() * 10) + 1; // Random damage between 1 and 10
+
+  // Ensure pokemonDetails is defined
+  if (!pokemonDetails || pokemonDetails.length < 2) {
+    return res.status(400).send("Battle context not set up correctly.");
+  }
+
+  // Define the current attacker and defender based on the user's input
+  let currentAttacker, currentDefender;
+
+  if (attacker === "user") {
+    currentAttacker = pokemonDetails[0]; // User's Pokémon
+    currentDefender = pokemonDetails[1]; // Opponent Pokémon
+  } else {
+    currentAttacker = pokemonDetails[1]; // Opponent Pokémon
+    currentDefender = pokemonDetails[0]; // User's Pokémon
+  }
+
+  const damage = moveDamage - currentDefender.defence; // Calculate damage after defense
+  currentDefender.hp -= damage > 0 ? damage : 0; // Reduce defender's HP
+
+  try {
+    // Ensure req.session and req.session.user are defined
+    if (!req.session || !req.session.user || !req.session.user.email) {
+      return res.status(401).send("Unauthorized");
+    }
+    const pokemon = req.body;
+    // Check if the opponent Pokémon has fainted
+    if (pokemonDetails[1].hp <= 0) {
+      // Capture the opponent Pokémon
+      const db = client.db();
+      const collection = db.collection("users");
+
+      const capturedPokemon: CapturedPokemon = {
+        name: pokemonDetails[1].name,
+        number: pokemonDetails[1].number, // Assuming number is part of pokemonDetails
+        image: pokemonDetails[1].image,
+        level: pokemonDetails[1].level,
+        defence: pokemonDetails[1].defence,
+        attack: pokemonDetails[1].attack,
+        moves: pokemonDetails[1].moves,
+        speed: pokemonDetails[1].speed,
+        hp: pokemonDetails[1].hp,
+      };
+
+      await collection.updateOne(
+        { email: req.session.user.email },
+        { $push: { capturedPokemon: pokemon } } // Simplified the $push operator
+      );
+
+      return res.json({
+        pokemonDetails,
+        message: "Battle Over! You captured the Pokémon!",
+      });
+    } else if (pokemonDetails[0].hp <= 0) {
+      return res.json({
+        pokemonDetails,
+        message: "Battle Over! Your Pokémon fainted!",
+      });
+    } else {
+      return res.json({
+        pokemonDetails,
+        message: "Battle Continues",
+      });
+    }
+  } catch (error) {
+    console.error("Error capturing Pokémon after battle:", error);
+    return res.status(500).send("Error capturing Pokémon after battle.");
+  }
+});
+
+app.get("/pokemonsearch/:pokemonName", async (req: Request, res: Response) => {
+  try {
+    const pokemonName = req.params.pokemonName.toLowerCase();
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+    );
+    const pokemonDetails = {
+      name: response.data.name,
+      sprite: response.data.sprites.other["official-artwork"].front_default,
+      moves: response.data.moves.map((move: any) => move.move.name),
+    };
+    res.json(pokemonDetails);
+  } catch (error) {
+    console.error("Error fetching Pokémon details:", error);
+    res.status(500).json({
+      error: "Er is een fout opgetreden bij het ophalen van Pokémon-details.",
+    });
+  }
+});
+
 
 // Who's That Pokemon?
 app.get("/whosthatpokemon", async (req, res) => {
