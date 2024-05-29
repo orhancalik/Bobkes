@@ -36,7 +36,7 @@ const getPokemonList = async () => {
 
 // Index
 app.get("/", (req, res) => {
-  res.render("landingpage");
+  res.render("landingPage");
 });
 
 // Route om de pokemonvergelijken.ejs pagina te renderen
