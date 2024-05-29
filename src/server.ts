@@ -24,7 +24,6 @@ app.use((req: Request, res: Response, next) => {
 });
 
 
-
 const uri = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, {});
 
@@ -34,12 +33,9 @@ const getPokemonList = async () => {
   return data.results;
 };
 
-
-
-
 // Index
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("landingpage");
 });
 
 // Route om de pokemonvergelijken.ejs pagina te renderen
@@ -102,8 +98,6 @@ app.get('/mijnpokemon', async (req: Request, res: Response) => {
     res.status(500).send('Er is een fout opgetreden bij het ophalen van je Pokémon.');
   }
 });
-
-
 
 app.post('/setFavoritePokemon', async (req: Request, res: Response) => {
   if (!req.session.user) {
@@ -207,12 +201,6 @@ app.post('/pokemon/:name/update', async (req: Request, res: Response) => {
     res.status(500).send('Er is een fout opgetreden bij het bijwerken van de Pokémon stats.');
   }
 });
-
-// pokemonStats YNS
-app.get("/pokemonStats", (req, res) => {
-  res.render("pokemonStats");
-});
-
 
 // pokemonbattler
 let pokemonDetails: CapturedPokemon[];
@@ -368,16 +356,29 @@ app.get("/pokemonsearch/:pokemonName", async (req: Request, res: Response) => {
 
 
 // Who's That Pokemon?
-app.get("/whosthatpokemon", async (req, res) => {
+app.get("/whosthatpokemon", async (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+
   try {
-    // Fetch a random Pokémon
+    const db = client.db();
+    const collection = db.collection("users");
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user || !user.capturedPokemon || user.capturedPokemon.length === 0) {
+      return res.status(400).send("You don't have any captured Pokémon.");
+    }
+
+    const currentPokemon1 = user.capturedPokemon[0]; // For simplicity, choose the first captured Pokémon
+
+    // Fetch a random Pokémon from the API for the guessing game
     const response = await axios.get(
       "https://pokeapi.co/api/v2/pokemon?limit=151"
     );
     const pokemonList = response.data.results;
     const randomIndex = Math.floor(Math.random() * pokemonList.length);
     const randomPokemon = pokemonList[randomIndex];
-
     const pokemonDetails = await axios.get(randomPokemon.url);
     const pokemon = {
       name: pokemonDetails.data.name,
@@ -385,7 +386,7 @@ app.get("/whosthatpokemon", async (req, res) => {
         pokemonDetails.data.sprites.other["official-artwork"].front_default,
     };
 
-    res.render("whosthatpokemon", { pokemon });
+    res.render("whosthatpokemon", { pokemon, currentPokemon: currentPokemon1 });
   } catch (error) {
     console.error("Error fetching Pokémon:", error);
     res
@@ -394,48 +395,49 @@ app.get("/whosthatpokemon", async (req, res) => {
   }
 });
 
-// Handle the guess submission
-app.post("/whosthatpokemon", (req: Request, res: Response) => {
+app.post("/whosthatpokemon", async (req: Request, res: Response) => {
   const { pokemonName, correctName } = req.body;
 
-  if (pokemonName.toLowerCase() === correctName.toLowerCase()) {
-    // Increase attack or defense
-    const statToIncrease = Math.random() > 0.5 ? "attack" : "defense";
-    //currentPokemon[statToIncrease]++;
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
 
-  res.redirect("/whosthatpokemon");
-});
-
-// LandingPage
-app.get("/landingPage", (req, res) => {
-  res.render("landingPage");
-});
-
-// Register
-app.get("/register", (req, res) => {
-  res.render("register");
-});
-
-app.post("/register", async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    // Hash het wachtwoord
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Voeg de gebruiker toe aan de database
     const db = client.db();
     const collection = db.collection("users");
-    await collection.insertOne({ email, password: hashedPassword });
+    const user = await collection.findOne({ email: req.session.user.email });
 
-    res.redirect("/login");
+    if (!user || !user.capturedPokemon || user.capturedPokemon.length === 0) {
+      return res.status(400).send("You don't have any captured Pokémon.");
+    }
+
+    const currentPokemon1 = user.capturedPokemon[0]; // For simplicity, choose the first captured Pokémon
+
+    if (pokemonName.toLowerCase() === correctName.toLowerCase()) {
+      const statToIncrease = Math.random() > 0.5 ? "attack" : "defense";
+      currentPokemon1[statToIncrease] =
+        (currentPokemon1[statToIncrease] || 0) + 1;
+
+      // Update the captured Pokémon in the database
+      await collection.updateOne(
+        {
+          email: req.session.user.email,
+          "capturedPokemon.name": currentPokemon1.name,
+        },
+        { $set: { "capturedPokemon.$": currentPokemon1 } }
+      );
+    }
+
+    res.redirect("/whosthatpokemon");
   } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).send("Er is een fout opgetreden bij de registratie.");
+    console.error("Error updating Pokémon stats:", error);
+    res
+      .status(500)
+      .send(
+        "Er is een fout opgetreden bij het bijwerken van de Pokémon stats."
+      );
   }
 });
-
 // Login
 app.get("/login", (req, res) => {
   const error = req.query.error;
@@ -466,7 +468,7 @@ app.post("/login", async (req: Request, res: Response) => {
     req.session.user = { username: user.username, email: user.email };
 
     // Stuur de gebruiker door naar de indexpagina
-    res.redirect("/");
+    res.redirect("/index");
 
   } catch (error) {
     console.error("Error during login:", error);
@@ -474,6 +476,10 @@ app.post("/login", async (req: Request, res: Response) => {
   }
 });
 
+
+app.get("/index", (req: Request, res: Response) => {
+  res.render("index");
+});
 
 const checkAuth = (req: Request, res: Response, next: () => void) => {
   if (!req.session.user) {
@@ -494,7 +500,10 @@ app.post("/logout", (req, res) => {
 
 //catcher
 
-app.get("/pokemoncatcher", (req, res) => {
+app.get("/pokemoncatcher", (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
   res.render("pokemoncatcher");
 });
 

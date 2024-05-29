@@ -12,6 +12,9 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"defer></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer></script>
+    <script src="/scripts/who's-pokemon.js" defer></script>
     <title>Who's that Pokemon?</title>
   </head>
   <body>
@@ -48,71 +51,41 @@
               <% if (user && user.username) { %>
                 <span id="currentPokemonName"><%= user.username %></span>
               <% } else { %>
-                <span id="currentPokemonName">Vang pokemon</span>
+                <span id="currentPokemonName"></span>
               <% } %>
               <% if (user && user.pokemon) { %>
                 <img src="<%= user.pokemon.image %>" alt="<%= user.pokemon.name %>" width="70px" />
                 <span class="<%= user.pokemon.type %>"><%= user.pokemon.name %></span>
               <% } else { %>
-                <span class="no-pokemon">Geen pokemon</span>
+                <span class="no-pokemon">?</span>
               <% } %>
             </div>
           </li>
         </ul>
       </nav>
     </header>
-    <main>
+    <main class="who-background">
       <section id="who-page">
-        <article class="projecten-item">
-          <h1>Who's that Pokémon?</h1>
-          <img
-            id="blurry"
-            src="<%= pokemon.image %>"
-            alt="Who's that Pokémon"
+        <h1>Who's that Pokémon?</h1>
+        <img id="blurry" src="<%= pokemon.image %>" alt="Who's that Pokémon" />
+        <form
+          id="guessForm"
+          method="POST"
+          action="/whosthatpokemon"
+          autocomplete="off"
+        >
+          <label for="pokemonName">Raad de naam van de Pokémon:</label>
+          <input
+            type="text"
+            id="pokemonName"
+            name="pokemonName"
+            autocomplete="off"
+            required
           />
-          <form id="guessForm" method="POST" action="/whosthatpokemon">
-            <label for="pokemonName">Raad de naam van de Pokémon:</label>
-            <input type="text" id="pokemonName" name="pokemonName" required />
-            <input
-              type="hidden"
-              name="correctName"
-              value="<%= pokemon.name %>"
-            />
-            <button class="myBttn" type="submit">Indienen</button>
-          </form>
-        </article>
-        <article class="projecten-item">
-          <h1>Huidige Pokémon</h1>
-          <img
-            src="assets/images/bulbasaur.jpg"
-            alt="Current Pokémon"
-            width="350px"
-          />
-          <div class="progress" style="height: 30px">
-            <div
-              class="progress-bar bg-warning"
-              role="progressbar"
-              style="width: 100"
-              aria-valuenow="<%= currentPokemon.attack %>"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              Aanval: <%= currentPokemon.attack %>
-            </div>
-          </div>
-          <div class="progress" style="height: 30px">
-            <div
-              class="progress-bar bg-danger"
-              role="progressbar"
-              style="width: 100"
-              aria-valuenow="<%= currentPokemon.defense %>"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              Verdediging: <%= currentPokemon.defense %>
-            </div>
-          </div>
-        </article>
+          <input type="hidden" name="correctName" value="<%= pokemon.name %>" />
+          <div id="autocompleteOptions"></div>
+          <button class="myBttn" type="submit">Indienen</button>
+        </form>
       </section>
     </main>
     <%- include("./partials/footer") %>
