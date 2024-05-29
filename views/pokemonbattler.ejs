@@ -40,7 +40,7 @@
             </form>
           </li>
           <% } else { %>
-          <li><a href="login">Login </a></li>
+          <li><a href="login">Login</a></li>
           <% } %>
           <li class="pokeball">
             <img src="/assets/images/pokeball.png" alt="" width="50px" />
@@ -83,11 +83,9 @@
               <span id="pokemon1HP"><%= pokemonDetails[0].hp %></span>
             </div>
           </div>
-
           <div class="moveset grid">
-            <!-- Moveset div for first Pokémon -->
             <% pokemonDetails[0].moves.forEach((move, index) => { %>
-            <button class="move" data-pokemon="1" data-move="<%= move %>">
+            <button class="move" data-pokemon="1" data-move="<%= index %>">
               <%= move %>
             </button>
             <% }) %>
@@ -101,7 +99,6 @@
             placeholder="Zoek een Pokémon..."
           />
           <button id="searchButton">Zoeken</button>
-
           <img
             src="<%= pokemonDetails[1].sprite %>"
             alt="<%= pokemonDetails[1].name %>"
@@ -118,14 +115,6 @@
             >
               <span id="pokemon2HP"><%= pokemonDetails[1].hp %></span>
             </div>
-          </div>
-          <div class="moveset grid">
-            <!-- Moveset div for second Pokémon -->
-            <% pokemonDetails[1].moves.forEach((move, index) => { %>
-            <button class="move" data-pokemon="2" data-move="<%= move %>">
-              <%= move %>
-            </button>
-            <% }) %>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import axios from "axios";
 import session from "./session";
-
+import { CapturedPokemon } from "./types";
 dotenv.config();
 
 const app = express();
@@ -63,38 +63,31 @@ app.get("/mijnpokemon", (req: Request, res: Response) => {
 app.get("/pokemonStats", (req: Request, res: Response) => {
   res.render("pokemonStats");
 });
-
+let pokemonDetails: CapturedPokemon[];
 app.get("/pokemonbattler", async (req: Request, res: Response) => {
   try {
-    const pokemonList = await getPokemonList(); // Get the list of Pokémon
-
-    // Create userPokemonMoves and pokemonDetails inside the try-block
-    const userPokemonMoves = ["move1", "move2", "move3", "move4"]; // Replace with actual moves
-    const pokemonDetails = await Promise.all(
-      pokemonList.slice(0, 2).map(async (pokemon: any) => {
-        const response = await axios.get(pokemon.url);
+    const response = await axios.get(
+      "https://pokeapi.co/api/v2/pokemon?limit=2"
+    );
+    pokemonDetails = await Promise.all(
+      response.data.results.map(async (pokemon: any) => {
+        const details = await axios.get(pokemon.url);
         return {
           name: pokemon.name,
-          moves: response.data.moves
+          moves: details.data.moves
             .slice(0, 4)
             .map((move: any) => move.move.name),
-          sprite: response.data.sprites.other["official-artwork"].front_default,
+          sprite: details.data.sprites.other["official-artwork"].front_default,
           hp: 100,
+          defense: 5,
+          attack: Math.floor(Math.random() * 10) + 1,
         };
       })
     );
-
-    // Render the EJS template with pokemonList, pokemonDetails, and userPokemonMoves passed as objects
-    res.render("pokemonbattler", {
-      pokemonList,
-      pokemonDetails,
-      userPokemonMoves,
-    });
+    res.render("pokemonbattler", { pokemonDetails });
   } catch (error) {
     console.error("Error fetching Pokémon list:", error);
-    res
-      .status(500)
-      .send("Er is een fout opgetreden bij het ophalen van de Pokémon-lijst.");
+    res.status(500).send("Error fetching Pokémon list.");
   }
 });
 
@@ -102,29 +95,29 @@ app.post("/pokemonbattle", (req: Request, res: Response) => {
   const { attacker, move } = req.body;
   const moveDamage = Math.floor(Math.random() * 10) + 1; // Random damage between 1 and 10
 
+  // Definieer de huidige aanvaller en verdediger op basis van de gebruikersinvoer
   let currentAttacker, currentDefender;
 
   if (attacker === "user") {
-    currentAttacker = currentPokemon1;
-    currentDefender = currentPokemon2;
+    currentAttacker = pokemonDetails[0]; // Gebruiker is de eerste Pokémon in de lijst
+    currentDefender = pokemonDetails[1]; // Tegenstander is de tweede Pokémon in de lijst
   } else {
-    currentAttacker = currentPokemon2;
-    currentDefender = currentPokemon1;
+    currentAttacker = pokemonDetails[1]; // Tegenstander is de eerste Pokémon in de lijst
+    currentDefender = pokemonDetails[0]; // Gebruiker is de tweede Pokémon in de lijst
   }
 
-  const damage = moveDamage - currentDefender.defense;
-  currentDefender.hp -= damage > 0 ? damage : 0;
+  const damage = moveDamage - currentDefender.defence; // Bereken de schade na het toepassen van verdedigingsstatistieken
+  currentDefender.hp -= damage > 0 ? damage : 0; // Verminder de HP van de verdediger
 
-  if (currentPokemon1.hp <= 0 || currentPokemon2.hp <= 0) {
+  // Controleer of een van de Pokémon geen HP meer heeft
+  if (pokemonDetails[0].hp <= 0 || pokemonDetails[1].hp <= 0) {
     res.json({
-      currentPokemon1,
-      currentPokemon2,
+      pokemonDetails,
       message: "Battle Over!",
     });
   } else {
     res.json({
-      currentPokemon1,
-      currentPokemon2,
+      pokemonDetails,
       message: "Battle Continues",
     });
   }

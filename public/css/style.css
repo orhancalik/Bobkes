@@ -262,6 +262,7 @@ select:focus {
 .moveset.grid .move:hover {
   background-color: #45a049; /* Darker Green */
 }
+
 #pokemon1 {
   display: flex;
   flex-direction: column;
@@ -596,7 +597,8 @@ label {
 #who-page {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
 #who-page article {
@@ -608,7 +610,6 @@ label {
   width: 50%;
   max-width: 450px;
   flex-direction: column;
-  margin-left: 250px;
 }
 
 #who-page article h1 {
