@@ -1,12 +1,10 @@
 window.onload = function () {
-    const pokemonContainer = document.getElementById("pokemonContainer");
-
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
 
     const offset = getRandomInt(1000);
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=8&offset=${offset}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon?limit=5&offset=${offset}`)
         .then(response => response.json())
         .then(data => {
             const availablePokemon = data.results;
@@ -104,7 +102,13 @@ window.onload = function () {
                                         pokemonCard.appendChild(pokemonImage);
                                         pokemonCard.appendChild(pokemonDetails);
                                         pokemonCard.appendChild(pokeballImage);
-                                        pokemonContainer.appendChild(pokemonCard);
+
+                                        const pokemonContainer = document.getElementById("pokemonContainer");
+                                        if (pokemonContainer) {
+                                            pokemonContainer.appendChild(pokemonCard);
+                                        } else {
+                                            console.error("pokemonContainer niet gevonden!");
+                                        }
                                     });
                             });
                     });

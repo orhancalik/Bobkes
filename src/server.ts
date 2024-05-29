@@ -589,9 +589,7 @@ app.post("/catchPokemon", async (req: Request, res: Response) => {
     res.status(200).send("Pokémon succesvol gevangen!");
   } catch (error) {
     console.error("Error catching Pokémon:", error);
-    res
-      .status(500)
-      .send("Er is een fout opgetreden bij het vangen van de Pokémon.");
+    res.status(500).send("Er is een fout opgetreden bij het vangen van de Pokémon.");
   }
 });
 
