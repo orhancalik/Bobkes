@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-import axios from "axios"; // Add axios for API requests
+import axios from "axios"; 
 import session from "./session";
 import { CapturedPokemon } from "./types";
 
@@ -34,17 +34,15 @@ const getPokemonList = async () => {
   return data.results;
 };
 
-// Index
 app.get("/", (req, res) => {
   res.render("landingPage");
 });
 
-// Route om de pokemonvergelijken.ejs pagina te renderen
+
 app.get("/pokemonvergelijken", async (req: Request, res: Response) => {
   res.render("pokemonvergelijken");
 });
 
-// MijnPokemon Orhan
 app.get("/mijnpokemon", async (req: Request, res: Response) => {
   if (!req.session.user) {
     return res.redirect("/login");
@@ -61,17 +59,16 @@ app.get("/mijnpokemon", async (req: Request, res: Response) => {
 
     const sortedPokemonList = user.capturedPokemon.sort(
       (a: CapturedPokemon, b: CapturedPokemon) => {
-        return a.number - b.number; // Zorg ervoor dat 'number' een eigenschap is van CapturedPokemon
+        return a.number - b.number; 
       }
     );
 
-    // Haal alle Pokémon op uit de API
+
     const response = await axios.get(
       "https://pokeapi.co/api/v2/pokemon?limit=1000"
     );
     const allPokemon: { name: string; url: string }[] = response.data.results;
 
-    // Filter de niet-gevangen Pokémon
     const caughtPokemonNames = sortedPokemonList.map(
       (pokemon: CapturedPokemon) => pokemon.name
     );
@@ -82,7 +79,7 @@ app.get("/mijnpokemon", async (req: Request, res: Response) => {
       )
       .slice(0, 20);
 
-    // Voeg extra details toe aan de niet-gevangen Pokémon
+   
     const uncaughtPokemonDetails = await Promise.all(
       uncaughtPokemon.map(async (pokemon: { name: string; url: string }) => {
         const details = await axios.get(pokemon.url);
@@ -101,7 +98,7 @@ app.get("/mijnpokemon", async (req: Request, res: Response) => {
       user: req.session.user,
       pokemonList: sortedPokemonList,
       allPokemonList: uncaughtPokemonDetails,
-      message: "", // Altijd een message variabele doorgeven
+      message: "",
     });
   } catch (error) {
     console.error("Error fetching user Pokémon:", error);
@@ -142,7 +139,7 @@ app.post("/setFavoritePokemon", async (req: Request, res: Response) => {
       { $set: { favoritePokemon } }
     );
 
-    req.session.user.pokemon = favoritePokemon; // Update de sessie met de favoriete Pokémon
+    req.session.user.pokemon = favoritePokemon; 
 
     res.json({ success: true });
   } catch (error) {
@@ -238,7 +235,7 @@ app.post("/pokemon/:name/update", async (req: Request, res: Response) => {
   }
 });
 
-// pokemonbattler
+
 let pokemonDetails: CapturedPokemon[];
 app.get("/pokemonbattler", async (req: Request, res: Response) => {
   if (!req.session.user) {
@@ -254,9 +251,9 @@ app.get("/pokemonbattler", async (req: Request, res: Response) => {
       return res.status(400).send("You don't have any captured Pokémon.");
     }
 
-    const currentPokemon1 = user.capturedPokemon[0]; // For simplicity, choose the first captured Pokémon
+    const currentPokemon1 = user.capturedPokemon[0]; 
 
-    // Fetch an opponent Pokémon from the API
+
     const response = await axios.get(
       "https://pokeapi.co/api/v2/pokemon?limit=151"
     );
@@ -277,15 +274,15 @@ app.get("/pokemonbattler", async (req: Request, res: Response) => {
       attack: Math.floor(Math.random() * 10) + 1,
     };
 
-    // Create a battle context
+
     const pokemonDetails = [
       {
         name: currentPokemon1.name,
-        moves: ["Tackle", "Growl", "Quick Attack", "Swift"], // Example moves
+        moves: ["Tackle", "Growl", "Quick Attack", "Swift"], 
         sprite: currentPokemon1.image,
         hp: 100,
-        defense: currentPokemon1.defense || 5, // Set default if not present
-        attack: currentPokemon1.attack || Math.floor(Math.random() * 10) + 1, // Set default if not present
+        defense: currentPokemon1.defense || 5, 
+        attack: currentPokemon1.attack || Math.floor(Math.random() * 10) + 1, 
       },
       currentPokemon2,
     ];
@@ -395,7 +392,7 @@ app.get("/pokemonsearch/:pokemonName", async (req: Request, res: Response) => {
   }
 });
 
-// Who's That Pokemon?
+
 app.get("/whosthatpokemon", async (req: Request, res: Response) => {
   if (!req.session.user) {
     return res.redirect("/login");
@@ -410,9 +407,9 @@ app.get("/whosthatpokemon", async (req: Request, res: Response) => {
       return res.status(400).send("You don't have any captured Pokémon.");
     }
 
-    const currentPokemon1 = user.capturedPokemon[0]; // For simplicity, choose the first captured Pokémon
+    const currentPokemon1 = user.capturedPokemon[0]; 
 
-    // Fetch a random Pokémon from the API for the guessing game
+
     const response = await axios.get(
       "https://pokeapi.co/api/v2/pokemon?limit=151"
     );
@@ -451,14 +448,14 @@ app.post("/whosthatpokemon", async (req: Request, res: Response) => {
       return res.status(400).send("You don't have any captured Pokémon.");
     }
 
-    const currentPokemon1 = user.capturedPokemon[0]; // For simplicity, choose the first captured Pokémon
+    const currentPokemon1 = user.capturedPokemon[0]; 
 
     if (pokemonName.toLowerCase() === correctName.toLowerCase()) {
       const statToIncrease = Math.random() > 0.5 ? "attack" : "defense";
       currentPokemon1[statToIncrease] =
         (currentPokemon1[statToIncrease] || 0) + 1;
 
-      // Update the captured Pokémon in the database
+
       await collection.updateOne(
         {
           email: req.session.user.email,
@@ -484,7 +481,7 @@ const redirectLoggedInUser = (
   next: () => void
 ) => {
   if (req.session.user) {
-    return res.redirect("/index"); // Stuur ingelogde gebruiker naar de hoofdpagina
+    return res.redirect("/index"); 
   }
   next();
 };
@@ -497,10 +494,10 @@ app.post("/register", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Hash het wachtwoord
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Voeg de gebruiker toe aan de database
+   
     const db = client.db();
     const collection = db.collection("users");
     await collection.insertOne({ email, password: hashedPassword });
@@ -512,7 +509,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Login
 app.get("/login", redirectLoggedInUser, (req, res) => {
   const error = req.query.error;
   res.render("login", { error });
@@ -522,7 +518,6 @@ app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    // Zoek de gebruiker in de database en haal de gebruikersnaam op
     const db = client.db();
     const collection = db.collection("users");
     const user = await collection.findOne({ email });
@@ -533,7 +528,7 @@ app.post("/login", async (req: Request, res: Response) => {
         .render("login", { error: "Ongeldige inloggegevens" });
     }
 
-    // Controleer het wachtwoord
+
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res
@@ -541,10 +536,10 @@ app.post("/login", async (req: Request, res: Response) => {
         .render("login", { error: "Ongeldige inloggegevens" });
     }
 
-    // Sla de gebruikersnaam op in de sessie
+
     req.session.user = { username: user.username, email: user.email };
 
-    // Stuur de gebruiker door naar de indexpagina
+
     res.redirect("/index");
   } catch (error) {
     console.error("Error during login:", error);
@@ -577,7 +572,7 @@ app.post("/logout", (req, res) => {
   });
 });
 
-//catcher
+
 
 app.get("/pokemoncatcher", (req: Request, res: Response) => {
   if (!req.session.user) {
