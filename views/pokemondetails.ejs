@@ -40,7 +40,7 @@
         <li class="pokeball">
           <img src="/assets/images/pokeball.png" alt="" width="30px" />
           <div class="pokemon-info">
-            <% if (user && user.username) { %>
+            <% if (user && user.username ) { %>
               <span id="currentPokemonName"><%= user.username %></span>
             <% } else { %>
               <span id="currentPokemonName"></span>
@@ -58,9 +58,11 @@
   </header>
   <main>
     <div class="pokemon-detail-container">
-      <h1>Pokémon: <%= pokemon.name %></h1>
+      <h1>Pokémon: <span id="pokemonName"><%= pokemon.name %></span></h1>
       <img src="<%= pokemon.image %>" alt="<%= pokemon.name %>">
-      <p>Bijnaam: <%= pokemon.nickname %></p>
+      <label for="nickname">Bijnaam:</label>
+      <input type="text" id="nickname" value="<%= pokemon.nickname %>">
+      <button id="saveNicknameBtn">Opslaan</button>
       <p>Level: <%= pokemon.level %></p>
       <p>Attack: <%= pokemon.attack %></p>
       <p>Defence: <%= pokemon.defence %></p>
@@ -92,14 +94,11 @@
     </div>
   </main>
  
- 
   <footer>
     <ul>
       <li><a href="mijnpokemon">Mijn Pokemon</a></li>
       <li><a href="pokemonvergelijken">Vergelijken</a></li>
       <li><a href="pokemonbattler">Battler</a></li>
-
-
       <li><a href="pokemoncatcher">Catcher</a></li>
       <li><a href="whosthatpokemon">Who's that pokemon</a></li>
     </ul>

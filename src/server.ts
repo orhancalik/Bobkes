@@ -372,6 +372,49 @@ app.post("/pokemonbattle", async (req: Request, res: Response) => {
   }
 });
 
+app.post("/pokemon/:name/updateNickname", async (req: Request, res: Response) => {
+  if (!req.session.user) {
+    return res.status(401).send("Niet geautoriseerd");
+  }
+
+  try {
+    const { nickname } = req.body;
+    const db = client.db();
+    const collection = db.collection("users");
+    const user = await collection.findOne({ email: req.session.user.email });
+
+    if (!user || !user.capturedPokemon) {
+      return res.status(404).send("Pokémon niet gevonden.");
+    }
+
+    const pokemon = user.capturedPokemon.find(
+      (p: CapturedPokemon) => p.name === req.params.name
+    );
+
+    if (!pokemon) {
+      return res.status(404).send("Pokémon niet gevonden.");
+    }
+
+    // Update the nickname of the Pokémon
+    pokemon.nickname = nickname;
+
+    await collection.updateOne(
+      { email: req.session.user.email },
+      { $set: { capturedPokemon: user.capturedPokemon } }
+    );
+
+    res.status(200).json({ message: "Pokémon nickname bijgewerkt" });
+  } catch (error) {
+    console.error("Error updating Pokémon nickname:", error);
+    res
+      .status(500)
+      .send(
+        "Er is een fout opgetreden bij het bijwerken van de Pokémon nickname."
+      );
+  }
+});
+
+
 app.get("/pokemonsearch/:pokemonName", async (req: Request, res: Response) => {
   try {
     const pokemonName = req.params.pokemonName.toLowerCase();
