@@ -46,15 +46,20 @@
             <img src="/assets/images/pokeball.png" alt="" width="30px" />
             <div class="pokemon-info">
               <% if (user && user.username) { %>
-                <span id="currentPokemonName"><%= user.username %></span>
+              <span id="currentPokemonName"><%= user.username %></span>
               <% } else { %>
-                <span id="currentPokemonName"></span>
-              <% } %>
-              <% if (user && user.pokemon) { %>
-                <img src="<%= user.pokemon.image %>" alt="<%= user.pokemon.name %>" width="70px" />
-                <span class="<%= user.pokemon.type %>"><%= user.pokemon.name %></span>
+              <span id="currentPokemonName"></span>
+              <% } %> <% if (user && user.pokemon) { %>
+              <img
+                src="<%= user.pokemon.image %>"
+                alt="<%= user.pokemon.name %>"
+                width="70px"
+              />
+              <span class="<%= user.pokemon.type %>"
+                ><%= user.pokemon.name %></span
+              >
               <% } else { %>
-                <span class="no-pokemon">?</span>
+              <span class="no-pokemon">?</span>
               <% } %>
             </div>
           </li>
@@ -63,66 +68,62 @@
     </header>
     <div class="background-wrapper">
       <main>
-        <section class="register-section">
-          <article>
-            <p class="register-title">Registreer hier!</p>
-            <p class="register-text">
-              Welkom bij de Bobkes-community! Registreer je vandaag nog om
-              toegang te krijgen tot een wereld vol avontuur, uitdagingen en
-              vriendschap. Als geregistreerd lid kun je deelnemen aan spannende
-              gevechten, Pokémon trainen, nieuwe vrienden maken en deelnemen aan
-              exclusieve evenementen.
-            </p>
-          </article>
+        <section id="fiksRegister">
+          <section class="register-section">
+            <article>
+              <p class="register-title">Registreer hier!</p>
+              <p class="register-text">
+                Welkom bij de Bobkes-community! Registreer je vandaag nog om
+                toegang te krijgen tot een wereld vol avontuur, uitdagingen en
+                vriendschap. Als geregistreerd lid kun je deelnemen aan
+                spannende gevechten, Pokémon trainen, nieuwe vrienden maken en
+                deelnemen aan exclusieve evenementen.
+              </p>
+            </article>
+          </section>
 
-          <article class="register-squad">
-            <img
-              src="./assets/images/register-squad.png"
-              alt=""
-              width="400px"
-            />
-          </article>
-        </section>
+          <section class="register-form">
+            <form class="row g-3" action="/register" method="POST">
+              <div class="col-md-3">
+                <label for="inputUsername" class="form-label"
+                  >Gebruikersnaam</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="username"
+                  id="inputUsername"
+                  required
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="inputEmail4" class="form-label">E-mail</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  id="inputEmail4"
+                  required
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="inputPassword4" class="form-label">Paswoord</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  id="inputPassword4"
+                  required
+                />
+              </div>
 
-        <section class="register-form">
-          <form class="row g-3" action="/register" method="POST">
-            <div class="col-md-3">
-              <label for="inputUsername" class="form-label"
-                >Gebruikersnaam</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="username"
-                id="inputUsername"
-                required
-              />
-            </div>
-            <div class="col-md-3">
-              <label for="inputEmail4" class="form-label">E-mail</label>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                id="inputEmail4"
-                required
-              />
-            </div>
-            <div class="col-md-3">
-              <label for="inputPassword4" class="form-label">Paswoord</label>
-              <input
-                type="password"
-                class="form-control"
-                name="password"
-                id="inputPassword4"
-                required
-              />
-            </div>
-            
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Registreer</button>
-            </div>
-          </form>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                  Registreer
+                </button>
+              </div>
+            </form>
+          </section>
         </section>
       </main>
     </div>

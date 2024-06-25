@@ -1017,4 +1017,18 @@ label {
   .pokeball img {
     width: 40px;
   }
+  .register-form {
+    width: 350px;
+  }
+  .background-wrapper {
+    width: 100vw;
+  }
+  .register-title {
+    font-size: 15px;
+  }
+
+  .register-text {
+    width: 300px;
+    color: white;
+  }
 }
